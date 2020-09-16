@@ -6,12 +6,13 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-import sys
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 import resources_pje_rc
+from pathlib import Path
 
 
-class Ui_PjeConverter(object):
+class UiPjeConverter:
     def setupUi(self, PjeConverter):
         PjeConverter.setObjectName("PjeConverter")
         PjeConverter.resize(723, 379)
@@ -46,10 +47,12 @@ class Ui_PjeConverter(object):
         self.input_file = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
         self.input_file.setObjectName("input_file")
         self.horizontal_layout_search_file.addWidget(self.input_file)
+        
+        #BUTTON SEARCH FILE
         self.search_file_button = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.search_file_button.setObjectName("search_file_button")
-        self.search_file_button.clicked.connect(self.get_file_name)
         self.horizontal_layout_search_file.addWidget(self.search_file_button)
+
         self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.grid_layout_main)
         self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(260, 280, 221, 80))
         self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
@@ -58,11 +61,13 @@ class Ui_PjeConverter(object):
         )
         self.horizontal_layout_start.setContentsMargins(0, 0, 0, 0)
         self.horizontal_layout_start.setObjectName("horizontal_layout_start")
+        #BUTTON START PROGRESS
         self.start_progress_button = QtWidgets.QPushButton(
             self.horizontalLayoutWidget_2
         )
         self.start_progress_button.setObjectName("start_progress_button")
         self.horizontal_layout_start.addWidget(self.start_progress_button)
+
         self.logo_tjrn = QtWidgets.QFrame(self.grid_layout_main)
         self.logo_tjrn.setGeometry(QtCore.QRect(180, 30, 361, 111))
         self.logo_tjrn.setStyleSheet("image: url(:/TJRN/bn-poder-judiciario.png);")
@@ -76,12 +81,6 @@ class Ui_PjeConverter(object):
         self.start_progress_button.clicked.connect(self.input_file.copy)
         QtCore.QMetaObject.connectSlotsByName(PjeConverter)
 
-    def get_file_name(self):
-        file_name, _ = QtWidgets.QFileDialog.getOpenFileName(
-            None, "Procurar Arquivo de Video", r"", "Video files (*.py* .wmv *.mp4)"
-        )
-        self.input_file.setText(file_name)
-
     def retranslateUi(self, PjeConverter):
         _translate = QtCore.QCoreApplication.translate
         PjeConverter.setWindowTitle(_translate("PjeConverter", "PJE Converter"))
@@ -90,10 +89,10 @@ class Ui_PjeConverter(object):
 
 
 if __name__ == "__main__":
-
+    import sys
     app = QtWidgets.QApplication(sys.argv)
     PjeConverter = QtWidgets.QMainWindow()
-    ui = Ui_PjeConverter()
+    ui = UiPjeConverter()
     ui.setupUi(PjeConverter)
     PjeConverter.show()
     sys.exit(app.exec_())
