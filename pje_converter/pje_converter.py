@@ -6,84 +6,94 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
+import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog, QTextEdit, QPushButton, QLabel, QVBoxLayout
-from PyQt5.QtCore import QDir
+import resources_pje_rc
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(734, 401)
+class Ui_PjeConverter(object):
+    def setupUi(self, PjeConverter):
+        PjeConverter.setObjectName("PjeConverter")
+        PjeConverter.resize(723, 379)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(".\\img/pjeMini.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        MainWindow.setWindowIcon(icon)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        icon.addPixmap(
+            QtGui.QPixmap(":/TJRN/pjeMini.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+        )
+        PjeConverter.setWindowIcon(icon)
+        self.centralwidget = QtWidgets.QWidget(PjeConverter)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName("gridLayout")
-        self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setStyleSheet("image: url(:/newPrefix/bn-poder-judiciario.png);")
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
-        self.horizontalLayoutWidget = QtWidgets.QWidget(self.frame)
+        self.grid_layout_main = QtWidgets.QFrame(self.centralwidget)
+        self.grid_layout_main.setStyleSheet(
+            "image: url(:/newPrefix/bn-poder-judiciario.png);\n" ""
+        )
+        self.grid_layout_main.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.grid_layout_main.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.grid_layout_main.setObjectName("grid_layout_main")
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.grid_layout_main)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(80, 190, 561, 80))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label = QtWidgets.QLabel(self.horizontalLayoutWidget)
-        self.label.setText("")
-        self.label.setObjectName("label")
-        self.horizontalLayout.addWidget(self.label)
-        self.lineEdit = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
-        self.lineEdit.setObjectName("lineEdit")
-        self.horizontalLayout.addWidget(self.lineEdit)
-        self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout.addWidget(self.pushButton)
-        self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.frame)
+        self.horizontal_layout_search_file = QtWidgets.QHBoxLayout(
+            self.horizontalLayoutWidget
+        )
+        self.horizontal_layout_search_file.setContentsMargins(0, 0, 0, 0)
+        self.horizontal_layout_search_file.setObjectName(
+            "horizontal_layout_search_file"
+        )
+        self.input_file = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
+        self.input_file.setObjectName("input_file")
+        self.horizontal_layout_search_file.addWidget(self.input_file)
+        self.search_file_button = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.search_file_button.setObjectName("search_file_button")
+        self.search_file_button.clicked.connect(self.get_file_name)
+        self.horizontal_layout_search_file.addWidget(self.search_file_button)
+        self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.grid_layout_main)
         self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(260, 280, 221, 80))
         self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget_2)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout_2.addWidget(self.pushButton_2)
-        self.frame_2 = QtWidgets.QFrame(self.frame)
-        self.frame_2.setGeometry(QtCore.QRect(180, 30, 361, 111))
-        self.frame_2.setStyleSheet("border-image: url(:/TJRN/img/bn-poder-judiciario.png);")
-        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_2.setObjectName("frame_2")
-        self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        self.horizontal_layout_start = QtWidgets.QHBoxLayout(
+            self.horizontalLayoutWidget_2
+        )
+        self.horizontal_layout_start.setContentsMargins(0, 0, 0, 0)
+        self.horizontal_layout_start.setObjectName("horizontal_layout_start")
+        self.start_progress_button = QtWidgets.QPushButton(
+            self.horizontalLayoutWidget_2
+        )
+        self.start_progress_button.setObjectName("start_progress_button")
+        self.horizontal_layout_start.addWidget(self.start_progress_button)
+        self.logo_tjrn = QtWidgets.QFrame(self.grid_layout_main)
+        self.logo_tjrn.setGeometry(QtCore.QRect(180, 30, 361, 111))
+        self.logo_tjrn.setStyleSheet("image: url(:/TJRN/bn-poder-judiciario.png);")
+        self.logo_tjrn.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.logo_tjrn.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.logo_tjrn.setObjectName("logo_tjrn")
+        self.gridLayout.addWidget(self.grid_layout_main, 0, 0, 1, 1)
+        PjeConverter.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
-        self.pushButton_2.clicked.connect(self.lineEdit.copy)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(PjeConverter)
+        self.start_progress_button.clicked.connect(self.input_file.copy)
+        QtCore.QMetaObject.connectSlotsByName(PjeConverter)
 
-    def retranslateUi(self, MainWindow):
+    def get_file_name(self):
+        file_name, _ = QtWidgets.QFileDialog.getOpenFileName(
+            None, "Procurar Arquivo de Video", r"", "Video files (*.py* .wmv *.mp4)"
+        )
+        self.input_file.setText(file_name)
+
+    def retranslateUi(self, PjeConverter):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "PJE Converter"))
-        self.pushButton.setText(_translate("MainWindow", "Procurar"))
-        self.pushButton_2.setText(_translate("MainWindow", "Iniciar"))
-import resources_pje_rc
+        PjeConverter.setWindowTitle(_translate("PjeConverter", "PJE Converter"))
+        self.search_file_button.setText(_translate("PjeConverter", "Procurar"))
+        self.start_progress_button.setText(_translate("PjeConverter", "Iniciar"))
 
 
 if __name__ == "__main__":
-    import sys
+
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    PjeConverter = QtWidgets.QMainWindow()
+    ui = Ui_PjeConverter()
+    ui.setupUi(PjeConverter)
+    PjeConverter.show()
     sys.exit(app.exec_())

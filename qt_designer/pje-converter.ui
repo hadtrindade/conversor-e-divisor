@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>PjeConverter</class>
+ <widget class="QMainWindow" name="PjeConverter">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>734</width>
-    <height>401</height>
+    <width>723</width>
+    <height>379</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>PJE Converter</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>img/pjeMini.png</normaloff>img/pjeMini.png</iconset>
+   <iconset resource="resources_pje.qrc">
+    <normaloff>:/TJRN/pjeMini.png</normaloff>:/TJRN/pjeMini.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -35,9 +35,10 @@
      <number>0</number>
     </property>
     <item row="0" column="0">
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="grid_layout_main">
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/bn-poder-judiciario.png);</string>
+       <string notr="true">image: url(:/newPrefix/bn-poder-judiciario.png);
+</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -54,19 +55,12 @@
          <height>80</height>
         </rect>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontal_layout_search_file">
         <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="input_file"/>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="search_file_button">
           <property name="text">
            <string>Procurar</string>
           </property>
@@ -83,9 +77,9 @@
          <height>80</height>
         </rect>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="horizontal_layout_start">
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="start_progress_button">
           <property name="text">
            <string>Iniciar</string>
           </property>
@@ -93,7 +87,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QFrame" name="frame_2">
+      <widget class="QFrame" name="logo_tjrn">
        <property name="geometry">
         <rect>
          <x>180</x>
@@ -103,7 +97,7 @@
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/TJRN/img/bn-poder-judiciario.png);</string>
+        <string notr="true">image: url(:/TJRN/bn-poder-judiciario.png);</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -116,16 +110,15 @@
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
   <include location="resources_pje.qrc"/>
  </resources>
  <connections>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>start_progress_button</sender>
    <signal>clicked()</signal>
-   <receiver>lineEdit</receiver>
+   <receiver>input_file</receiver>
    <slot>copy()</slot>
    <hints>
     <hint type="sourcelabel">
