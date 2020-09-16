@@ -1,5 +1,14 @@
 from subprocess import Popen, DEVNULL
 from os import path
+from PyQt5 import QtWidgets
+
+
+def done_popup():
+    msg_box = QtWidgets.QMessageBox()
+    msg_box.setWindowTitle("PJe Converter")
+    msg_box.setText("Processo Concluído.")
+    msg_box.setIcon(QtWidgets.QMessageBox.Information)
+    msg_box.exec_()
 
 
 def converter_and_split(video_file):
@@ -10,7 +19,8 @@ def converter_and_split(video_file):
             "bin\\ffmpeg.exe",
             "-i",
             video_file,
-            output_video_file
+            output_video_file,
+            "-y"
         ], 
         stderr=DEVNULL,
         stdout=DEVNULL,
@@ -31,3 +41,4 @@ def converter_and_split(video_file):
             stdout=DEVNULL,
                 )
         mp4box.wait()
+    done_popup()
