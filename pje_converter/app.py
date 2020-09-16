@@ -11,17 +11,19 @@ class MainWindow(QtWidgets.QMainWindow, UiPjeConverter):
 
         self.search_file_button.clicked.connect(self.get_file_name)
         self.start_progress_button.clicked.connect(self.make_convert)
-
+        
     def make_convert(self):
         converter_and_split(self.input_file.text())
+
+        #self.done_popup()
+        self.start_progress_button.setText("Iniciar")
 
     def get_file_name(self):
         home = Path.home()
         file_name, _ = QtWidgets.QFileDialog.getOpenFileName(
-            None, "Procurar Arquivo de Video", r"%s" % home, "Video mp4files (*.py* .wmv *.mp4)"
-        )
+            None, "Procurar Arquivo de Video", r"%s" % home, )
         self.input_file.setText(file_name)
-       
+
 
 if __name__ == "__main__":
 

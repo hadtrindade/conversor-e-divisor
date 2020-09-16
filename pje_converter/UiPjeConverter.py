@@ -47,8 +47,6 @@ class UiPjeConverter:
         self.input_file = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
         self.input_file.setObjectName("input_file")
         self.horizontal_layout_search_file.addWidget(self.input_file)
-        
-        #BUTTON SEARCH FILE
         self.search_file_button = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.search_file_button.setObjectName("search_file_button")
         self.horizontal_layout_search_file.addWidget(self.search_file_button)
@@ -61,7 +59,6 @@ class UiPjeConverter:
         )
         self.horizontal_layout_start.setContentsMargins(0, 0, 0, 0)
         self.horizontal_layout_start.setObjectName("horizontal_layout_start")
-        #BUTTON START PROGRESS
         self.start_progress_button = QtWidgets.QPushButton(
             self.horizontalLayoutWidget_2
         )

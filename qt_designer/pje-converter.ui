@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>723</width>
-    <height>379</height>
+    <height>411</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -106,10 +106,51 @@
         <enum>QFrame::Raised</enum>
        </property>
       </widget>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="geometry">
+        <rect>
+         <x>207</x>
+         <y>150</y>
+         <width>321</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>723</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="abrir">
+    <property name="title">
+     <string>Abrir</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_sobre">
+    <property name="title">
+     <string>Sobre</string>
+    </property>
+   </widget>
+   <addaction name="abrir"/>
+   <addaction name="menu_sobre"/>
+  </widget>
+  <widget class="QStatusBar" name="status_bar"/>
+  <action name="actionFile">
+   <property name="text">
+    <string>File</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="resources_pje.qrc"/>
