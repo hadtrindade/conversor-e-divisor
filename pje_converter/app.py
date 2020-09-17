@@ -6,6 +6,7 @@ from PyQt5.QtCore import (QRunnable, QThread,
                           )
 from converter import converter_and_split
 from pathlib import Path
+from os import path
 from threading import Thread
 
 
@@ -43,11 +44,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
         self.start_progress_button.clicked.connect(self.make_convert)
         self.action_abrir.triggered.connect(self.get_file_name)
         self.actionSobre.triggered.connect(self.about)
+        self.output_file_button.clicked.connect(self.get_path_output_name)
 
     def make_convert(self):
         worker = Worker(
             converter_and_split,
             self.input_file,
+            self.output_file.text(),
             )
         worker.signals.progress.connect(self.progressBar.setValue)
         worker.signals.button.connect(self.start_progress_button.setText)
@@ -58,7 +61,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
         home = Path.home()
         file_name, _ = QtWidgets.QFileDialog.getOpenFileName(
             None, "Procurar Arquivo de Video", r"%s" % home, )
+        paths = path.split(file_name)
+        ouput_path = paths[0]
         self.input_file.setText(file_name)
+        self.output_file.setText(ouput_path)
+
+    def get_path_output_name(self):
+        home = Path.home()
+        path_output = QtWidgets.QFileDialog.getExistingDirectory(
+            None, "Procurar Diretório de Destino.", r"%s" % home, )
+        self.output_file.setText(path_output)
 
     def done_popup(self, s):
         msg_box = QtWidgets.QMessageBox()
@@ -73,7 +85,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
     def about(self):
         msg_box = QtWidgets.QMessageBox()
         msg_box.setWindowTitle("PJe Converter")
-        msg_box.setText("Desenvolvido por Haddly Trindade\nEmail: haddtrindade@gmail.com")
+        msg_box.setText(
+            "Desenvolvido por Haddly Trindade\n"
+            "Email: haddtrindade@gmail.com\n"
+            "github.com/hadtrindade\n"
+            "Versão: 0.1.0"
+            )
         msg_box.exec_()
 
 if __name__ == "__main__":

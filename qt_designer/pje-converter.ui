@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>723</width>
-    <height>411</height>
+    <width>738</width>
+    <height>570</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,22 +49,29 @@
       <widget class="QWidget" name="horizontalLayoutWidget">
        <property name="geometry">
         <rect>
-         <x>90</x>
-         <y>160</y>
-         <width>561</width>
-         <height>80</height>
+         <x>100</x>
+         <y>250</y>
+         <width>511</width>
+         <height>41</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontal_layout_search_file">
         <item>
-         <widget class="QLineEdit" name="input_file"/>
-        </item>
-        <item>
          <widget class="QPushButton" name="search_file_button">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Procurar</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="input_file"/>
         </item>
        </layout>
       </widget>
@@ -72,7 +79,7 @@
        <property name="geometry">
         <rect>
          <x>250</x>
-         <y>280</y>
+         <y>400</y>
          <width>221</width>
          <height>80</height>
         </rect>
@@ -109,14 +116,161 @@
       <widget class="QProgressBar" name="progressBar">
        <property name="geometry">
         <rect>
-         <x>220</x>
-         <y>250</y>
+         <x>210</x>
+         <y>370</y>
          <width>321</width>
          <height>23</height>
         </rect>
        </property>
        <property name="value">
         <number>0</number>
+       </property>
+      </widget>
+      <widget class="QWidget" name="horizontalLayoutWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>320</y>
+         <width>511</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="output_file_button">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Selecionar</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="output_file"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>300</y>
+         <width>91</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Destino:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>230</y>
+         <width>47</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Origem:</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radio_button_normal">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>190</y>
+         <width>82</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="tabletTracking">
+        <bool>false</bool>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Normal</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radio_button_avarege">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>190</y>
+         <width>82</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Média</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radio_button_low">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>190</y>
+         <width>82</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Baixa</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>160</y>
+         <width>101</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Qualidade:</string>
        </property>
       </widget>
      </widget>
@@ -129,7 +283,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>723</width>
+     <width>738</width>
      <height>21</height>
     </rect>
    </property>
@@ -189,12 +343,12 @@
    <slot>copy()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>360</x>
-     <y>191</y>
+     <x>361</x>
+     <y>449</y>
     </hint>
     <hint type="destinationlabel">
-     <x>337</x>
-     <y>86</y>
+     <x>429</x>
+     <y>281</y>
     </hint>
    </hints>
   </connection>
