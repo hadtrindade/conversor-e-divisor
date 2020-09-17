@@ -132,3 +132,7 @@ dmypy.json
 # bin
 
 bin/
+
+qt_designer/
+
+output/

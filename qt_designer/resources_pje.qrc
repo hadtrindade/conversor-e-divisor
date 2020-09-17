@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="TJRN">
+    <file>saida.png</file>
     <file>pjeMini.png</file>
     <file>bn-poder-judiciario.png</file>
     <file>cinema.png</file>

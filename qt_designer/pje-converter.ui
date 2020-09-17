@@ -49,8 +49,8 @@
       <widget class="QWidget" name="horizontalLayoutWidget">
        <property name="geometry">
         <rect>
-         <x>80</x>
-         <y>190</y>
+         <x>90</x>
+         <y>160</y>
          <width>561</width>
          <height>80</height>
         </rect>
@@ -71,7 +71,7 @@
       <widget class="QWidget" name="horizontalLayoutWidget_2">
        <property name="geometry">
         <rect>
-         <x>260</x>
+         <x>250</x>
          <y>280</y>
          <width>221</width>
          <height>80</height>
@@ -109,8 +109,8 @@
       <widget class="QProgressBar" name="progressBar">
        <property name="geometry">
         <rect>
-         <x>207</x>
-         <y>150</y>
+         <x>220</x>
+         <y>250</y>
          <width>321</width>
          <height>23</height>
         </rect>
@@ -123,6 +123,7 @@
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="status_bar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -132,23 +133,48 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="abrir">
+   <widget class="QMenu" name="menuArquivo">
     <property name="title">
-     <string>Abrir</string>
+     <string>Arquivo</string>
     </property>
+    <addaction name="action_abrir"/>
+    <addaction name="actionSair"/>
    </widget>
-   <widget class="QMenu" name="menu_sobre">
+   <widget class="QMenu" name="menuSobre">
     <property name="title">
-     <string>Sobre</string>
+     <string>Ajuda</string>
     </property>
+    <addaction name="actionSobre"/>
    </widget>
-   <addaction name="abrir"/>
-   <addaction name="menu_sobre"/>
+   <addaction name="menuArquivo"/>
+   <addaction name="menuSobre"/>
   </widget>
-  <widget class="QStatusBar" name="status_bar"/>
   <action name="actionFile">
    <property name="text">
     <string>File</string>
+   </property>
+  </action>
+  <action name="action_abrir">
+   <property name="icon">
+    <iconset resource="resources_pje.qrc">
+     <normaloff>:/TJRN/cinema.png</normaloff>:/TJRN/cinema.png</iconset>
+   </property>
+   <property name="text">
+    <string>Abrir</string>
+   </property>
+  </action>
+  <action name="actionSair">
+   <property name="icon">
+    <iconset resource="resources_pje.qrc">
+     <normaloff>:/TJRN/saida.png</normaloff>:/TJRN/saida.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sair</string>
+   </property>
+  </action>
+  <action name="actionSobre">
+   <property name="text">
+    <string>Sobre</string>
    </property>
   </action>
  </widget>
@@ -169,6 +195,22 @@
     <hint type="destinationlabel">
      <x>337</x>
      <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSair</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>PjeConverter</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>205</y>
     </hint>
    </hints>
   </connection>
