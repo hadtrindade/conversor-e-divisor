@@ -136,3 +136,5 @@ bin/
 qt_designer/
 
 output/
+
+.vscode

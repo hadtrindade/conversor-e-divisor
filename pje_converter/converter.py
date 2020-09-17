@@ -32,21 +32,23 @@ def converter_and_split(input_file, pb, button):
         ], 
         stderr=DEVNULL,
         stdout=DEVNULL,
+        shell=True
         )
     ffmpeg.wait()
     pb(70)
-    if int(path.getsize(output_video_file)) > 20000000:
+    if int(path.getsize(output_video_file)) > 30000000:
         ouput_file = f"{split_video_path[0]}/part_{split_video_path[1]}"
         mp4box = Popen(
             [
                 "bin\\gpac_mp4box\\mp4box.exe",
                 "-add", output_video_file,
                 "-split-size",
-                "5000",
+                "30000",
                 ouput_file
             ],
             stderr=DEVNULL,
             stdout=DEVNULL,
+            shell=True,
                 )
         pb(90)
         mp4box.wait()
