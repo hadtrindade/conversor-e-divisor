@@ -1,24 +1,12 @@
 from subprocess import Popen, DEVNULL
 from os import path
-from PyQt5 import QtWidgets
 
 
-def done_popup(pb):
-    msg_box = QtWidgets.QMessageBox()
-    msg_box.setWindowTitle("PJe Converter")
-    msg_box.setText(
-        "Processo Concluído.\nVideos Convertivos e/ou Dividos"
-        "\nestão no mesmo local do video original"
-        )
-    msg_box.setIcon(QtWidgets.QMessageBox.Information)
-    msg_box.exec_()
-    pb(0)
+def converter_and_split(input_file, progress_bar, button, done):
 
-
-def converter_and_split(input_file, pb, button):
     video_file = input_file.text()
-    button("Aguarde!")
-    pb(20)
+    button.emit("Aguarde!")
+    progress_bar.emit(40)
     split_video_path = path.split(video_file)
     file = split_video_path[1][:-4]
     output_video_file = f"{split_video_path[0]}/convertido_{file}.mp4"
@@ -30,12 +18,10 @@ def converter_and_split(input_file, pb, button):
             output_video_file,
             "-y"
         ], 
-        stderr=DEVNULL,
-        stdout=DEVNULL,
-        shell=True
+
         )
     ffmpeg.wait()
-    pb(70)
+    progress_bar.emit(70)
     if int(path.getsize(output_video_file)) > 30000000:
         ouput_file = f"{split_video_path[0]}/part_{split_video_path[1]}"
         mp4box = Popen(
@@ -46,15 +32,14 @@ def converter_and_split(input_file, pb, button):
                 "30000",
                 ouput_file
             ],
-            stderr=DEVNULL,
-            stdout=DEVNULL,
-            shell=True,
+
                 )
-        pb(90)
+        progress_bar.emit(90)
         mp4box.wait()
-        pb(100)
+        progress_bar.emit(100)
     else:
-        pb(100)
+        progress_bar.emit(100)
     input_file.clear()
-    button("Iniciar")
-    done_popup(pb)
+    progress_bar.emit(0)
+    button.emit("Iniciar")
+    done.emit("ok")
