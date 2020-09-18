@@ -42,6 +42,9 @@ class PageWindow(QtWidgets.QMainWindow):
 
 
 class NextPreInstall(PageWindow, Ui_Pje_converter_setup_pre_install):
+
+    path_default = None
+
     def __init__(self):
         super(NextPreInstall, self).__init__()
         self.setupUi(self)
@@ -51,6 +54,7 @@ class NextPreInstall(PageWindow, Ui_Pje_converter_setup_pre_install):
         self._path_install = path.join(self._base_path, "PJe Converter")
         self.input_directory_install.setText(self._path_install)
         self.button_change_directory.clicked.connect(self.change_directory)
+        NextPreInstall.path_default = self._path_install
 
     def change_directory(self):
         directory = QtWidgets.QFileDialog.getExistingDirectory(
@@ -63,6 +67,7 @@ class NextPreInstall(PageWindow, Ui_Pje_converter_setup_pre_install):
         self.input_directory_install.setText(
             path.join(directory, "PJe Converter")
             )
+        NextPreInstall.path_default = directory
 
     def goto_main_setup(self):
         self.goto("main_setup")
@@ -88,7 +93,7 @@ class NextProgressBarInstall(
         self.button_close.hide()
         self.button_back_pre_install.hide()
         self.button_install.setText("Instalando")
-        worker = Worker(init_setup)
+        worker = Worker(init_setup, NextPreInstall.path_default)
         worker.signals.progress.connect(self.progress_bar_install.setValue)
         worker.signals.button_finish.connect(self.set_button_finish)
         self.thread_pool.start(worker)

@@ -1,11 +1,27 @@
-from os import environ, path, getcwd, walk, listdir
-from shutil import move
+from shutil import copy, copytree
+from os import listdir, path, chdir, getcwd, makedirs
+from contextlib import contextmanager
 from time import sleep
 
 
-def init_setup(progress_bar, button_finish):
-    for i in range(10):
-        sleep(0.1)       
-        progress_bar.emit(i*100/10)
+def init_setup(dst, progress_bar, button_finish):
+
+    source = "C:\\Users\\hadd\\Desktop\\compartilhamento\\app"
+    makedirs(dst, mode=777)
+    old_path = getcwd()
+    chdir(source)
+    files = [paths for paths in listdir(".")]
+    for i in range(len(files)):
+        if path.isfile(files[i]):
+            copy(files[i], dst)
+            progress_bar.emit(i*100/len(files))
+            print(files[i])
+        elif path.isdir(files[i]):
+            copytree(files[i], path.join(dst, files[i]))
+            progress_bar.emit(i*100/len(files))
+            print(files[i])
+    sleep(1)
+    chdir(old_path)
     progress_bar.emit(100)
     button_finish.emit("Finalizar")
+    
