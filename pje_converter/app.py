@@ -24,7 +24,7 @@ class Worker(QRunnable):
         self.args = args
         self.kwargs = kwargs
         self.signals = WokerSignal()
-    
+
         self.kwargs['progress_bar'] = self.signals.progress
         self.kwargs['button'] = self.signals.button
         self.kwargs['done'] = self.signals.done
@@ -59,17 +59,31 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
 
     def get_file_name(self):
         home = Path.home()
-        file_name, _ = QtWidgets.QFileDialog.getOpenFileName(
-            None, "Procurar Arquivo de Video", r"%s" % home, )
-        paths = path.split(file_name)
-        ouput_path = paths[0]
-        self.input_file.setText(file_name)
-        self.output_file.setText(ouput_path)
+        file_name, _ = QtWidgets.QFileDialog.getOpenFileNames(
+            None, "Procurar Arquivo de Video", r"%s" % home,
+            "Video Files (*.mp4 *.mkv *.flv *.swf *.avchd *.mov *.qt *.avi *.wmv *.mpeg *.rmvb);;All Files (*)",
+            )
+        if not file_name:
+            return
 
+        if len(file_name) == 1:
+            paths = path.split(file_name[0])
+            ouput_path = paths[0]
+            self.input_file.setPlainText(file_name[0])
+            self.output_file.setText(ouput_path)
+        else:
+            paths = path.split(file_name[0])
+            ouput_path = paths[0]
+            files = ""
+            for i in file_name:
+                files += i+"\n"
+            self.input_file.setPlainText(files)
+            self.output_file.setText(ouput_path)
+            
     def get_path_output_name(self):
         home = Path.home()
         path_output = QtWidgets.QFileDialog.getExistingDirectory(
-            None, "Procurar Diretório de Destino.", r"%s" % home, )
+            None, "Procurar Diretório de Destino.", r"%s" % home,)
         self.output_file.setText(path_output)
 
     def done_popup(self, s):
@@ -80,7 +94,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
             "\nestão no mesmo local do video original"
             )
         msg_box.setIcon(QtWidgets.QMessageBox.Information)
+        msg_box.buttonClicked.connect(self.button_done_popup)
         msg_box.exec_()
+
+    def button_done_popup(self, arg):
+        self.input_file.clear()
+        self.progressBar.setValue(0)
 
     def about(self):
         msg_box = QtWidgets.QMessageBox()
