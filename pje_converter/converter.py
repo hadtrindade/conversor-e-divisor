@@ -2,12 +2,74 @@ from subprocess import Popen, DEVNULL
 from os import path
 from time import sleep
 
+
+def ffmpeg_low(video_file, output_video_file):
+    process = Popen(
+            [
+                "bin\\ffmpeg.exe",
+                "-i",
+                video_file,
+                "-s",
+                "320x240",
+                "-vcodec",
+                "mpeg4",
+                "-r",
+                "30",
+                "-b:v",
+                "100000",
+                "-ar",
+                "44100",
+                "-ac",
+                "1",
+                output_video_file,
+                "-y"
+                ],
+                stderr=DEVNULL,
+                stdout=DEVNULL,
+                shell=True,
+                )
+    process.wait()
+
+
+def ffmpeg(video_file, output_video_file):
+    process = Popen(
+            [
+                "bin\\ffmpeg.exe",
+                "-i",
+                video_file,
+                output_video_file,
+                "-y"
+                ],
+                stderr=DEVNULL,
+                stdout=DEVNULL,
+                shell=True,
+                )
+    process.wait()
+
+
+def mp4box(output_video_file, output_file):
+    process = Popen(
+        [
+            "bin\\gpac_mp4box\\mp4box.exe",
+            "-add", output_video_file,
+            "-split-size",
+            "30000",
+            output_file,
+            ],
+            stderr=DEVNULL,
+            stdout=DEVNULL,
+            shell=True,
+            )
+    process.wait()
+
+
 def converter_and_split(
     input_file,
     ouput_path,
-    progress_bar,
-    button,
-    done
+    low=True,
+    progress_bar=None,
+    button=None,
+    done=None,
     ):
 
     video_files = input_file.toPlainText().split("\n")
@@ -24,35 +86,13 @@ def converter_and_split(
         split_video_file = path.split(video_file)
         file = split_video_file[1][:-4]
         output_video_file = f"{ouput_path}/convertido_{file}.mp4"
-        ffmpeg = Popen(
-            [
-                "bin\\ffmpeg.exe",
-                "-i",
-                video_file,
-                output_video_file,
-                "-y"
-                ],
-                stderr=DEVNULL,
-                stdout=DEVNULL,
-                shell=True,
-                )
-        ffmpeg.wait()
+        if low:
+            ffmpeg_low(video_file, output_video_file)
+        ffmpeg(video_file, output_video_file)
 
         if int(path.getsize(output_video_file)) > 30000000:
             output_file = f"{ouput_path}/part_{file}.mp4"
-            mp4box = Popen(
-                [
-                    "bin\\gpac_mp4box\\mp4box.exe",
-                    "-add", output_video_file,
-                    "-split-size",
-                    "30000",
-                    output_file,
-                    ],
-                    stderr=DEVNULL,
-                    stdout=DEVNULL,
-                    shell=True,
-                    )
-            mp4box.wait()
+            mp4box(output_video_file, output_file)
         count+=1
 
     progress_bar.emit(100)

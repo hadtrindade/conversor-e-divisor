@@ -14,7 +14,8 @@ class WokerSignal(QObject):
 
     progress = pyqtSignal(int)
     button = pyqtSignal(object)
-    done  = pyqtSignal(object)
+    done = pyqtSignal(object)
+    low = pyqtSignal(bool)
 
 
 class Worker(QRunnable):
@@ -29,12 +30,16 @@ class Worker(QRunnable):
         self.kwargs['button'] = self.signals.button
         self.kwargs['done'] = self.signals.done
 
+
     @pyqtSlot()
     def run(self):
         self.func(*self.args, **self.kwargs)
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
+
+    low_quality = True
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
@@ -45,12 +50,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
         self.action_abrir.triggered.connect(self.get_file_name)
         self.actionSobre.triggered.connect(self.about)
         self.output_file_button.clicked.connect(self.get_path_output_name)
+        self.radio_button_normal.clicked.connect(self.set_nornal_quality)
+
+    def set_nornal_quality(self):
+        MainWindow.low_quality = False
 
     def make_convert(self):
         worker = Worker(
             converter_and_split,
             self.input_file,
             self.output_file.text(),
+            MainWindow.low_quality,
             )
         worker.signals.progress.connect(self.progressBar.setValue)
         worker.signals.button.connect(self.start_progress_button.setText)
