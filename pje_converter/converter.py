@@ -29,6 +29,7 @@ def ffmpeg_low(video_file, output_video_file):
                 shell=True,
                 )
     process.wait()
+    return process.pid
 
 
 def ffmpeg(video_file, output_video_file):
@@ -45,6 +46,7 @@ def ffmpeg(video_file, output_video_file):
                 shell=True,
                 )
     process.wait()
+    return process.pid
 
 
 def mp4box(output_video_file, output_file):
@@ -61,6 +63,7 @@ def mp4box(output_video_file, output_file):
             shell=True,
             )
     process.wait()
+    return process.pid
 
 
 def converter_and_split(
@@ -70,6 +73,7 @@ def converter_and_split(
     progress_bar=None,
     button=None,
     done=None,
+    process_pid=None,
     ):
 
     video_files = input_file.toPlainText().split("\n")
@@ -87,12 +91,14 @@ def converter_and_split(
         file = split_video_file[1][:-4]
         output_video_file = f"{ouput_path}/convertido_{file}.mp4"
         if low:
-            ffmpeg_low(video_file, output_video_file)
+            pid = ffmpeg_low(video_file, output_video_file)
+            process_pid.emit(pid)
         ffmpeg(video_file, output_video_file)
 
         if int(path.getsize(output_video_file)) > 30000000:
             output_file = f"{ouput_path}/part_{file}.mp4"
-            mp4box(output_video_file, output_file)
+            pid = mp4box(output_video_file, output_file)
+            process_pid.emit(pid)
         count+=1
 
     progress_bar.emit(100)

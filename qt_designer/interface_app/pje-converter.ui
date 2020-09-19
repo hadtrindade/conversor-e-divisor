@@ -49,9 +49,9 @@
       <widget class="QWidget" name="horizontalLayoutWidget">
        <property name="geometry">
         <rect>
-         <x>100</x>
+         <x>60</x>
          <y>250</y>
-         <width>511</width>
+         <width>591</width>
          <height>111</height>
         </rect>
        </property>
@@ -80,7 +80,7 @@
         <rect>
          <x>290</x>
          <y>470</y>
-         <width>131</width>
+         <width>158</width>
          <height>41</height>
         </rect>
        </property>
@@ -89,6 +89,13 @@
          <widget class="QPushButton" name="start_progress_button">
           <property name="text">
            <string>Iniciar</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="stop_progress_button">
+          <property name="text">
+           <string>Cancelar</string>
           </property>
          </widget>
         </item>
@@ -129,9 +136,9 @@
       <widget class="QWidget" name="horizontalLayoutWidget_3">
        <property name="geometry">
         <rect>
-         <x>100</x>
+         <x>60</x>
          <y>390</y>
-         <width>511</width>
+         <width>591</width>
          <height>41</height>
         </rect>
        </property>
@@ -151,12 +158,19 @@
         <item>
          <widget class="QLineEdit" name="output_file"/>
         </item>
+        <item>
+         <widget class="QPushButton" name="open_folder">
+          <property name="text">
+           <string>Abrir</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QLabel" name="label">
        <property name="geometry">
         <rect>
-         <x>100</x>
+         <x>60</x>
          <y>370</y>
          <width>91</width>
          <height>21</height>
@@ -174,7 +188,7 @@
       <widget class="QLabel" name="label_2">
        <property name="geometry">
         <rect>
-         <x>100</x>
+         <x>60</x>
          <y>230</y>
          <width>47</width>
          <height>21</height>

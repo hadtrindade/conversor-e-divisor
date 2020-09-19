@@ -2,17 +2,20 @@ from ui_pje_converter import Ui_PjeConverter
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import (QRunnable, QThread, 
                           QThreadPool, QObject, 
-                          pyqtSignal, pyqtSlot
+                          pyqtSignal, pyqtSlot,
                           )
 from converter import converter_and_split
 from pathlib import Path
 from os import path
 from threading import Thread
+from subprocess import Popen
+from time import sleep
 
 
 class WokerSignal(QObject):
 
     progress = pyqtSignal(int)
+    process = pyqtSignal(object) 
     button = pyqtSignal(object)
     done = pyqtSignal(object)
     low = pyqtSignal(bool)
@@ -27,6 +30,7 @@ class Worker(QRunnable):
         self.signals = WokerSignal()
 
         self.kwargs['progress_bar'] = self.signals.progress
+        self.kwargs['process_pid'] = self.signals.process
         self.kwargs['button'] = self.signals.button
         self.kwargs['done'] = self.signals.done
 
@@ -51,11 +55,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
         self.actionSobre.triggered.connect(self.about)
         self.output_file_button.clicked.connect(self.get_path_output_name)
         self.radio_button_normal.clicked.connect(self.set_nornal_quality)
+        self.open_folder.clicked.connect(self.open_ouput_folder)
+        self.stop_progress_button.hide()
+        self.stop_progress_button.clicked.connect(self.kill_process)
 
     def set_nornal_quality(self):
         MainWindow.low_quality = False
 
+    def open_ouput_folder(self):
+        path_output_folder = self.output_file.text().replace("/","\\")
+        Popen(f"explorer /open, \"{path_output_folder}\"")
+
+    def kill_process(self, pid):
+        self.thread_pool.terminate()
+        self.stop_progress_button.hide()
+        self.start_progress_button.setText("Iniciar")
+
     def make_convert(self):
+        self.stop_progress_button.setVisible(True)
         worker = Worker(
             converter_and_split,
             self.input_file,
@@ -66,13 +83,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
         worker.signals.button.connect(self.start_progress_button.setText)
         worker.signals.done.connect(self.done_popup)
         self.thread_pool.start(worker)
-
+    
     def get_file_name(self):
         home = Path.home()
         file_name, _ = QtWidgets.QFileDialog.getOpenFileNames(
             None, "Procurar Arquivo de Video", r"%s" % home,
             "Video Files (*.mp4 *.mkv *.flv *.swf *.avchd *.mov *.qt *.avi *.wmv *.mpeg *.rmvb);;All Files (*)",
             )
+        
         if not file_name:
             return
 
