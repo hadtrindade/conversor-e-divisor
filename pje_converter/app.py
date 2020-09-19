@@ -1,8 +1,8 @@
 from ui_pje_converter import Ui_PjeConverter
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import (QRunnable, QThread, 
-                          QThreadPool, QObject, 
-                          pyqtSignal, pyqtSlot,
+                          QObject, pyqtSignal,
+                          pyqtSlot,
                           )
 from converter import converter_and_split
 from pathlib import Path
@@ -12,30 +12,31 @@ from subprocess import Popen
 from time import sleep
 
 
-class WokerSignal(QObject):
+class WorkerSignals(QObject):
 
     progress = pyqtSignal(int)
-    process = pyqtSignal(object) 
     button = pyqtSignal(object)
     done = pyqtSignal(object)
-    low = pyqtSignal(bool)
+    error = pyqtSignal(object)
 
 
-class Worker(QRunnable):
+class Worker(QThread):
+
     def __init__(self, func, *args, **kwargs):
-        super(Worker, self).__init__()
+        super(Worker,self).__init__()
         self.func = func
         self.args = args
         self.kwargs = kwargs
-        self.signals = WokerSignal()
+        self.signals = WorkerSignals()
 
         self.kwargs['progress_bar'] = self.signals.progress
-        self.kwargs['process_pid'] = self.signals.process
         self.kwargs['button'] = self.signals.button
         self.kwargs['done'] = self.signals.done
+        self.kwargs['error'] = self.signals.error
 
+    def stop(self):
+        self.terminate()
 
-    @pyqtSlot()
     def run(self):
         self.func(*self.args, **self.kwargs)
 
@@ -47,7 +48,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
-        self.thread_pool = QThreadPool()
+        self.worker = Worker(converter_and_split)
 
         self.search_file_button.clicked.connect(self.get_file_name)
         self.start_progress_button.clicked.connect(self.make_convert)
@@ -56,8 +57,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
         self.output_file_button.clicked.connect(self.get_path_output_name)
         self.radio_button_normal.clicked.connect(self.set_nornal_quality)
         self.open_folder.clicked.connect(self.open_ouput_folder)
-        self.stop_progress_button.hide()
-        self.stop_progress_button.clicked.connect(self.kill_process)
+        self.stop_progress_button.setDisabled(True)
+        self.stop_progress_button.clicked.connect(self.stop_task)
+        self.start_progress_button.setDisabled(True)
 
     def set_nornal_quality(self):
         MainWindow.low_quality = False
@@ -66,23 +68,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
         path_output_folder = self.output_file.text().replace("/","\\")
         Popen(f"explorer /open, \"{path_output_folder}\"")
 
-    def kill_process(self, pid):
-        self.thread_pool.terminate()
-        self.stop_progress_button.hide()
-        self.start_progress_button.setText("Iniciar")
-
     def make_convert(self):
-        self.stop_progress_button.setVisible(True)
-        worker = Worker(
-            converter_and_split,
-            self.input_file,
-            self.output_file.text(),
-            MainWindow.low_quality,
-            )
-        worker.signals.progress.connect(self.progressBar.setValue)
-        worker.signals.button.connect(self.start_progress_button.setText)
-        worker.signals.done.connect(self.done_popup)
-        self.thread_pool.start(worker)
+        
+        self.stop_progress_button.setEnabled(True)
+        self.start_progress_button.setDisabled(True)
+        self.worker.args = (self.input_file, self.output_file.text(), MainWindow.low_quality)
+        self.worker.signals.progress.connect(self.progressBar.setValue)
+        self.worker.signals.button.connect(self.start_progress_button.setText)
+        self.worker.signals.done.connect(self.done_popup)
+        self.worker.signals.error.connect(self.app_error)
+        self.worker.start()
+
+    def stop_task(self):
+        self.worker.stop()
+        self.popup
+        self.stop_progress_button.setDisabled(True)
+        self.progressBar.setValue(0)
+        self.start_progress_button.setText("Iniciar")
+        self.start_progress_button.setEnabled(True)
     
     def get_file_name(self):
         home = Path.home()
@@ -99,6 +102,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
             ouput_path = paths[0]
             self.input_file.setPlainText(file_name[0])
             self.output_file.setText(ouput_path)
+            self.start_progress_button.setEnabled(True)
         else:
             paths = path.split(file_name[0])
             ouput_path = paths[0]
@@ -107,6 +111,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
                 files += i+"\n"
             self.input_file.setPlainText(files)
             self.output_file.setText(ouput_path)
+            self.start_progress_button.setEnabled(True)
             
     def get_path_output_name(self):
         home = Path.home()
@@ -128,6 +133,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
     def button_done_popup(self, arg):
         self.input_file.clear()
         self.progressBar.setValue(0)
+
+
+    def app_error(self, arg):
+        self.input_file.clear()
+        self.progressBar.setValue(0)
+        self.popup(arg)
+
+    def popup(self, msg):
+        msg_box = QtWidgets.QMessageBox()
+        msg_box.setWindowTitle("PJe Converter")
+        msg_box.setText(msg)
+        msg_box.setIcon(QtWidgets.QMessageBox.Critical)
+        msg_box.buttonClicked.connect(self.button_done_popup)
+        msg_box.exec_()
 
     def about(self):
         msg_box = QtWidgets.QMessageBox()
