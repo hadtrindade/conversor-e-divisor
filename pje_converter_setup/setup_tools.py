@@ -2,14 +2,20 @@ from shutil import copy, copytree, rmtree
 from os import listdir, path, chdir, getcwd, makedirs
 from contextlib import contextmanager
 from time import sleep
+import sys
 
 
-def init_setup(dst, progress_bar, button_finish):
+def init_setup(dst, error, progress_bar, button_finish,):
 
     source = "PJe Converter"
-    if path.exists(dst):
-        rmtree(dst)
-    makedirs(dst, mode=777)
+    try:
+        if path.exists(dst):
+            rmtree(dst)
+        makedirs(dst, mode=777)
+    except PermissionError:
+        error.emit("PermissionError")
+        sleep(20)
+        sys.exit()
     old_path = getcwd()
     chdir(source)
     files = [paths for paths in listdir(".")]

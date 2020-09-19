@@ -16,6 +16,7 @@ class WokerSignal(QObject):
 
     progress = pyqtSignal(int)
     button_finish = pyqtSignal(object)
+    error = pyqtSignal(object)
 
 
 class Worker(QRunnable):
@@ -28,6 +29,7 @@ class Worker(QRunnable):
 
         self.kwargs['progress_bar'] = self.signals.progress
         self.kwargs['button_finish'] = self.signals.button_finish
+        self.kwargs['error'] = self.signals.error
 
     @pyqtSlot()
     def run(self):
@@ -94,9 +96,27 @@ class NextProgressBarInstall(
         self.button_back_pre_install.hide()
         self.button_install.setText("Instalando")
         worker = Worker(init_setup, NextPreInstall.path_default)
+        worker.signals.error.connect(self.error)
         worker.signals.progress.connect(self.progress_bar_install.setValue)
         worker.signals.button_finish.connect(self.set_button_finish)
         self.thread_pool.start(worker)
+
+    def error(self, name):
+        if name == "PermissionError":
+            self.popup(f"{name}, Execute o programa de Instalação\n"
+                       "como administrador."
+                       )
+
+    def popup(self, msg):
+        msg_box = QtWidgets.QMessageBox()
+        msg_box.setWindowTitle("PJe Installer")
+        msg_box.setText(msg)
+        msg_box.setIcon(QtWidgets.QMessageBox.Information)
+        msg_box.buttonClicked.connect(self.button_done_popup)
+        msg_box.exec_()
+
+    def button_done_popup(self):
+        sys.exit()
 
     def set_button_finish(self, arg):
         self.button_install.hide()
