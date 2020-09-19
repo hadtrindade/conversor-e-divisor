@@ -133,6 +133,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PjeConverter):
     def button_done_popup(self, arg):
         self.input_file.clear()
         self.progressBar.setValue(0)
+        self.start_progress_button.setEnabled(True)
+        self.stop_progress_button.setDisabled(True)
 
 
     def app_error(self, arg):
