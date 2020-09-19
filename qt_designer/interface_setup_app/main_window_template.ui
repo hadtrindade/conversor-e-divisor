@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Pje_converter_setup_template_window</class>
+ <widget class="QMainWindow" name="Pje_converter_setup_template_window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>578</width>
+    <height>396</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PJe Converter Setup</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources_pje.qrc">
+    <normaloff>:/TJRN/pjeMini.png</normaloff>:/TJRN/pjeMini.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>-10</y>
+      <width>581</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="resources_pje.qrc"/>
+ </resources>
+ <connections/>
+</ui>

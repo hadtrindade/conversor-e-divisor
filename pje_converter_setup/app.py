@@ -9,6 +9,7 @@ from next_window_pre_install import Ui_Pje_converter_setup_pre_install
 from next_window_progress_bar_install import (
     Ui_Pje_converter_setup_install_progress_bar
     )
+from main_window_template import Ui_Pje_converter_setup_template_window
 from setup_tools import init_setup
 
 
@@ -144,18 +145,10 @@ class PjeSetupWindow(PageWindow, Ui_Pje_converter_setup):
         self.goto("pre_install")
 
 
-class Window(PageWindow):
+class Window(PageWindow, Ui_Pje_converter_setup_template_window):
     def __init__(self):
         super(Window, self).__init__()
-
-        self.resize(578, 396)
-        self.centralwidget = QtWidgets.QWidget(self)
-        self.centralwidget.setObjectName("centralwidget")
-        self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setGeometry(QRect(0, -1, 581, 401))
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
+        self.setupUi(self)
         self.stacked_widget = QtWidgets.QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
         self.m_pages = {}
