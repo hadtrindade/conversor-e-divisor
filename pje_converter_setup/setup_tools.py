@@ -6,7 +6,7 @@ from time import sleep
 
 def init_setup(dst, progress_bar, button_finish):
 
-    source = "C:\\Users\\hadd\\Desktop\\compartilhamento\\app"
+    source = "PJe Converter"
     if path.exists(dst):
         rmtree(dst)
     makedirs(dst, mode=777)
