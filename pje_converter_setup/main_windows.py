@@ -33,7 +33,7 @@ class Ui_Pje_converter_setup(object):
         self.label_pje_converter_center.setFont(font)
         self.label_pje_converter_center.setObjectName("label_pje_converter_center")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.frame)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(350, 310, 191, 71))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(350, 300, 191, 71))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -66,7 +66,7 @@ class Ui_Pje_converter_setup(object):
         self.termos_uso_label.setGeometry(QtCore.QRect(40, 50, 91, 16))
         self.termos_uso_label.setObjectName("termos_uso_label")
         Pje_converter_setup.setCentralWidget(self.centralwidget)
-        
+
         self.retranslateUi(Pje_converter_setup)
         self.button_exit.clicked.connect(Pje_converter_setup.close)
         self.button_radio_not_accept.clicked['bool'].connect(self.button_next.hide)
