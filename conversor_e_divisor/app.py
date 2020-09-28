@@ -7,7 +7,7 @@ from worker import Worker
 from time import sleep
 from pathlib import Path
 from os import path
-from ui_pje_converter import Ui_MainWindow
+from ui_cd_converter import Ui_MainWindow
 import ui_functions
 from convert import convert_or_split
 
