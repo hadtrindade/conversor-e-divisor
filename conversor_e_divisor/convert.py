@@ -99,9 +99,10 @@ def mp4box(input_file, output_file, pid_process, error_signal):
 def converter_split(input_file, output_path, low, not_split, pid_process, error_signal):
 
     try:
-        videos_file = input_file
-        if isinstance(input_file, str):
-            videos_file = input_file.split()
+        videos_file = list()
+        videos_file.append(input_file)
+        if isinstance(input_file, list):
+            videos_file = [video_file for video_file in input_file]
         for video_file in videos_file:
 
             split_video_file = path.split(video_file)
