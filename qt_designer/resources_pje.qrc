@@ -1,0 +1,33 @@
+<RCC>
+  <qresource prefix="MainIcon">
+    <file>cil-media-play.png</file>
+  </qresource>
+  <qresource prefix="open_folder">
+    <file>cil-folder.png</file>
+  </qresource>
+  <qresource prefix="button_stop">
+    <file>cil-media-stop.png</file>
+  </qresource>
+  <qresource prefix="button_start">
+    <file>cil-media-play.png</file>
+  </qresource>
+  <qresource prefix="button_output_file">
+    <file>cil-folder-open.png</file>
+  </qresource>
+  <qresource prefix="button_search_file">
+    <file>cil-movie.png</file>
+  </qresource>
+  <qresource prefix="MenuIcon">
+    <file>cardapio.png</file>
+    <file>cil-menu.png</file>
+  </qresource>
+  <qresource prefix="Menu_Settings">
+    <file>cil-options-horizontal.png</file>
+  </qresource>
+  <qresource prefix="menu_CC">
+    <file>cil-movie.png</file>
+  </qresource>
+  <qresource prefix="menu_C">
+    <file>cil-view-module.png</file>
+  </qresource>
+</RCC>
