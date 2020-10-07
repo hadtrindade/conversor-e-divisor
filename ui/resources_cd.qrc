@@ -1,6 +1,6 @@
 <RCC>
   <qresource prefix="MainIcon">
-    <file>cil-media-play.png</file>
+    <file>main_icone</file>
   </qresource>
   <qresource prefix="open_folder">
     <file>cil-folder.png</file>
@@ -18,7 +18,6 @@
     <file>cil-movie.png</file>
   </qresource>
   <qresource prefix="MenuIcon">
-    <file>cardapio.png</file>
     <file>cil-menu.png</file>
   </qresource>
   <qresource prefix="Menu_Settings">
