@@ -1,7 +1,7 @@
 from os import path
 from subprocess import Popen
 from pathlib import Path
-from PySide2 import QtCore, QtWidgets, QtGui
+from PySide2 import QtCore, QtWidgets
 
 
 def config_initial(app):
@@ -16,17 +16,21 @@ def config_initial(app):
     app.radio_button_normal.setEnabled(True)
     app.radio_button_low.setEnabled(True)
     app.button_stop.hide()
+    app.button_stop_split.hide()
     app.line_edit_input_file.hide()
     app.line_edit_input_file_split.hide()
     app.line_edit_output_file.setDisabled(True)
     app.line_edit_output_file_split.setDisabled(True)
     app.progress_bar.setValue(0)
-    app.progress_bar.hide()  
+    app.progress_bar.hide()
+    app.progress_bar_split.setValue(0)
+    app.progress_bar_split.hide()
 
 
 def config_processing(app):
 
     app.button_start.setDisabled(True)
+    app.button_start_split.setDisabled(True)
     app.button_start_split.setDisabled(True)
     app.button_output_file.setDisabled(True)
     app.button_output_file_split.setDisabled(True)
@@ -36,10 +40,12 @@ def config_processing(app):
     app.radio_button_normal.setDisabled(True)
     app.radio_button_low.setDisabled(True)
     app.button_stop.setVisible(True)
+    app.button_stop_split.setVisible(True)
     app.line_edit_output_file.setDisabled(True)
     app.line_edit_input_file.setDisabled(True)
     app.button_open_folder_split.setVisible(True)
     app.progress_bar.setVisible(True)
+    app.progress_bar_split.setVisible(True)
 
 
 def toggle_menu(app, max_width, enable):
@@ -60,7 +66,9 @@ def toggle_menu(app, max_width, enable):
             app.button_page_2.setText("")
             app.button_settings.setText("")
 
-        app.animation = QtCore.QPropertyAnimation(app.frame_left_menu, b"minimumWidth")
+        app.animation = QtCore.QPropertyAnimation(
+            app.frame_left_menu, b"minimumWidth"
+            )
         app.animation.setDuration(400)
         app.animation.setStartValue(width)
         app.animation.setEndValue(width_extended)
@@ -70,7 +78,7 @@ def toggle_menu(app, max_width, enable):
 
 def open_ouput_folder(app):
     try:
-        path_output_folder = app.output_path.replace("/","\\")
+        path_output_folder = app.output_path.replace("/", "\\")
     except TypeError:
         Popen(f"explorer /open, \"{app.output_path}\"")
     else:
@@ -82,9 +90,10 @@ def get_file_video(app):
     home = Path.home()
     file_name, _ = QtWidgets.QFileDialog.getOpenFileNames(
         None, "Procurar Arquivo de Video", r"%s" % home,
-        "Video Files (*.mp4 *.mkv *.flv *.swf *.avchd *.mov *.qt *.avi *.wmv *.mpeg *.rmvb);;All Files (*)",
+        "Video Files (*.mp4 *.mkv *.flv *.swf *.avchd *.mov "
+        "*.qt *.avi *.wmv *.mpeg *.rmvb);;All Files (*)",
         )
-    
+
     if not file_name:
         return
 
@@ -106,7 +115,9 @@ def get_file_video(app):
         paths = path.split(file_name[0])
         app.input_file = file_name
         app.output_path = paths[0]
-        app.line_edit_input_file.setText(f"Você Adicinou {len(file_name)} Videos")
+        app.line_edit_input_file.setText(
+            f"Você Adicinou {len(file_name)} Videos"
+            )
         app.line_edit_output_file.setText(app.output_path)
         app.line_edit_input_file.setVisible(True)
         app.line_edit_output_file.setVisible(True)
@@ -133,10 +144,10 @@ def get_file_video_split(app):
         None, "Procurar Arquivo de Video", r"%s" % home,
         "Video Files (*.mp4 )",
         )
-    
+
     if not file_name:
         return
-    app.input_file_split = file_name 
+    app.input_file_split = file_name
     file = path.split(file_name)
     app.output_path = file[0]
     app.line_edit_input_file_split.setText(file[1])
@@ -156,7 +167,3 @@ def get_path_output_name_split(app):
     app.output_path = path_dst
     app.line_edit_output_file_split.setText(app.output_path)
     app.line_edit_output_file_split.setDisabled(True)
-
-
-
-

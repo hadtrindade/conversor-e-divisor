@@ -150,6 +150,9 @@
                  <height>40</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Menu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	color: rgb(235, 240, 243);
@@ -159,6 +162,11 @@
 
 QPushButton:hover {
 	background-color: rgb(0, 130,180 );	
+}
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -190,6 +198,9 @@ QPushButton:hover {
                  <height>40</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Converter e Dividir Arquivos de Vídeo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	color: rgb(235, 240, 243);
@@ -199,6 +210,12 @@ QPushButton:hover {
 
 QPushButton:hover {
 	background-color: rgb(0, 130,180 );	
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -224,6 +241,9 @@ QPushButton:hover {
                  <height>40</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Dividir Arquivos de Vídeo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	color: rgb(235, 240, 243);
@@ -233,6 +253,12 @@ QPushButton:hover {
 
 QPushButton:hover {
 	background-color: rgb(0, 130,180 );	
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -285,6 +311,9 @@ QPushButton:hover {
                  <height>40</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Sobre o Aplicativo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	color: rgb(235, 240, 243);
@@ -294,6 +323,12 @@ QPushButton:hover {
 
 QPushButton:hover {
 	background-color: rgb(0, 130,180 );	
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -423,10 +458,19 @@ QPushButton:hover {
                  <pointsize>14</pointsize>
                 </font>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Qualidade Normal: o vídeo mantém todas suas caracteristicas originais.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QRadioButton::indicator{
 	color: rgb(69, 69, 69);
 
+}
+
+QRadioButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -451,10 +495,18 @@ QPushButton:hover {
                  <pointsize>14</pointsize>
                 </font>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Qualidade Baixa: o vídeo perde qualidade, mas a conversão e/ou divisão é mais rápida.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Resolução: 320x240&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Codec: mpeg4&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;FPS: 30&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Bitrate: 100 kbps &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Áudio mono de 48 kbps / 44 KHz&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QRadioButton::indicator{
 	color: rgb(69, 69, 69);
+}
 
+QRadioButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -476,10 +528,19 @@ QPushButton:hover {
                  <pointsize>14</pointsize>
                 </font>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Não dividir, somente converte o vídeo.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QCheckBox::indicator{
 	color: rgb(69, 69, 69);
 	
+}
+
+QCheckBox QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -520,6 +581,17 @@ QPushButton:hover {
                  <height>100</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Local de destino do Vídeo convertido e/ou dividido.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	color:  rgb(235, 240, 243);
@@ -537,6 +609,12 @@ QPushButton:hover {
 QPushButton:pressed {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -574,6 +652,20 @@ QPushButton:pressed {
                  <height>100</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#454545;&quot;&gt;Procurar 1(um) ou vários vídeos.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="toolTipDuration">
+                <number>-1</number>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	color:  rgb(235, 240, 243);
@@ -591,7 +683,21 @@ QPushButton:hover {
 QPushButton:pressed {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
-}</string>
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
+}
+
+</string>
                </property>
                <property name="text">
                 <string>Origem</string>
@@ -631,8 +737,13 @@ QPushButton:pressed {
                <property name="font">
                 <font>
                  <family>Segoe UI</family>
-                 <pointsize>16</pointsize>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
                 </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Cancelar Processo.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -651,6 +762,12 @@ QPushButton:hover {
 QPushButton:pressed {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -688,6 +805,17 @@ QPushButton:pressed {
                  <height>100</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Abrir Local do vídeo convertido e/ou dividido.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	color:  rgb(235, 240, 243);
@@ -705,6 +833,12 @@ QPushButton:hover {
 QPushButton:pressed {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -742,6 +876,17 @@ QPushButton:pressed {
                  <height>100</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Iniciar Processo.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	color:  rgb(235, 240, 243);
@@ -759,6 +904,12 @@ QPushButton:hover {
 QPushButton:pressed {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                </property>
                <property name="text">
@@ -844,7 +995,7 @@ QLineEdit:focus {
 	border-style: none;
 	background-position: center;
 	text-align: center;
-	background-color: rgb(235, 240,243);
+	background-color: rgb(217, 237,247);
 }
 
 QProgressBar::chunk {
@@ -999,6 +1150,30 @@ QLineEdit:focus {
                    <string>Divisor</string>
                   </property>
                  </widget>
+                 <widget class="QLabel" name="label_2">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>110</y>
+                    <width>711</width>
+                    <height>20</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>8</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(69, 69, 69);</string>
+                  </property>
+                  <property name="text">
+                   <string>Divisão disponível somente para vídeos .MP4, para outros formatos/extensões use o menu Conversor e Divisor</string>
+                  </property>
+                 </widget>
                 </widget>
                </item>
                <item>
@@ -1030,6 +1205,17 @@ QLineEdit:focus {
                     <height>100</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Procurar vídeo para dividir&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
 	color:  rgb(235, 240, 243);
@@ -1047,6 +1233,12 @@ QPushButton:hover {
 QPushButton:pressed {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                   </property>
                   <property name="text">
@@ -1066,7 +1258,7 @@ QPushButton:pressed {
                  <widget class="QLineEdit" name="line_edit_input_file_split">
                   <property name="geometry">
                    <rect>
-                    <x>5</x>
+                    <x>2</x>
                     <y>190</y>
                     <width>240</width>
                     <height>35</height>
@@ -1136,6 +1328,17 @@ QLineEdit:focus {
                     <height>100</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Iniciar Processo.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
 	color:  rgb(235, 240, 243);
@@ -1153,10 +1356,16 @@ QPushButton:hover {
 QPushButton:pressed {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>Iniciar</string>
                   </property>
                   <property name="icon">
                    <iconset resource="resources_cd.qrc">
@@ -1190,6 +1399,17 @@ QPushButton:pressed {
                     <height>100</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Local de Destino do Vídeo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
 	color:  rgb(235, 240, 243);
@@ -1207,6 +1427,12 @@ QPushButton:hover {
 QPushButton:pressed {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                   </property>
                   <property name="text">
@@ -1226,7 +1452,7 @@ QPushButton:pressed {
                  <widget class="QLineEdit" name="line_edit_output_file_split">
                   <property name="geometry">
                    <rect>
-                    <x>480</x>
+                    <x>486</x>
                     <y>190</y>
                     <width>240</width>
                     <height>35</height>
@@ -1296,6 +1522,17 @@ QLineEdit:focus {
                     <height>40</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Abrir local do vídeo dividido.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
 	color:  rgb(235, 240, 243);
@@ -1313,6 +1550,12 @@ QPushButton:hover {
 QPushButton:pressed {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
 }</string>
                   </property>
                   <property name="text">
@@ -1326,6 +1569,113 @@ QPushButton:pressed {
                    <size>
                     <width>40</width>
                     <height>40</height>
+                   </size>
+                  </property>
+                 </widget>
+                 <widget class="QProgressBar" name="progress_bar_split">
+                  <property name="geometry">
+                   <rect>
+                    <x>244</x>
+                    <y>190</y>
+                    <width>240</width>
+                    <height>35</height>
+                   </rect>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>240</width>
+                    <height>35</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QProgressBar {
+	color:  rgb(65, 65,65);
+	border: 0px solid;
+	border-radius: 15px;
+	border-style: none;
+	background-position: center;
+	text-align: center;
+	background-color: rgb(217, 237,247);
+}
+
+QProgressBar::chunk {
+	background-color: rgb(0, 120, 170);
+	border-radius: 5px;
+}
+</string>
+                  </property>
+                  <property name="value">
+                   <number>0</number>
+                  </property>
+                 </widget>
+                 <widget class="QPushButton" name="button_stop_split">
+                  <property name="geometry">
+                   <rect>
+                    <x>265</x>
+                    <y>250</y>
+                    <width>200</width>
+                    <height>40</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>200</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>200</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Cancelar Divisão.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+	color:  rgb(235, 240, 243);
+	border: 0px solid;
+	border-radius: 5px;
+	background-position: center;
+	background-color: rgb(0, 120, 170);
+}
+
+QPushButton:hover {
+	border: 2px solid  rgb(235, 240, 243);
+	background-color: rgb(0, 130,180 );
+}
+
+QPushButton:pressed {
+	color: rgb(69, 69, 69);
+	background-color: rgb(217, 237, 247);
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>Cancelar</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="resources_cd.qrc">
+                    <normaloff>:/button_stop/cil-media-stop.png</normaloff>:/button_stop/cil-media-stop.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>40</width>
+                    <height>50</height>
                    </size>
                   </property>
                  </widget>

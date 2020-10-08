@@ -74,6 +74,11 @@ class Ui_MainWindow(object):
 "\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(0, 130,180 );	\n"
+"}\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         icon1 = QIcon()
         icon1.addFile(u":/MenuIcon/cil-menu.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -95,6 +100,12 @@ class Ui_MainWindow(object):
 "\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(0, 130,180 );	\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         icon2 = QIcon()
         icon2.addFile(u":/menu_CC/cil-movie.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -114,6 +125,12 @@ class Ui_MainWindow(object):
 "\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(0, 130,180 );	\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         icon3 = QIcon()
         icon3.addFile(u":/menu_C/cil-view-module.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -144,6 +161,12 @@ class Ui_MainWindow(object):
 "\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(0, 130,180 );	\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         icon4 = QIcon()
         icon4.addFile(u":/Menu_Settings/cil-options-horizontal.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -198,6 +221,12 @@ class Ui_MainWindow(object):
         self.radio_button_normal.setStyleSheet(u"QRadioButton::indicator{\n"
 "	color: rgb(69, 69, 69);\n"
 "\n"
+"}\n"
+"\n"
+"QRadioButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         self.radio_button_normal.setChecked(True)
         self.radio_button_low = QRadioButton(self.frame_top_page)
@@ -206,7 +235,12 @@ class Ui_MainWindow(object):
         self.radio_button_low.setFont(font1)
         self.radio_button_low.setStyleSheet(u"QRadioButton::indicator{\n"
 "	color: rgb(69, 69, 69);\n"
+"}\n"
 "\n"
+"QRadioButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         self.check_box_split = QCheckBox(self.frame_top_page)
         self.check_box_split.setObjectName(u"check_box_split")
@@ -215,6 +249,12 @@ class Ui_MainWindow(object):
         self.check_box_split.setStyleSheet(u"QCheckBox::indicator{\n"
 "	color: rgb(69, 69, 69);\n"
 "	\n"
+"}\n"
+"\n"
+"QCheckBox QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         self.check_box_split.setChecked(False)
 
@@ -229,6 +269,12 @@ class Ui_MainWindow(object):
         self.button_output_file.setGeometry(QRect(550, 70, 100, 100))
         self.button_output_file.setMinimumSize(QSize(70, 70))
         self.button_output_file.setMaximumSize(QSize(100, 100))
+        font2 = QFont()
+        font2.setFamily(u"Segoe UI")
+        font2.setPointSize(10)
+        font2.setBold(True)
+        font2.setWeight(75)
+        self.button_output_file.setFont(font2)
         self.button_output_file.setStyleSheet(u"QPushButton {\n"
 "	color:  rgb(235, 240, 243);\n"
 "	border: 0px solid;\n"
@@ -245,6 +291,12 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "	color: rgb(69, 69, 69);\n"
 "	background-color: rgb(217, 237, 247);\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         icon5 = QIcon()
         icon5.addFile(u":/button_output_file/cil-folder-open.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -255,6 +307,8 @@ class Ui_MainWindow(object):
         self.button_source_file.setGeometry(QRect(70, 70, 100, 100))
         self.button_source_file.setMinimumSize(QSize(70, 70))
         self.button_source_file.setMaximumSize(QSize(100, 100))
+        self.button_source_file.setFont(font2)
+        self.button_source_file.setToolTipDuration(-1)
         self.button_source_file.setStyleSheet(u"QPushButton {\n"
 "	color:  rgb(235, 240, 243);\n"
 "	border: 0px solid;\n"
@@ -271,7 +325,21 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "	color: rgb(69, 69, 69);\n"
 "	background-color: rgb(217, 237, 247);\n"
-"}")
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
+"}\n"
+"\n"
+"")
         icon6 = QIcon()
         icon6.addFile(u":/button_search_file/cil-movie.png", QSize(), QIcon.Normal, QIcon.Off)
         self.button_source_file.setIcon(icon6)
@@ -281,10 +349,12 @@ class Ui_MainWindow(object):
         self.button_stop.setGeometry(QRect(270, 250, 200, 40))
         self.button_stop.setMinimumSize(QSize(200, 40))
         self.button_stop.setMaximumSize(QSize(200, 40))
-        font2 = QFont()
-        font2.setFamily(u"Segoe UI")
-        font2.setPointSize(16)
-        self.button_stop.setFont(font2)
+        font3 = QFont()
+        font3.setFamily(u"Segoe UI")
+        font3.setPointSize(12)
+        font3.setBold(True)
+        font3.setWeight(75)
+        self.button_stop.setFont(font3)
         self.button_stop.setStyleSheet(u"QPushButton {\n"
 "	color:  rgb(235, 240, 243);\n"
 "	border: 0px solid;\n"
@@ -301,6 +371,12 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "	color: rgb(69, 69, 69);\n"
 "	background-color: rgb(217, 237, 247);\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         icon7 = QIcon()
         icon7.addFile(u":/button_stop/cil-media-stop.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -311,6 +387,7 @@ class Ui_MainWindow(object):
         self.button_open_folder.setGeometry(QRect(560, 250, 81, 40))
         self.button_open_folder.setMinimumSize(QSize(40, 40))
         self.button_open_folder.setMaximumSize(QSize(100, 100))
+        self.button_open_folder.setFont(font2)
         self.button_open_folder.setStyleSheet(u"QPushButton {\n"
 "	color:  rgb(235, 240, 243);\n"
 "	border: 0px solid;\n"
@@ -327,6 +404,12 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "	color: rgb(69, 69, 69);\n"
 "	background-color: rgb(217, 237, 247);\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         icon8 = QIcon()
         icon8.addFile(u":/open_folder/cil-folder.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -337,6 +420,7 @@ class Ui_MainWindow(object):
         self.button_start.setGeometry(QRect(310, 70, 100, 100))
         self.button_start.setMinimumSize(QSize(70, 70))
         self.button_start.setMaximumSize(QSize(100, 100))
+        self.button_start.setFont(font2)
         self.button_start.setStyleSheet(u"QPushButton {\n"
 "	color:  rgb(235, 240, 243);\n"
 "	border: 0px solid;\n"
@@ -353,6 +437,12 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "	color: rgb(69, 69, 69);\n"
 "	background-color: rgb(217, 237, 247);\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         icon9 = QIcon()
         icon9.addFile(u":/button_start/cil-media-play.png", QSize(), QIcon.Normal, QIcon.Off)
@@ -362,11 +452,6 @@ class Ui_MainWindow(object):
         self.line_edit_output_file.setObjectName(u"line_edit_output_file")
         self.line_edit_output_file.setGeometry(QRect(494, 190, 231, 35))
         self.line_edit_output_file.setMaximumSize(QSize(240, 35))
-        font3 = QFont()
-        font3.setFamily(u"Segoe UI")
-        font3.setPointSize(12)
-        font3.setBold(True)
-        font3.setWeight(75)
         self.line_edit_output_file.setFont(font3)
         self.line_edit_output_file.setStyleSheet(u"QLineEdit {\n"
 "	color: rgb(69, 69, 69);\n"
@@ -397,7 +482,7 @@ class Ui_MainWindow(object):
 "	border-style: none;\n"
 "	background-position: center;\n"
 "	text-align: center;\n"
-"	background-color: rgb(235, 240,243);\n"
+"	background-color: rgb(217, 237,247);\n"
 "}\n"
 "\n"
 "QProgressBar::chunk {\n"
@@ -460,6 +545,16 @@ class Ui_MainWindow(object):
         self.label_split.setGeometry(QRect(10, 10, 331, 41))
         self.label_split.setFont(font)
         self.label_split.setStyleSheet(u"color: rgb(69, 69, 69);")
+        self.label_2 = QLabel(self.frame_top_page_2)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(10, 110, 711, 20))
+        font4 = QFont()
+        font4.setFamily(u"Segoe UI")
+        font4.setPointSize(8)
+        font4.setBold(True)
+        font4.setWeight(75)
+        self.label_2.setFont(font4)
+        self.label_2.setStyleSheet(u"color: rgb(69, 69, 69);")
 
         self.verticalLayout_2.addWidget(self.frame_top_page_2)
 
@@ -472,6 +567,7 @@ class Ui_MainWindow(object):
         self.button_source_file_split.setGeometry(QRect(70, 70, 100, 100))
         self.button_source_file_split.setMinimumSize(QSize(70, 70))
         self.button_source_file_split.setMaximumSize(QSize(100, 100))
+        self.button_source_file_split.setFont(font2)
         self.button_source_file_split.setStyleSheet(u"QPushButton {\n"
 "	color:  rgb(235, 240, 243);\n"
 "	border: 0px solid;\n"
@@ -488,12 +584,18 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "	color: rgb(69, 69, 69);\n"
 "	background-color: rgb(217, 237, 247);\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         self.button_source_file_split.setIcon(icon6)
         self.button_source_file_split.setIconSize(QSize(100, 100))
         self.line_edit_input_file_split = QLineEdit(self.frame_body_page_2)
         self.line_edit_input_file_split.setObjectName(u"line_edit_input_file_split")
-        self.line_edit_input_file_split.setGeometry(QRect(5, 190, 240, 35))
+        self.line_edit_input_file_split.setGeometry(QRect(2, 190, 240, 35))
         self.line_edit_input_file_split.setMinimumSize(QSize(240, 35))
         self.line_edit_input_file_split.setMaximumSize(QSize(240, 35))
         self.line_edit_input_file_split.setFont(font3)
@@ -520,6 +622,7 @@ class Ui_MainWindow(object):
         self.button_start_split.setGeometry(QRect(310, 70, 100, 100))
         self.button_start_split.setMinimumSize(QSize(70, 70))
         self.button_start_split.setMaximumSize(QSize(100, 100))
+        self.button_start_split.setFont(font2)
         self.button_start_split.setStyleSheet(u"QPushButton {\n"
 "	color:  rgb(235, 240, 243);\n"
 "	border: 0px solid;\n"
@@ -536,6 +639,12 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "	color: rgb(69, 69, 69);\n"
 "	background-color: rgb(217, 237, 247);\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         self.button_start_split.setIcon(icon9)
         self.button_start_split.setIconSize(QSize(100, 100))
@@ -544,6 +653,7 @@ class Ui_MainWindow(object):
         self.button_output_file_split.setGeometry(QRect(550, 70, 100, 100))
         self.button_output_file_split.setMinimumSize(QSize(70, 70))
         self.button_output_file_split.setMaximumSize(QSize(100, 100))
+        self.button_output_file_split.setFont(font2)
         self.button_output_file_split.setStyleSheet(u"QPushButton {\n"
 "	color:  rgb(235, 240, 243);\n"
 "	border: 0px solid;\n"
@@ -560,12 +670,18 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "	color: rgb(69, 69, 69);\n"
 "	background-color: rgb(217, 237, 247);\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         self.button_output_file_split.setIcon(icon5)
         self.button_output_file_split.setIconSize(QSize(100, 100))
         self.line_edit_output_file_split = QLineEdit(self.frame_body_page_2)
         self.line_edit_output_file_split.setObjectName(u"line_edit_output_file_split")
-        self.line_edit_output_file_split.setGeometry(QRect(480, 190, 240, 35))
+        self.line_edit_output_file_split.setGeometry(QRect(486, 190, 240, 35))
         self.line_edit_output_file_split.setMinimumSize(QSize(240, 35))
         self.line_edit_output_file_split.setMaximumSize(QSize(240, 35))
         self.line_edit_output_file_split.setFont(font3)
@@ -592,6 +708,7 @@ class Ui_MainWindow(object):
         self.button_open_folder_split.setGeometry(QRect(560, 250, 81, 40))
         self.button_open_folder_split.setMinimumSize(QSize(40, 40))
         self.button_open_folder_split.setMaximumSize(QSize(100, 40))
+        self.button_open_folder_split.setFont(font2)
         self.button_open_folder_split.setStyleSheet(u"QPushButton {\n"
 "	color:  rgb(235, 240, 243);\n"
 "	border: 0px solid;\n"
@@ -608,9 +725,66 @@ class Ui_MainWindow(object):
 "QPushButton:pressed {\n"
 "	color: rgb(69, 69, 69);\n"
 "	background-color: rgb(217, 237, 247);\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
 "}")
         self.button_open_folder_split.setIcon(icon8)
         self.button_open_folder_split.setIconSize(QSize(40, 40))
+        self.progress_bar_split = QProgressBar(self.frame_body_page_2)
+        self.progress_bar_split.setObjectName(u"progress_bar_split")
+        self.progress_bar_split.setGeometry(QRect(244, 190, 240, 35))
+        self.progress_bar_split.setMaximumSize(QSize(240, 35))
+        self.progress_bar_split.setStyleSheet(u"QProgressBar {\n"
+"	color:  rgb(65, 65,65);\n"
+"	border: 0px solid;\n"
+"	border-radius: 15px;\n"
+"	border-style: none;\n"
+"	background-position: center;\n"
+"	text-align: center;\n"
+"	background-color: rgb(217, 237,247);\n"
+"}\n"
+"\n"
+"QProgressBar::chunk {\n"
+"	background-color: rgb(0, 120, 170);\n"
+"	border-radius: 5px;\n"
+"}\n"
+"")
+        self.progress_bar_split.setValue(0)
+        self.button_stop_split = QPushButton(self.frame_body_page_2)
+        self.button_stop_split.setObjectName(u"button_stop_split")
+        self.button_stop_split.setGeometry(QRect(265, 250, 200, 40))
+        self.button_stop_split.setMinimumSize(QSize(200, 40))
+        self.button_stop_split.setMaximumSize(QSize(200, 40))
+        self.button_stop_split.setFont(font3)
+        self.button_stop_split.setStyleSheet(u"QPushButton {\n"
+"	color:  rgb(235, 240, 243);\n"
+"	border: 0px solid;\n"
+"	border-radius: 5px;\n"
+"	background-position: center;\n"
+"	background-color: rgb(0, 120, 170);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	border: 2px solid  rgb(235, 240, 243);\n"
+"	background-color: rgb(0, 130,180 );\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(69, 69, 69);\n"
+"	background-color: rgb(217, 237, 247);\n"
+"}\n"
+"\n"
+"QPushButton QToolTip {\n"
+"	color: #454545;\n"
+"	background-color: #d9edf7;\n"
+"	border: 0px solid;\n"
+"}")
+        self.button_stop_split.setIcon(icon7)
+        self.button_stop_split.setIconSize(QSize(40, 50))
 
         self.verticalLayout_2.addWidget(self.frame_body_page_2)
 
@@ -691,24 +865,77 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Conversor e Divisor", None))
+#if QT_CONFIG(tooltip)
+        self.button_toggle.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Menu</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_toggle.setText("")
+#if QT_CONFIG(tooltip)
+        self.button_page_1.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Converter e Dividir Arquivos de V\u00eddeo</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_page_1.setText("")
+#if QT_CONFIG(tooltip)
+        self.button_page_2.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Dividir Arquivos de V\u00eddeo</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_page_2.setText("")
+#if QT_CONFIG(tooltip)
+        self.button_settings.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Sobre o Aplicativo</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_settings.setText("")
         self.label_convert_split.setText(QCoreApplication.translate("MainWindow", u"Conversor e Divisor", None))
+#if QT_CONFIG(tooltip)
+        self.radio_button_normal.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Qualidade Normal: o v\u00eddeo mant\u00e9m todas suas caracteristicas originais.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.radio_button_normal.setText(QCoreApplication.translate("MainWindow", u"Normal", None))
+#if QT_CONFIG(tooltip)
+        self.radio_button_low.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Qualidade Baixa: o v\u00eddeo perde qualidade, mas a convers\u00e3o e/ou divis\u00e3o \u00e9 mais r\u00e1pida.</span></p><p><span style=\" font-size:10pt; font-weight:600;\">Resolu\u00e7\u00e3o: 320x240</span></p><p><span style=\" font-size:10pt; font-weight:600;\">Codec: mpeg4</span></p><p><span style=\" font-size:10pt; font-weight:600;\">FPS: 30</span></p><p><span style=\" font-size:10pt; font-weight:600;\">Bitrate: 100 kbps </span></p><p><span style=\" font-size:10pt; font-weight:600;\">\u00c1udio mono de 48 kbps / 44 KHz</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.radio_button_low.setText(QCoreApplication.translate("MainWindow", u"Baixa", None))
+#if QT_CONFIG(tooltip)
+        self.check_box_split.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">N\u00e3o dividir, somente converte o v\u00eddeo.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.check_box_split.setText(QCoreApplication.translate("MainWindow", u"N\u00e3o Dividir", None))
+#if QT_CONFIG(tooltip)
+        self.button_output_file.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Local de destino do V\u00eddeo convertido e/ou dividido.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_output_file.setText(QCoreApplication.translate("MainWindow", u"Destino", None))
+#if QT_CONFIG(tooltip)
+        self.button_source_file.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600; color:#454545;\">Procurar 1(um) ou v\u00e1rios v\u00eddeos.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_source_file.setText(QCoreApplication.translate("MainWindow", u"Origem", None))
+#if QT_CONFIG(tooltip)
+        self.button_stop.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Cancelar Processo.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_stop.setText(QCoreApplication.translate("MainWindow", u"Cancelar", None))
+#if QT_CONFIG(tooltip)
+        self.button_open_folder.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Abrir Local do v\u00eddeo convertido e/ou dividido.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_open_folder.setText(QCoreApplication.translate("MainWindow", u"Abrir", None))
+#if QT_CONFIG(tooltip)
+        self.button_start.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Iniciar Processo.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_start.setText(QCoreApplication.translate("MainWindow", u"Iniciar", None))
         self.label_split.setText(QCoreApplication.translate("MainWindow", u"Divisor", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Divis\u00e3o dispon\u00edvel somente para v\u00eddeos .MP4, para outros formatos/extens\u00f5es use o menu Conversor e Divisor", None))
+#if QT_CONFIG(tooltip)
+        self.button_source_file_split.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Procurar v\u00eddeo para dividir</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_source_file_split.setText(QCoreApplication.translate("MainWindow", u"Origem", None))
-        self.button_start_split.setText("")
+#if QT_CONFIG(tooltip)
+        self.button_start_split.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Iniciar Processo.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.button_start_split.setText(QCoreApplication.translate("MainWindow", u"Iniciar", None))
+#if QT_CONFIG(tooltip)
+        self.button_output_file_split.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Local de Destino do V\u00eddeo</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_output_file_split.setText(QCoreApplication.translate("MainWindow", u"Destino", None))
+#if QT_CONFIG(tooltip)
+        self.button_open_folder_split.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Abrir local do v\u00eddeo dividido.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.button_open_folder_split.setText(QCoreApplication.translate("MainWindow", u"Abrir", None))
+#if QT_CONFIG(tooltip)
+        self.button_stop_split.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Cancelar Divis\u00e3o.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.button_stop_split.setText(QCoreApplication.translate("MainWindow", u"Cancelar", None))
         self.label_ajustes.setText(QCoreApplication.translate("MainWindow", u"Sobre", None))
         self.textEdit.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

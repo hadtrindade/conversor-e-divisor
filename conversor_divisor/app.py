@@ -14,7 +14,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         QtWidgets.QMainWindow.__init__(self)
         self.setupUi(self)
         self.start = None
-        self.stop = None
         self.not_split = False
         self.process_in_progress = None
         self.input_file = None
@@ -37,6 +36,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_start_split.clicked.connect(self.make_split)
         # button_stop
         self.button_stop.clicked.connect(self.stop_process)
+        self.button_stop_split.clicked.connect(self.stop_process)
         # button_checkbox_split
         self.check_box_split.clicked.connect(self.change_not_split)
         # buttons_source_files
@@ -76,10 +76,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.process_in_progress = obj_proc
 
     def stop_process(self):
-        self.stop = True
         self.process_in_progress.send_signal(CTRL_BREAK_EVENT)
         self.worker.terminate()
         ui_functions.config_initial(self)
+        self.popup_done("Processo Cancelado")
 
     def change_quality_low(self):
         self.low = True
@@ -91,7 +91,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.worker = Worker()
         self.worker.args = (self.input_file_split, self.output_path)
         self.worker.signal.process_signal.connect(self.set_process)
-        self.worker.signal.progress_signal.connect(self.progress_bar.setValue)
+        self.worker.signal.progress_signal.connect(
+            self.progress_bar_split.setValue
+            )
         self.worker.signal.error_signal.connect(self.popup_error)
         self.worker.signal.done_signal.connect(self.popup_done)
         self.worker.kwargs["just_divide"] = self.split
@@ -132,9 +134,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         msg_box = QtWidgets.QMessageBox()
         msg_box.setWindowTitle("Conversor & Divisor")
-        if self.stop:
-            msg = "Processo Cancelado"
-            self.stop = False
         msg_box.setText(msg)
         msg_box.setWindowIcon(QtGui.QIcon(u":/MainIcon/main_icone"))
         msg_box.setIcon(QtWidgets.QMessageBox.Information)

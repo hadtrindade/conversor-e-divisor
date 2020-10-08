@@ -1,5 +1,5 @@
 import re
-from subprocess import Popen, PIPE, DEVNULL, CREATE_NEW_PROCESS_GROUP
+from subprocess import Popen, PIPE, CREATE_NEW_PROCESS_GROUP
 from os import path, getcwd, remove
 
 
@@ -11,6 +11,12 @@ class Convert:
     regex_elapsed_time = re.compile(
         r"time=\s?[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}"
         )
+
+    regex_import_iso = re.compile(
+        r"^Importing ISO File:\s*\|\S*\s*\|\s\([0-9]{2}"
+        )
+    regex_splitting = re.compile(r"^Splitting:\s*\|\S*\s*\|\s\([0-9]{2}")
+    regex_iso_file = re.compile(r"^ISO File Writing:\s*\|\S*\s*\|\s\([0-9]{2}")
 
     def __init__(
         self,
@@ -70,10 +76,10 @@ class Convert:
                 for line in process.stderr:
                     tt = Convert.regex_total_time.findall(line)
                     if tt:
-                        time_duration = self.get_sec(tt[0].split()[1])
+                        time_duration = self._get_sec(tt[0].split()[1])
                     et = Convert.regex_elapsed_time.findall(line)
                     if et:
-                        elapsed_time = self.get_sec(et[0].split("=")[1])
+                        elapsed_time = self._get_sec(et[0].split("=")[1])
                     try:
                         self.progress_signal.emit(
                             int(elapsed_time/time_duration*100)
@@ -113,10 +119,10 @@ class Convert:
                 for line in process.stderr:
                     tt = Convert.regex_total_time.findall(line)
                     if tt:
-                        time_duration = self.get_sec(tt[0].split()[1])
+                        time_duration = self._get_sec(tt[0].split()[1])
                     et = Convert.regex_elapsed_time.findall(line)
                     if et:
-                        elapsed_time = self.get_sec(et[0].split("=")[1])
+                        elapsed_time = self._get_sec(et[0].split("=")[1])
                     try:
                         self.progress_signal.emit(
                             int(elapsed_time/time_duration*100)
@@ -141,19 +147,51 @@ class Convert:
                     binary_mp4box,
                     "-add", input_file,
                     "-split-size",
-                    "30000",
+                    "30720",  # Quilobytes
                     output_file,
                     ],
                     bufsize=1,
                     universal_newlines=True,
                     shell=True,
-                    stdout=DEVNULL,
-                    stderr=DEVNULL,
+                    stdout=PIPE,
+                    stderr=PIPE,
                     creationflags=CREATE_NEW_PROCESS_GROUP,
                     ) as process:
                 self.process_signal.emit(process)
+                count = 0
+                for line in process.stderr:
+                    import_iso = Convert.regex_import_iso.findall(line)
+                    split_file = Convert.regex_splitting.findall(line)
+                    iso_file = Convert.regex_iso_file.findall(line)
+                    if import_iso:
+                        self.progress_signal.emit(
+                            int(count/self._get_total_split_bar(
+                                self.input_file
+                                )*100)
+                            )
+                        count += 1
+                    elif split_file:
+                        self.progress_signal.emit(
+                            int(count/self._get_total_split_bar(
+                                self.input_file
+                                )*100)
+                            )
+                        count += 1
+                    elif iso_file:
+                        if int(count/self._get_total_split_bar(
+                                self.input_file
+                                )*100) <= 100:
+                            self.progress_signal.emit(
+                                int(count/self._get_total_split_bar(
+                                    self.input_file
+                                    )*100)
+                                )
+                            count += 1
                 process.wait()
                 if process.returncode == 0:
+                    if self.just_divide:
+                        self.done_signal.emit("Processo Concluído")
+                        return True
                     return True
                 else:
                     self.error_signal.emit(f"Erro: {process.returncode}")
@@ -162,7 +200,13 @@ class Convert:
             self.error_signal.emit(f"Erro: {e}")
             return
 
-    def get_sec(self,  time_str):
+    def _get_total_split_bar(self, input_file):
+
+        file_size = int(path.getsize(self.input_file))/1024
+        number_of_divisions = file_size/30720
+        return 294 + 100*number_of_divisions
+
+    def _get_sec(self,  time_str):
 
         h, m, s = time_str.split(':')
         return int(h) * 3600 + int(m) * 60 + int(float(s))
@@ -185,7 +229,7 @@ class Convert:
                 )
             if not result:
                 return
-        if int(path.getsize(output_file)) > 30000000 and not self.not_split:
+        if int(path.getsize(output_file)) > 31457280 and not self.not_split:
             file = path.split(output_file)[1]
             result = self.mp4box(
                 output_file.replace("/", "\\"),
@@ -195,30 +239,31 @@ class Convert:
             if not result:
                 return
             else:
-                True
+                return True
         else:
             return True
 
     def convert_or_split(self):
 
         if self.just_divide:
+            if int(path.getsize(self.input_file)) <= 31457280:  # Bytes
+                self.done_signal.emit("Video já está em tamanho apropriado!")
+                return
             file = path.split(self.input_file)[1]
-            mp4box = self.mp4box(
+            self.mp4box(
                 self.input_file.replace("/", "\\"),
                 path.join(
                     self.output_path, f"_{file[:-4]}.mp4").replace("/", "\\")
                     )
-            if mp4box:
-                self.done_signal.emit("Processo Concluído")
         else:
             if isinstance(self.input_file, list):
                 videos_file = [video_file for video_file in self.input_file]
-                exec_x = ""
+                cd_n = False
                 for video_file in videos_file:
-                    exec_x = self.execute(video_file, self.output_path)
-                if exec_x:
+                    cd_n = self.execute(video_file, self.output_path)
+                if cd_n:
                     self.done_signal.emit("Processo Concluído")
             else:
-                exec_ = self.execute(self.input_file, self.output_path)
-                if exec_:
+                cd_1 = self.execute(self.input_file, self.output_path)
+                if cd_1:
                     self.done_signal.emit("Processo Concluído")
