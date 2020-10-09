@@ -478,7 +478,7 @@ class Ui_MainWindow(object):
         self.progress_bar.setStyleSheet(u"QProgressBar {\n"
 "	color:  rgb(69, 69,69);\n"
 "	border: 0px solid;\n"
-"	border-radius: 15px;\n"
+"	border-radius: 5px;\n"
 "	border-style: none;\n"
 "	background-position: center;\n"
 "	text-align: center;\n"
@@ -741,7 +741,7 @@ class Ui_MainWindow(object):
         self.progress_bar_split.setStyleSheet(u"QProgressBar {\n"
 "	color:  rgb(65, 65,65);\n"
 "	border: 0px solid;\n"
-"	border-radius: 15px;\n"
+"	border-radius: 5px;\n"
 "	border-style: none;\n"
 "	background-position: center;\n"
 "	text-align: center;\n"
@@ -835,15 +835,27 @@ class Ui_MainWindow(object):
         self.frame_botton.setFrameShape(QFrame.NoFrame)
         self.frame_botton.setFrameShadow(QFrame.Raised)
         self.horizontalLayout = QHBoxLayout(self.frame_botton)
+        self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.label = QLabel(self.frame_botton)
         self.label.setObjectName(u"label")
+        font5 = QFont()
+        font5.setFamily(u"Segoe UI")
+        font5.setPointSize(10)
+        self.label.setFont(font5)
         self.label.setStyleSheet(u"color: rgb(69, 69, 69);")
 
         self.horizontalLayout.addWidget(self.label)
 
         self.label_4 = QLabel(self.frame_botton)
         self.label_4.setObjectName(u"label_4")
+        font6 = QFont()
+        font6.setFamily(u"Segoe UI")
+        font6.setPointSize(10)
+        font6.setBold(False)
+        font6.setWeight(50)
+        self.label_4.setFont(font6)
 
         self.horizontalLayout.addWidget(self.label_4, 0, Qt.AlignRight)
 
@@ -941,11 +953,11 @@ class Ui_MainWindow(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-weight:600;\">Conversor &amp; Divisor</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-weight:600;\">Conversor &amp; Divisor v1.2.0</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-weight:600;\"><br /></p>\n"
-"<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2';\">	Interface Grafica para convers\u00e3o e divis\u00e3o de v\u00ed"
-                        "deos para inclus\u00e3o no PJe, utilizando as ferramentas FFMPEG e MP4Box.</span></p></body></html>", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Desenvolvido por Haddly Trindade", None))
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"V 1.1.1", None))
+"<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2';\">	Interface Grafica para convers\u00e3o e divis\u00e3o de"
+                        " v\u00eddeos para inclus\u00e3o no PJe, utilizando as ferramentas FFMPEG e MP4Box.</span></p></body></html>", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"  Desenvolvido por Haddly Trindade", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"v1.2.0  ", None))
     # retranslateUi
 

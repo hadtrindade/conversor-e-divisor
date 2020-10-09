@@ -26,7 +26,7 @@
    <string>Conversor e Divisor</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources_cd.qrc">
+   <iconset>
     <normaloff>:/MainIcon/main_icone</normaloff>:/MainIcon/main_icone</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -991,7 +991,7 @@ QLineEdit:focus {
                 <string notr="true">QProgressBar {
 	color:  rgb(69, 69,69);
 	border: 0px solid;
-	border-radius: 15px;
+	border-radius: 5px;
 	border-style: none;
 	background-position: center;
 	text-align: center;
@@ -1591,7 +1591,7 @@ QPushButton QToolTip {
                    <string notr="true">QProgressBar {
 	color:  rgb(65, 65,65);
 	border: 0px solid;
-	border-radius: 15px;
+	border-radius: 5px;
 	border-style: none;
 	background-position: center;
 	text-align: center;
@@ -1774,7 +1774,7 @@ QPushButton QToolTip {
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-weight:600;&quot;&gt;Conversor &amp;amp; Divisor&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-weight:600;&quot;&gt;Conversor &amp;amp; Divisor v1.2.0&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;	Interface Grafica para conversão e divisão de vídeos para inclusão no PJe, utilizando as ferramentas FFMPEG e MP4Box.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
@@ -1815,20 +1815,49 @@ p, li { white-space: pre-wrap; }
            <enum>QFrame::Raised</enum>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QLabel" name="label">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(69, 69, 69);</string>
              </property>
              <property name="text">
-              <string>Desenvolvido por Haddly Trindade</string>
+              <string>  Desenvolvido por Haddly Trindade</string>
              </property>
             </widget>
            </item>
            <item alignment="Qt::AlignRight">
             <widget class="QLabel" name="label_4">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>10</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
-              <string>V 1.1.1</string>
+              <string>v1.2.0  </string>
              </property>
             </widget>
            </item>
