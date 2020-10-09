@@ -957,7 +957,7 @@ class Ui_MainWindow(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-weight:600;\"><br /></p>\n"
 "<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2';\">	Interface Grafica para convers\u00e3o e divis\u00e3o de"
                         " v\u00eddeos para inclus\u00e3o no PJe, utilizando as ferramentas FFMPEG e MP4Box.</span></p></body></html>", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"  Desenvolvido por Haddly Trindade", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"  Desenvolvido por Ivo H. Trindade", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"v1.2.0  ", None))
     # retranslateUi
 
