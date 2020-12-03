@@ -4,7 +4,7 @@ from os import path, getcwd, remove
 
 
 class Convert:
-    
+
     regex_total_time = re.compile(
         r"\sDuration:\s[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}"
     )
@@ -19,7 +19,7 @@ class Convert:
     regex_iso_file = re.compile(r"^ISO File Writing:\s*\|\S*\s*\|\s\([0-9]{2}")
     regex_video_extensions = re.compile(
         r"\.(mp4|mkv|flv|swf|avchd|mov|qt|avi|wmv|mpeg|rmvb|[Ww]eb[Mm])"
-        )
+    )
     regex_unknown_extension = re.compile(r"\.\S*")
 
     def __init__(
