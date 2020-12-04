@@ -2,6 +2,10 @@ language: python
 python:
   - 3.8
 install:
-  - pip install -r -q requeriments-dev.txt
+  - pip install -r -q requeriments-dev.txt codecov
 script:
   - flake8
+  - pytest tests --cov=conversor_divisor
+
+after_success:
+  - codecov
