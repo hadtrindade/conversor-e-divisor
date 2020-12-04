@@ -1,11 +1,15 @@
 import sys
+from signal import SIGTERM
 from PySide2 import QtGui, QtWidgets
-from signal import CTRL_BREAK_EVENT
 from pathlib import Path
 from ui_cd import Ui_MainWindow
 import ui_functions
 from worker import Worker
 from convert import Convert
+
+
+_sigterm = SIGTERM
+_windows = (sys.platform == 'win32')
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -80,13 +84,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.process_split_in_progress = obj_proc
 
     def stop_process(self):
-        self.process_in_progress.send_signal(CTRL_BREAK_EVENT)
+        if _windows:
+            from signal import CTRL_BREAK_EVENT
+            _sigterm = CTRL_BREAK_EVENT
+        self.process_in_progress.send_signal(_sigterm)
         self.worker.terminate()
         ui_functions.config_init(self)
         self.popup_done("Conversão e/ou Cancelada")
 
     def stop_process_split(self):
-        self.process_split_in_progress.send_signal(CTRL_BREAK_EVENT)
+        if _windows:
+            from signal import CTRL_BREAK_EVENT
+            _sigterm = CTRL_BREAK_EVENT
+        self.process_split_in_progress.send_signal(_sigterm)
         self.worker_split.terminate()
         ui_functions.config_init_split(self)
         self.popup_done("Divisão Cancelada.")

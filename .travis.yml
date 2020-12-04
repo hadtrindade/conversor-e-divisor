@@ -1,6 +1,9 @@
 language: python
 python:
   - 3.8
+
+dist: bionic
+
 install:
   - pip install -r -q requeriments-dev.txt codecov
 script:
