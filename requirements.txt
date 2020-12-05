@@ -1,2 +1,3 @@
-PySide2==5.15.1 
+PySide2==5.15.1
+toml==0.10.2
 auto-py-to-exe==2.7.10
