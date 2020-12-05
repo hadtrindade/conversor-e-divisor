@@ -131,11 +131,9 @@ dmypy.json
 
 # bin
 
-bin/gpac_mp4box/
-bin/ffmpeg.exe
-
-
-
 output/
 
 .vscode/
+
+FFmpeg/
+MP4Box/
