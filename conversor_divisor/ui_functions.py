@@ -1,7 +1,12 @@
+import sys
 from os import path
 from subprocess import Popen
 from pathlib import Path
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtWidgets, QtGui
+from config import writer_config
+
+
+_windows = (sys.platform == 'win32')
 
 
 def config_init(app):
@@ -84,12 +89,12 @@ def toggle_menu(app, max_width, enable):
 
 
 def open_ouput_folder(app):
-    try:
-        path_output_folder = app.output_path.replace("/", "\\")
-    except TypeError:
-        Popen(f'explorer /open, "{app.output_path}"')
+
+    if _windows:
+        from os import startfile
+        startfile(app.output_path, "Open")
     else:
-        Popen(f'explorer /open, "{path_output_folder}"')
+        Popen(["xdg-open", f"{app.output_path}"])
 
 
 def get_file_video(app):
@@ -100,7 +105,7 @@ def get_file_video(app):
         "Procurar Arquivo de Video",
         r"%s" % home,
         "Video Files (*.mp4 *.mkv *.flv *.swf *.avchd *.mov "
-        "*.qt *.avi *.wmv *.mpeg *.rmvb);;All Files (*)",
+        "*.qt *.avi *.wmv *.m4v *.mpeg *.rmvb);;All Files (*)",
     )
 
     if not file_name:
@@ -184,3 +189,14 @@ def get_path_output_name_split(app):
     app.output_path = path_dst
     app.line_edit_output_file_split.setText(app.output_path)
     app.line_edit_output_file_split.setDisabled(True)
+
+
+def set_settings(app):
+    value = app.spinBox_split_size.text()
+    value_kilobytes = int(value) * 1024
+    value_bytes = value_kilobytes * 1024
+    writer_config(split_size_bytes=str(value_bytes),
+                  split_size_kilobytes=str(value_kilobytes),
+                  split_size_mb=value,
+                  )
+    app.popup_done("Configurações Aplicadas")

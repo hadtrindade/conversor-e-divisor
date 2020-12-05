@@ -6,10 +6,11 @@ from ui_cd import Ui_MainWindow
 import ui_functions
 from worker import Worker
 from convert import Convert
+from config import SPLIT_SIZE_MB
 
 
-_sigterm = SIGTERM
-_windows = (sys.platform == 'win32')
+VERSION = "1.3.0"
+AUTHOR = "Desenvolvido por Ivo H. Trindade"
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -23,9 +24,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.output_path = Path.home()
         self.input_file_split = None
         self.split = None
-        self.low = False
+        self.low = True
         self.worker = None
         self.worker_split = None
+        self._signal_sigterm = SIGTERM
+        self._platform_ms_win = (sys.platform == 'win32')
 
         # menu
         self.button_toggle.clicked.connect(
@@ -70,6 +73,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # config init
         ui_functions.config_init(self)
         ui_functions.config_init_split(self)
+        # Infos
+        self.label_version.setText(VERSION)
+        self.label_author.setText(AUTHOR)
+
+        # SET SETTINGS
+        self.spinBox_split_size.setValue(int(SPLIT_SIZE_MB))
+        self.pushButton_apply_settings.clicked.connect(self.change_settings)
+
+    def change_settings(self):
+        ui_functions.set_settings(self)
 
     def change_not_split(self):
         if self.check_box_split.isChecked():
@@ -84,19 +97,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.process_split_in_progress = obj_proc
 
     def stop_process(self):
-        if _windows:
+        if self._platform_ms_win:
             from signal import CTRL_BREAK_EVENT
-            _sigterm = CTRL_BREAK_EVENT
-        self.process_in_progress.send_signal(_sigterm)
+            self._signal_sigterm = CTRL_BREAK_EVENT
+        self.process_in_progress.send_signal(self._signal_sigterm)
         self.worker.terminate()
         ui_functions.config_init(self)
         self.popup_done("Conversão e/ou Cancelada")
 
     def stop_process_split(self):
-        if _windows:
+        if self._platform_ms_win:
             from signal import CTRL_BREAK_EVENT
-            _sigterm = CTRL_BREAK_EVENT
-        self.process_split_in_progress.send_signal(_sigterm)
+            self._signal_sigterm = CTRL_BREAK_EVENT
+        self.process_split_in_progress.send_signal(self._signal_sigterm)
         self.worker_split.terminate()
         ui_functions.config_init_split(self)
         self.popup_done("Divisão Cancelada.")
@@ -116,7 +129,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.worker_split.signal.progress_signal.connect(
             self.progress_bar_split.setValue
         )
-        self.worker_split.signal.error_signal.connect(self.popup_error)
+        self.worker_split.signal.error_signal.connect(self.popup_error_split)
         self.worker_split.signal.done_signal.connect(self.popup_done)
         self.worker_split.kwargs["just_divide"] = self.split
         self.worker_split._class = Convert
@@ -184,6 +197,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         ui_functions.config_init(self)
         msg_box.exec_()
 
+    def popup_error_split(self, msg):
+        msg_box = QtWidgets.QMessageBox()
+        msg_box.setWindowTitle("Conversor & Divisor")
+        msg_box.setText(msg)
+        msg_box.setWindowIcon(QtGui.QIcon(u":/MainIcon/main_icone"))
+        msg_box.setIcon(QtWidgets.QMessageBox.Critical)
+        ui_functions.config_init_split(self)
+        msg_box.exec_()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
