@@ -91,7 +91,7 @@
           <string notr="true">background-color: rgb(0, 120, 170);</string>
          </property>
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::NoFrame</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
@@ -115,7 +115,7 @@
           <item alignment="Qt::AlignLeft|Qt::AlignTop">
            <widget class="QFrame" name="frame_top_menus">
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
@@ -282,7 +282,7 @@ QPushButton QToolTip {
           <item alignment="Qt::AlignLeft|Qt::AlignBottom">
            <widget class="QFrame" name="frame_botton_menus">
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
@@ -416,7 +416,7 @@ QPushButton QToolTip {
                </size>
               </property>
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::NoFrame</enum>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
@@ -446,10 +446,10 @@ QPushButton QToolTip {
               <widget class="QRadioButton" name="radio_button_normal">
                <property name="geometry">
                 <rect>
-                 <x>30</x>
+                 <x>180</x>
                  <y>110</y>
-                 <width>91</width>
-                 <height>17</height>
+                 <width>101</width>
+                 <height>21</height>
                 </rect>
                </property>
                <property name="font">
@@ -477,16 +477,16 @@ QRadioButton QToolTip {
                 <string>Normal</string>
                </property>
                <property name="checked">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
               </widget>
               <widget class="QRadioButton" name="radio_button_low">
                <property name="geometry">
                 <rect>
-                 <x>140</x>
+                 <x>30</x>
                  <y>110</y>
-                 <width>82</width>
-                 <height>17</height>
+                 <width>131</width>
+                 <height>21</height>
                 </rect>
                </property>
                <property name="font">
@@ -510,16 +510,19 @@ QRadioButton QToolTip {
 }</string>
                </property>
                <property name="text">
-                <string>Baixa</string>
+                <string>Compactar</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
                </property>
               </widget>
               <widget class="QCheckBox" name="check_box_split">
                <property name="geometry">
                 <rect>
                  <x>30</x>
-                 <y>80</y>
-                 <width>121</width>
-                 <height>17</height>
+                 <y>76</y>
+                 <width>141</width>
+                 <height>21</height>
                 </rect>
                </property>
                <property name="font">
@@ -555,7 +558,7 @@ QCheckBox QToolTip {
             <item>
              <widget class="QFrame" name="frame">
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::NoFrame</enum>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
@@ -1087,7 +1090,7 @@ QLineEdit:focus {
                <string notr="true">background-color: rgb(237, 240, 243);</string>
               </property>
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::NoFrame</enum>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
@@ -1123,7 +1126,7 @@ QLineEdit:focus {
                   </size>
                  </property>
                  <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <property name="frameShadow">
                   <enum>QFrame::Raised</enum>
@@ -1179,7 +1182,7 @@ QLineEdit:focus {
                <item>
                 <widget class="QFrame" name="frame_body_page_2">
                  <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
+                  <enum>QFrame::NoFrame</enum>
                  </property>
                  <property name="frameShadow">
                   <enum>QFrame::Raised</enum>
@@ -1718,17 +1721,17 @@ QPushButton QToolTip {
                </size>
               </property>
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::NoFrame</enum>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
               </property>
-              <widget class="QLabel" name="label_ajustes">
+              <widget class="QLabel" name="label_about">
                <property name="geometry">
                 <rect>
                  <x>10</x>
                  <y>10</y>
-                 <width>331</width>
+                 <width>101</width>
                  <height>41</height>
                 </rect>
                </property>
@@ -1745,23 +1748,13 @@ QPushButton QToolTip {
                 <string>Sobre</string>
                </property>
               </widget>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="frame_body_page_3">
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
               <widget class="QTextEdit" name="textEdit">
                <property name="geometry">
                 <rect>
-                 <x>190</x>
-                 <y>40</y>
+                 <x>180</x>
+                 <y>20</y>
                  <width>331</width>
-                 <height>341</height>
+                 <height>121</height>
                 </rect>
                </property>
                <property name="styleSheet">
@@ -1769,14 +1762,210 @@ QPushButton QToolTip {
 	border: 0px solid;
 }</string>
                </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
                <property name="html">
                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-weight:600;&quot;&gt;Conversor &amp;amp; Divisor v1.2.0&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-weight:600;&quot;&gt;Conversor &amp;amp; Divisor&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;	Interface Grafica para conversão e divisão de vídeos para inclusão no PJe, utilizando as ferramentas FFMPEG e MP4Box.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame_body_page_3">
+              <property name="frameShape">
+               <enum>QFrame::NoFrame</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <widget class="QLabel" name="label_config">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>20</y>
+                 <width>231</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>24</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(69, 69, 69);</string>
+               </property>
+               <property name="text">
+                <string>Configurações</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_split_size">
+               <property name="geometry">
+                <rect>
+                 <x>40</x>
+                 <y>150</y>
+                 <width>131</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(69, 69, 69);</string>
+               </property>
+               <property name="text">
+                <string>Dividir em (MB)</string>
+               </property>
+              </widget>
+              <widget class="QSpinBox" name="spinBox_split_size">
+               <property name="geometry">
+                <rect>
+                 <x>180</x>
+                 <y>145</y>
+                 <width>71</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QSpinBox {
+	color: rgb(69, 69, 69);
+	border: 0px solid;
+	border-radius: 5px;
+	background-position: center;
+	background-color: rgb(255, 255,255 );
+}
+
+QSpinBox:hover {
+	border: 2px solid  rgb(0, 120, 170);
+	background-color: rgb(255, 255,255 );
+}
+
+QSpinBox:focus {
+	color: rgb(69, 69, 69);
+	background-color: rgb(255, 255, 255);
+}</string>
+               </property>
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+               <property name="value">
+                <number>30</number>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_confi_split">
+               <property name="geometry">
+                <rect>
+                 <x>40</x>
+                 <y>90</y>
+                 <width>101</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(69, 69, 69);</string>
+               </property>
+               <property name="text">
+                <string>Divisor</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_confi_convert">
+               <property name="geometry">
+                <rect>
+                 <x>410</x>
+                 <y>90</y>
+                 <width>101</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(69, 69, 69);</string>
+               </property>
+               <property name="text">
+                <string>Conversor</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="pushButton_apply_settings">
+               <property name="geometry">
+                <rect>
+                 <x>324</x>
+                 <y>370</y>
+                 <width>81</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+	color:  rgb(235, 240, 243);
+	border: 0px solid;
+	border-radius: 5px;
+	background-position: center;
+	background-color: rgb(0, 120, 170);
+}
+
+QPushButton:hover {
+	border: 2px solid  rgb(235, 240, 243);
+	background-color: rgb(0, 130,180 );
+}
+
+QPushButton:pressed {
+	color: rgb(69, 69, 69);
+	background-color: rgb(217, 237, 247);
+}
+
+QPushButton QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
+}</string>
+               </property>
+               <property name="text">
+                <string>Aplicar</string>
                </property>
               </widget>
              </widget>
@@ -1831,7 +2020,7 @@ p, li { white-space: pre-wrap; }
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="label">
+            <widget class="QLabel" name="label_author">
              <property name="font">
               <font>
                <family>Segoe UI</family>
@@ -1847,7 +2036,7 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item alignment="Qt::AlignRight">
-            <widget class="QLabel" name="label_4">
+            <widget class="QLabel" name="label_version">
              <property name="font">
               <font>
                <family>Segoe UI</family>
