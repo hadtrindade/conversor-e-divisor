@@ -98,18 +98,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def stop_process(self):
         if self._platform_ms_win:
-            from signal import CTRL_BREAK_EVENT
-            self._signal_sigterm = CTRL_BREAK_EVENT
-        self.process_in_progress.send_signal(self._signal_sigterm)
+            from subprocess import Popen
+            Popen(["tskill", "ffmpeg"])
+        else:
+            self.process_in_progress.send_signal(self._signal_sigterm)
         self.worker.terminate()
         ui_functions.config_init(self)
         self.popup_done("Conversão e/ou Cancelada")
 
     def stop_process_split(self):
         if self._platform_ms_win:
-            from signal import CTRL_BREAK_EVENT
-            self._signal_sigterm = CTRL_BREAK_EVENT
-        self.process_split_in_progress.send_signal(self._signal_sigterm)
+            from subprocess import Popen
+            Popen(["tskill", "mp4box"])
+        else:
+            self.process_split_in_progress.send_signal(self._signal_sigterm)
         self.worker_split.terminate()
         ui_functions.config_init_split(self)
         self.popup_done("Divisão Cancelada.")

@@ -57,10 +57,8 @@ class Convert:
             from subprocess import CREATE_NEW_PROCESS_GROUP
             kwargs['creationflags'] = CREATE_NEW_PROCESS_GROUP
             kwargs['shell'] = True
-        print(args)
         process = Popen(args, **kwargs)
         return process
-
 
     def ffmpeg(self, video_in, video_out):
         binary_ffmpeg = "ffmpeg"
