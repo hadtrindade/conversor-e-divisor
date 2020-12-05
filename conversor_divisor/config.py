@@ -1,24 +1,27 @@
-from configparser import ConfigParser
 from os import path
+import toml
 
 
-config = ConfigParser(allow_no_value=True,
-                      inline_comment_prefixes="#",
-                      strict=False,
-                      )
-
-config.read(f"{path.dirname(__file__)}/cd_settings.ini")
-default_config = dict(config['DEFAULT'])
+data_settings = toml.load(f"{path.dirname(__file__)}/cd_settings.toml")
+SPLIT_SIZE_BYTES = data_settings["settings_split"]["split_size_bytes"]
+SPLIT_SIZE_KILOBYTES = data_settings["settings_split"]["split_size_kilobytes"]
+SPLIT_SIZE_MB = data_settings["settings_split"]["split_size_mb"]
 
 
 def writer_config(**args):
 
+    data_settings = toml.load(f"{path.dirname(__file__)}/cd_settings.toml")
+
     for k, v in args.items():
-        config['DEFAULT'][k] = v
-    with open(f"{path.dirname(__file__)}/cd_settings.ini", "w") as configfile:
-        config.write(configfile)
+        data_settings["settings_split"][k] = v
+    with open(path.join(path.dirname(__file__), "cd_settings.toml"), "w") as f:
+        toml.dump(data_settings, f)
+    global SPLIT_SIZE_BYTES
+    global SPLIT_SIZE_KILOBYTES
+    global SPLIT_SIZE_MB
 
-
-SPLIT_SIZE_BYTES = config['DEFAULT']['split_size_bytes']
-SPLIT_SIZE_KILOBYTES = config['DEFAULT']['split_size_kilobytes']
-SPLIT_SIZE_MB = config['DEFAULT']['split_size_mb']
+    SPLIT_SIZE_BYTES = data_settings["settings_split"]["split_size_bytes"]
+    SPLIT_SIZE_KILOBYTES = data_settings["settings_split"][
+        "split_size_kilobytes"
+    ]
+    SPLIT_SIZE_MB = data_settings["settings_split"]["split_size_mb"]
