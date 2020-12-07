@@ -3,7 +3,8 @@ import sys
 from subprocess import Popen, PIPE
 from os import path, getcwd, remove
 from config import SPLIT_SIZE_BYTES, SPLIT_SIZE_KILOBYTES
-_windows = (sys.platform == 'win32')
+
+_windows = sys.platform == "win32"
 
 
 class Convert:
@@ -49,14 +50,15 @@ class Convert:
 
     def _subprocess(self, *args, **kwargs):
 
-        kwargs['bufsize'] = 1
-        kwargs['universal_newlines'] = True
-        kwargs['stdout'] = PIPE
-        kwargs['stderr'] = PIPE
+        kwargs["bufsize"] = 1
+        kwargs["universal_newlines"] = True
+        kwargs["stdout"] = PIPE
+        kwargs["stderr"] = PIPE
         if _windows:
             from subprocess import CREATE_NEW_PROCESS_GROUP
-            kwargs['creationflags'] = CREATE_NEW_PROCESS_GROUP
-            kwargs['shell'] = True
+
+            kwargs["creationflags"] = CREATE_NEW_PROCESS_GROUP
+            kwargs["shell"] = True
         process = Popen(args, **kwargs)
         return process
 
@@ -78,7 +80,7 @@ class Convert:
             "9999",
             f"{output_video_file}",
             "-y",
-            ]
+        ]
         if self.low:
             args = [
                 f"{binary_ffmpeg}",
@@ -102,11 +104,9 @@ class Convert:
                 "9999",
                 f"{output_video_file}",
                 "-y",
-                ]
+            ]
         try:
-            process = self._subprocess(
-                *args,
-                )
+            process = self._subprocess(*args,)
             self.process_signal.emit(process)
             time_duration = 0
             elapsed_time = 0
@@ -138,19 +138,17 @@ class Convert:
         output_video_file = video_out
         try:
             if _windows:
-                binary_mp4box = path.join(
-                    getcwd(), r"MP4Box\mp4box.exe"
-                    )
+                binary_mp4box = path.join(getcwd(), r"MP4Box\mp4box.exe")
                 video_file = video_in.replace("/", "\\")
                 output_video_file = video_out.replace("/", "\\")
             args = [
-                    f"{binary_mp4box}",
-                    "-add",
-                    f"{video_file}",
-                    "-split-size",
-                    f"{SPLIT_SIZE_KILOBYTES}",  # Quilobytes
-                    f"{output_video_file}",
-                ]
+                f"{binary_mp4box}",
+                "-add",
+                f"{video_file}",
+                "-split-size",
+                f"{SPLIT_SIZE_KILOBYTES}",  # Quilobytes
+                f"{output_video_file}",
+            ]
             process = self._subprocess(*args)
             self.process_signal.emit(process)
             count = 0
@@ -188,9 +186,7 @@ class Convert:
                         self.progress_signal.emit(
                             int(
                                 count
-                                / self._get_total_split_bar(
-                                    self.input_file
-                                )
+                                / self._get_total_split_bar(self.input_file)
                                 * 100
                             )
                         )
@@ -233,12 +229,14 @@ class Convert:
         result = self.ffmpeg(input_file, output_file)
         if not result:
             return
-        if int(path.getsize(output_file)) > int(SPLIT_SIZE_BYTES) and not self.not_split:
+        if (
+            int(path.getsize(output_file)) > int(SPLIT_SIZE_BYTES)
+            and not self.not_split
+        ):
             file = path.split(output_file)[1]
             result = self.mp4box(
-                output_file,
-                path.join(output_path, f"_{file[:-5]}.mp4")
-                )
+                output_file, path.join(output_path, f"_{file[:-5]}.mp4")
+            )
             remove(output_file)
             if not result:
                 return
@@ -250,14 +248,16 @@ class Convert:
     def convert_or_split(self):
 
         if self.just_divide:
-            if int(path.getsize(self.input_file)) <= int(SPLIT_SIZE_BYTES):  # Bytes
+            if int(path.getsize(self.input_file)) <= int(
+                SPLIT_SIZE_BYTES
+            ):  # Bytes
                 self.done_signal.emit("Video já está em tamanho apropriado!")
                 return
             file = path.split(self.input_file)[1]
             self.mp4box(
                 self.input_file,
                 path.join(self.output_path, f"_{file[:-4]}.mp4"),
-                )
+            )
         else:
             if isinstance(self.input_file, list):
                 videos_file = [video_file for video_file in self.input_file]

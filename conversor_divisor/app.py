@@ -28,7 +28,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.worker = None
         self.worker_split = None
         self._signal_sigterm = SIGTERM
-        self._platform_ms_win = (sys.platform == 'win32')
+        self._platform_ms_win = sys.platform == "win32"
 
         # menu
         self.button_toggle.clicked.connect(
@@ -99,6 +99,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def stop_process(self):
         if self._platform_ms_win:
             from subprocess import Popen
+
             Popen(["tskill", "ffmpeg"])
         else:
             self.process_in_progress.send_signal(self._signal_sigterm)
@@ -109,6 +110,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def stop_process_split(self):
         if self._platform_ms_win:
             from subprocess import Popen
+
             Popen(["tskill", "mp4box"])
         else:
             self.process_split_in_progress.send_signal(self._signal_sigterm)
@@ -173,7 +175,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         msg_box = QtWidgets.QMessageBox()
         msg_box.setWindowTitle("Conversor & Divisor")
         msg_box.setText(msg)
-        msg_box.setWindowIcon(QtGui.QIcon(u":/MainIcon/main_icone"))
+        msg_box.setWindowIcon(QtGui.QIcon(":/MainIcon/main_icone"))
         msg_box.setIcon(QtWidgets.QMessageBox.Information)
         if msg == "Divisão Concluída.":
             ui_functions.config_init_split(self)
@@ -194,7 +196,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         msg_box = QtWidgets.QMessageBox()
         msg_box.setWindowTitle("Conversor & Divisor")
         msg_box.setText(msg)
-        msg_box.setWindowIcon(QtGui.QIcon(u":/MainIcon/main_icone"))
+        msg_box.setWindowIcon(QtGui.QIcon(":/MainIcon/main_icone"))
         msg_box.setIcon(QtWidgets.QMessageBox.Critical)
         ui_functions.config_init(self)
         msg_box.exec_()
@@ -203,10 +205,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         msg_box = QtWidgets.QMessageBox()
         msg_box.setWindowTitle("Conversor & Divisor")
         msg_box.setText(msg)
-        msg_box.setWindowIcon(QtGui.QIcon(u":/MainIcon/main_icone"))
+        msg_box.setWindowIcon(QtGui.QIcon(":/MainIcon/main_icone"))
         msg_box.setIcon(QtWidgets.QMessageBox.Critical)
         ui_functions.config_init_split(self)
         msg_box.exec_()
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
