@@ -6,7 +6,7 @@ from PySide2 import QtCore, QtWidgets, QtGui
 from config import writer_config
 
 
-_windows = (sys.platform == 'win32')
+_windows = sys.platform == "win32"
 
 
 def config_init(app):
@@ -92,6 +92,7 @@ def open_ouput_folder(app):
 
     if _windows:
         from os import startfile
+
         startfile(app.output_path, "Open")
     else:
         Popen(["xdg-open", f"{app.output_path}"])
@@ -145,9 +146,7 @@ def get_file_video(app):
 def get_path_output_name(app):
     home = Path.home()
     output_path = QtWidgets.QFileDialog.getExistingDirectory(
-        None,
-        "Procurar Diretório de Destino.",
-        r"%s" % home,
+        None, "Procurar Diretório de Destino.", r"%s" % home,
     )
     app.output_path = output_path
     app.line_edit_output_file.setText(app.output_path)
@@ -182,9 +181,7 @@ def get_file_video_split(app):
 def get_path_output_name_split(app):
     home = Path.home()
     path_dst = QtWidgets.QFileDialog.getExistingDirectory(
-        None,
-        "Procurar Diretório de Destino.",
-        r"%s" % home,
+        None, "Procurar Diretório de Destino.", r"%s" % home,
     )
     app.output_path = path_dst
     app.line_edit_output_file_split.setText(app.output_path)
@@ -195,8 +192,9 @@ def set_settings(app):
     value = app.spinBox_split_size.text()
     value_kilobytes = int(value) * 1024
     value_bytes = value_kilobytes * 1024
-    writer_config(split_size_bytes=str(value_bytes),
-                  split_size_kilobytes=str(value_kilobytes),
-                  split_size_mb=value,
-                  )
+    writer_config(
+        split_size_bytes=str(value_bytes),
+        split_size_kilobytes=str(value_kilobytes),
+        split_size_mb=value,
+    )
     app.popup_done("Configurações Aplicadas")
