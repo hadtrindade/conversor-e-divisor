@@ -1,5 +1,5 @@
 # Conversor & Divisor
-[![build](https://github.com/hadtrindade/conversor-e-divisor/workflows/conversor_divisor.yml/badge.svg)](https://github.com/hadtrindade/conversor-e-divisor/actions)
+![Conversor & Divisor](https://github.com/hadtrindade/conversor-e-divisor/workflows/Conversor%20&%20Divisor/badge.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Python 3](https://pyup.io/repos/github/hadtrindade/conversor-e-divisor/python-3-shield.svg)](https://pyup.io/repos/github/hadtrindade/conversor-e-divisor/)
 [![Updates](https://pyup.io/repos/github/hadtrindade/conversor-e-divisor/shield.svg)](https://pyup.io/repos/github/hadtrindade/conversor-e-divisor/)
