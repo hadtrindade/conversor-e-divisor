@@ -1,6 +1,0 @@
-title = "Convert Split Settings"
-
-[settings_split]
-split_size_bytes = "31457280"
-split_size_kilobytes = "30720"
-split_size_mb = "30"

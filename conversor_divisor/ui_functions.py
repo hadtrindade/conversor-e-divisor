@@ -3,7 +3,7 @@ from os import path
 from subprocess import Popen
 from pathlib import Path
 from PySide2 import QtCore, QtWidgets, QtGui
-from config import writer_config
+from settings import Settings
 
 
 _windows = sys.platform == "win32"
@@ -189,12 +189,22 @@ def get_path_output_name_split(app):
 
 
 def set_settings(app):
-    value = app.spinBox_split_size.text()
-    value_kilobytes = int(value) * 1024
+
+    size_value = app.spinBox_split_size.text()
+    value_kilobytes = int(size_value) * 1024
     value_bytes = value_kilobytes * 1024
-    writer_config(
-        split_size_bytes=str(value_bytes),
-        split_size_kilobytes=str(value_kilobytes),
-        split_size_mb=value,
+    s = Settings()
+    s.writer_settings(
+        "settings_split",
+        split_size_bytes=value_bytes,
+        split_size_kilobytes=value_kilobytes,
+        split_size_mb=int(size_value),
+    )
+    resolution_value = app.resolution_settings.currentText()
+    resolution_index_value = app.resolution_settings.currentIndex()
+    s.writer_settings(
+        "settings_convert",
+        resolution_value=resolution_value,
+        resolution_index_value=resolution_index_value,
     )
     app.popup_done("Configurações Aplicadas")

@@ -6,7 +6,7 @@ from ui_cd import Ui_MainWindow
 import ui_functions
 from worker import Worker
 from convert import Convert
-from config import SPLIT_SIZE_MB
+from settings import Settings
 
 
 VERSION = "1.3.0"
@@ -29,6 +29,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.worker_split = None
         self._signal_sigterm = SIGTERM
         self._platform_ms_win = sys.platform == "win32"
+        s = Settings()
+        self.settings = s.read_settings()
 
         # menu
         self.button_toggle.clicked.connect(
@@ -78,7 +80,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_author.setText(AUTHOR)
 
         # SET SETTINGS
-        self.spinBox_split_size.setValue(int(SPLIT_SIZE_MB))
+        self.spinBox_split_size.setValue(
+            self.settings["settings_split"]["split_size_mb"]
+        )
+        self.resolution_settings.setCurrentIndex(
+            self.settings["settings_convert"]["resolution_index_value"]
+        )
         self.pushButton_apply_settings.clicked.connect(self.change_settings)
 
     def change_settings(self):

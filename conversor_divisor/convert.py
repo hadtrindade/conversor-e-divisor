@@ -2,7 +2,7 @@ import re
 import sys
 from subprocess import Popen, PIPE
 from os import path, getcwd, remove
-from config import SPLIT_SIZE_BYTES, SPLIT_SIZE_KILOBYTES
+from settings import Settings
 
 _windows = sys.platform == "win32"
 
@@ -47,6 +47,8 @@ class Convert:
         self.low = low
         self.not_split = not_split
         self.just_divide = just_divide
+        s = Settings()
+        self.settings = s.read_settings()
 
     def _subprocess(self, *args, **kwargs):
 
@@ -87,7 +89,7 @@ class Convert:
                 "-i",
                 f"{video_file}",
                 "-s",
-                "320x240",
+                f"{self.settings['settings_convert']['resolution_value']}",
                 "-vcodec",
                 "mpeg4",
                 "-preset",
@@ -146,7 +148,7 @@ class Convert:
                 "-add",
                 f"{video_file}",
                 "-split-size",
-                f"{SPLIT_SIZE_KILOBYTES}",  # Quilobytes
+                f"{self.settings['settings_split']['split_size_kilobytes']}",  # Quilobytes
                 f"{output_video_file}",
             ]
             process = self._subprocess(*args)
@@ -230,7 +232,8 @@ class Convert:
         if not result:
             return
         if (
-            int(path.getsize(output_file)) > int(SPLIT_SIZE_BYTES)
+            int(path.getsize(output_file))
+            > self.settings["settings_split"]["split_size_bytes"]
             and not self.not_split
         ):
             file = path.split(output_file)[1]
@@ -248,8 +251,9 @@ class Convert:
     def convert_or_split(self):
 
         if self.just_divide:
-            if int(path.getsize(self.input_file)) <= int(
-                SPLIT_SIZE_BYTES
+            if (
+                int(path.getsize(self.input_file))
+                <= self.settings["settings_split"]["split_size_bytes"]
             ):  # Bytes
                 self.done_signal.emit("Video já está em tamanho apropriado!")
                 return
