@@ -120,13 +120,13 @@ class Convert:
             self.process_signal.emit(process)
             self._bar_ffmpeg(process.stderr)
             process.wait()
-            if process.returncode == 0:
-                return True
-            else:
-                self.error_signal.emit(f"Erro: {process.returncode}")
+            if process.returncode:
+                self.error_signal.emit("Erro no processo de conversão.")
                 return
+            return True
         except Exception as e:
             self.error_signal.emit(f"Erro: {e}")
+            return
 
     def _bar_mp4box(self, video_in, std_out):
 
@@ -175,14 +175,13 @@ class Convert:
             self.process_signal.emit(process)
             self._bar_mp4box(video_in, process.stderr)
             process.wait()
-            if process.returncode == 0:
-                if self.just_divide:
-                    self.done_signal.emit("Divisão Concluída.")
-                    return True
-                return True
-            else:
+            if process.returncode:
                 self.error_signal.emit(f"Erro: {process.returncode}")
                 return
+            if self.just_divide:
+                self.done_signal.emit("Divisão Concluída.")
+                return True
+            return True
         except Exception as e:
             self.error_signal.emit(f"Erro: {e}")
             return
@@ -228,8 +227,7 @@ class Convert:
             remove(output_file)
             if not result:
                 return
-            else:
-                return True
+            return True
         else:
             return True
 
