@@ -224,12 +224,11 @@ class Convert:
             result = self.mp4box(
                 output_file, path.join(output_path, f"_{file[:-5]}.mp4")
             )
-            remove(output_file)
             if not result:
                 return
+            remove(output_file)
             return True
-        else:
-            return True
+        return True
 
     def convert_or_split(self):
 
