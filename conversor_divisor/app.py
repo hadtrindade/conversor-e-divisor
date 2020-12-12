@@ -2,15 +2,12 @@ import sys
 from signal import SIGTERM
 from PySide2 import QtGui, QtWidgets
 from pathlib import Path
-from ui_cd import Ui_MainWindow
+from ui_conversor_divisor.ui_cd import Ui_MainWindow
+from ui_conversor_divisor import __version__, __author__
 import ui_functions
 from worker import Worker
 from convert import Convert
 from settings import Settings
-
-
-VERSION = "1.3.2"
-AUTHOR = "Ivo H. Trindade"
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -76,8 +73,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         ui_functions.config_init(self)
         ui_functions.config_init_split(self)
         # Infos
-        self.label_version.setText(VERSION)
-        self.label_author.setText(f"Desenvolvido por {AUTHOR}")
+        self.label_version.setText(__version__)
+        self.label_author.setText(f"Desenvolvido por {__author__}")
 
         # SET SETTINGS
         self.spinBox_split_size.setValue(
@@ -185,7 +182,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         msg_box = QtWidgets.QMessageBox()
         msg_box.setWindowTitle("Conversor & Divisor")
         msg_box.setText(msg)
-        msg_box.setWindowIcon(QtGui.QIcon(":/MainIcon/main_icone"))
+        msg_box.setWindowIcon(QtGui.QIcon(":/MainIcon/img/main_icone"))
         msg_box.setIcon(QtWidgets.QMessageBox.Information)
         if msg == "Divisão Concluída.":
             ui_functions.config_init_split(self)

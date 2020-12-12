@@ -26,8 +26,8 @@
    <string>Conversor &amp; Divisor</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/MainIcon/main_icone</normaloff>:/MainIcon/main_icone</iconset>
+   <iconset resource="resources_cd.qrc">
+    <normaloff>:/MainIcon/img/main_icone.ico</normaloff>:/MainIcon/img/main_icone.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -174,7 +174,7 @@ QPushButton QToolTip {
                </property>
                <property name="icon">
                 <iconset resource="resources_cd.qrc">
-                 <normaloff>:/MenuIcon/cil-menu.png</normaloff>:/MenuIcon/cil-menu.png</iconset>
+                 <normaloff>:/MenuIcon/img/cil-menu.png</normaloff>:/MenuIcon/img/cil-menu.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -223,7 +223,7 @@ QPushButton QToolTip {
                </property>
                <property name="icon">
                 <iconset resource="resources_cd.qrc">
-                 <normaloff>:/menu_CC/cil-movie.png</normaloff>:/menu_CC/cil-movie.png</iconset>
+                 <normaloff>:/menu_CC/img/cil-movie.png</normaloff>:/menu_CC/img/cil-movie.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -266,7 +266,7 @@ QPushButton QToolTip {
                </property>
                <property name="icon">
                 <iconset resource="resources_cd.qrc">
-                 <normaloff>:/menu_C/cil-view-module.png</normaloff>:/menu_C/cil-view-module.png</iconset>
+                 <normaloff>:/menu_C/img/cil-view-module.png</normaloff>:/menu_C/img/cil-view-module.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -336,7 +336,7 @@ QPushButton QToolTip {
                </property>
                <property name="icon">
                 <iconset resource="resources_cd.qrc">
-                 <normaloff>:/Menu_Settings/cil-options-horizontal.png</normaloff>:/Menu_Settings/cil-options-horizontal.png</iconset>
+                 <normaloff>:/Menu_Settings/img/cil-options-horizontal.png</normaloff>:/Menu_Settings/img/cil-options-horizontal.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -625,7 +625,7 @@ QPushButton QToolTip {
                </property>
                <property name="icon">
                 <iconset resource="resources_cd.qrc">
-                 <normaloff>:/button_output_file/cil-folder-open.png</normaloff>:/button_output_file/cil-folder-open.png</iconset>
+                 <normaloff>:/button_output_file/img/cil-folder-open.png</normaloff>:/button_output_file/img/cil-folder-open.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -707,7 +707,7 @@ QPushButton QToolTip {
                </property>
                <property name="icon">
                 <iconset resource="resources_cd.qrc">
-                 <normaloff>:/button_search_file/cil-movie.png</normaloff>:/button_search_file/cil-movie.png</iconset>
+                 <normaloff>:/button_search_file/img/cil-movie.png</normaloff>:/button_search_file/img/cil-movie.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -719,7 +719,7 @@ QPushButton QToolTip {
               <widget class="QPushButton" name="button_stop">
                <property name="geometry">
                 <rect>
-                 <x>270</x>
+                 <x>265</x>
                  <y>250</y>
                  <width>200</width>
                  <height>40</height>
@@ -778,7 +778,7 @@ QPushButton QToolTip {
                </property>
                <property name="icon">
                 <iconset resource="resources_cd.qrc">
-                 <normaloff>:/button_stop/cil-media-stop.png</normaloff>:/button_stop/cil-media-stop.png</iconset>
+                 <normaloff>:/button_stop/img/cil-media-stop.png</normaloff>:/button_stop/img/cil-media-stop.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -849,7 +849,7 @@ QPushButton QToolTip {
                </property>
                <property name="icon">
                 <iconset resource="resources_cd.qrc">
-                 <normaloff>:/open_folder/cil-folder.png</normaloff>:/open_folder/cil-folder.png</iconset>
+                 <normaloff>:/open_folder/img/cil-folder-open.png</normaloff>:/open_folder/img/cil-folder-open.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -920,7 +920,7 @@ QPushButton QToolTip {
                </property>
                <property name="icon">
                 <iconset resource="resources_cd.qrc">
-                 <normaloff>:/button_start/cil-media-play.png</normaloff>:/button_start/cil-media-play.png</iconset>
+                 <normaloff>:/button_start/img/cil-media-play.png</normaloff>:/button_start/img/cil-media-play.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -932,9 +932,9 @@ QPushButton QToolTip {
               <widget class="QLineEdit" name="line_edit_output_file">
                <property name="geometry">
                 <rect>
-                 <x>494</x>
+                 <x>486</x>
                  <y>190</y>
-                 <width>231</width>
+                 <width>240</width>
                  <height>35</height>
                 </rect>
                </property>
@@ -978,7 +978,7 @@ QLineEdit:focus {
               <widget class="QProgressBar" name="progress_bar">
                <property name="geometry">
                 <rect>
-                 <x>250</x>
+                 <x>244</x>
                  <y>190</y>
                  <width>240</width>
                  <height>35</height>
@@ -1014,7 +1014,7 @@ QProgressBar::chunk {
               <widget class="QLineEdit" name="line_edit_input_file">
                <property name="geometry">
                 <rect>
-                 <x>5</x>
+                 <x>2</x>
                  <y>190</y>
                  <width>240</width>
                  <height>35</height>
@@ -1249,7 +1249,7 @@ QPushButton QToolTip {
                   </property>
                   <property name="icon">
                    <iconset resource="resources_cd.qrc">
-                    <normaloff>:/button_search_file/cil-movie.png</normaloff>:/button_search_file/cil-movie.png</iconset>
+                    <normaloff>:/button_search_file/img/cil-movie.png</normaloff>:/button_search_file/img/cil-movie.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1372,7 +1372,7 @@ QPushButton QToolTip {
                   </property>
                   <property name="icon">
                    <iconset resource="resources_cd.qrc">
-                    <normaloff>:/button_start/cil-media-play.png</normaloff>:/button_start/cil-media-play.png</iconset>
+                    <normaloff>:/button_start/img/cil-media-play.png</normaloff>:/button_start/img/cil-media-play.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1443,7 +1443,7 @@ QPushButton QToolTip {
                   </property>
                   <property name="icon">
                    <iconset resource="resources_cd.qrc">
-                    <normaloff>:/button_output_file/cil-folder-open.png</normaloff>:/button_output_file/cil-folder-open.png</iconset>
+                    <normaloff>:/button_output_file/img/cil-folder-open.png</normaloff>:/button_output_file/img/cil-folder-open.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1566,7 +1566,7 @@ QPushButton QToolTip {
                   </property>
                   <property name="icon">
                    <iconset resource="resources_cd.qrc">
-                    <normaloff>:/open_folder/cil-folder.png</normaloff>:/open_folder/cil-folder.png</iconset>
+                    <normaloff>:/open_folder/img/cil-folder-open.png</normaloff>:/open_folder/img/cil-folder-open.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1673,7 +1673,7 @@ QPushButton QToolTip {
                   </property>
                   <property name="icon">
                    <iconset resource="resources_cd.qrc">
-                    <normaloff>:/button_stop/cil-media-stop.png</normaloff>:/button_stop/cil-media-stop.png</iconset>
+                    <normaloff>:/button_stop/img/cil-media-stop.png</normaloff>:/button_stop/img/cil-media-stop.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
