@@ -6,14 +6,15 @@
 [![Updates](https://pyup.io/repos/github/hadtrindade/conversor-e-divisor/shield.svg)](https://pyup.io/repos/github/hadtrindade/conversor-e-divisor/)
 
 ---
-#####Conversor & Divisor é uma interface gráfica gratuita e open-source para o FFmpeg e MP4Box a fim de realizar conversões e divisões para o PJe.
+
+#### Conversor & Divisor é uma interface gráfica gratuita e open-source para o FFmpeg e MP4Box a fim de realizar conversões e divisões para o PJe.
 
 ![Conversor & Divisor](https://i.imgur.com/iQzzrBN.gif)
 
 ---
-#####Como obter o código-fonte
+#### Como obter o código-fonte
 
 `git clone https://github.com/hadtrindade/conversor-e-divisor`
 
 
-`Binários do MP4Box e FFmpeg em `[Aqui](https://drive.google.com/drive/folders/1h_ySXbsgu-hWg_ZKAWhqQx4mCNzQy3eU?usp=sharing)
+`Binários do MP4Box e FFmpeg em `[Aqui](https://drive.google.com/drive/folders/1h_ySXbsgu-hWg_ZKAWhqQx4mCNzQy3eU?usp=sharing) 
