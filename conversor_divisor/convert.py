@@ -8,24 +8,6 @@ _windows = sys.platform == "win32"
 
 
 class Convert:
-
-    regex_total_time = re.compile(
-        r"\sDuration:\s[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}"
-    )
-    regex_elapsed_time = re.compile(
-        r"time=\s?[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}"
-    )
-
-    regex_import_iso = re.compile(
-        r"^Importing ISO File:\s*\|\S*\s*\|\s\([0-9]{2}"
-    )
-    regex_splitting = re.compile(r"^Splitting:\s*\|\S*\s*\|\s\([0-9]{2}")
-    regex_iso_file = re.compile(r"^ISO File Writing:\s*\|\S*\s*\|\s\([0-9]{2}")
-    regex_video_extensions = re.compile(
-        r"\.(mp4|mkv|m4v|flv|swf|avchd|mov|qt|avi|wmv|mpeg|rmvb|[Ww]eb[Mm])"
-    )
-    regex_unknown_extension = re.compile(r"\.\S*")
-
     def __init__(
         self,
         input_file=None,
@@ -34,6 +16,7 @@ class Convert:
         progress_signal=None,
         error_signal=None,
         done_signal=None,
+        line_input_file_signal=None,
         low=None,
         not_split=None,
         just_divide=None,
@@ -44,6 +27,7 @@ class Convert:
         self.progress_signal = progress_signal
         self.error_signal = error_signal
         self.done_signal = done_signal
+        self.line_input_file_signal = line_input_file_signal
         self.low = low
         self.not_split = not_split
         self.just_divide = just_divide
@@ -63,6 +47,30 @@ class Convert:
             kwargs["shell"] = True
         process = Popen(args, **kwargs)
         return process
+
+    def _bar_ffmpeg(self, std_out):
+
+        regex_total_time = re.compile(
+            r"\sDuration:\s[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}"
+        )
+        regex_elapsed_time = re.compile(
+            r"time=\s?[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}"
+        )
+        time_duration = 0
+        elapsed_time = 0
+        for line in std_out:
+            tt = regex_total_time.findall(line)
+            if tt:
+                time_duration = self._get_sec(tt[0].split()[1])
+            et = regex_elapsed_time.findall(line)
+            if et:
+                elapsed_time = self._get_sec(et[0].split("=")[1])
+            try:
+                self.progress_signal.emit(
+                    int(elapsed_time / time_duration * 100)
+                )
+            except ZeroDivisionError:
+                pass
 
     def ffmpeg(self, video_in, video_out):
         binary_ffmpeg = "ffmpeg"
@@ -110,21 +118,7 @@ class Convert:
         try:
             process = self._subprocess(*args,)
             self.process_signal.emit(process)
-            time_duration = 0
-            elapsed_time = 0
-            for line in process.stderr:
-                tt = self.regex_total_time.findall(line)
-                if tt:
-                    time_duration = self._get_sec(tt[0].split()[1])
-                et = self.regex_elapsed_time.findall(line)
-                if et:
-                    elapsed_time = self._get_sec(et[0].split("=")[1])
-                try:
-                    self.progress_signal.emit(
-                        int(elapsed_time / time_duration * 100)
-                    )
-                except ZeroDivisionError:
-                    pass
+            self._bar_ffmpeg(process.stderr)
             process.wait()
             if process.returncode == 0:
                 return True
@@ -133,6 +127,32 @@ class Convert:
                 return
         except Exception as e:
             self.error_signal.emit(f"Erro: {e}")
+
+    def _bar_mp4box(self, video_in, std_out):
+
+        regex_import_iso = re.compile(
+            r"^Importing ISO File:\s*\|\S*\s*\|\s\([0-9]{2}"
+        )
+        regex_splitting = re.compile(r"^Splitting:\s*\|\S*\s*\|\s\([0-9]{2}")
+        regex_iso_file = re.compile(
+            r"^ISO File Writing:\s*\|\S*\s*\|\s\([0-9]{2}"
+        )
+        total_size = self._get_total_split_bar(video_in)
+        count = 0
+        for line in std_out:
+            import_iso = regex_import_iso.findall(line)
+            split_file = regex_splitting.findall(line)
+            iso_file = regex_iso_file.findall(line)
+            if import_iso:
+                self.progress_signal.emit(int(count / total_size * 100))
+                count += 1
+            elif split_file:
+                self.progress_signal.emit(int(count / total_size * 100))
+                count += 1
+            elif iso_file:
+                if int(count / total_size * 100) <= 100:
+                    self.progress_signal.emit(int(count / total_size * 100))
+                    count += 1
 
     def mp4box(self, video_in, video_out):
         binary_mp4box = "MP4Box"
@@ -153,46 +173,7 @@ class Convert:
             ]
             process = self._subprocess(*args)
             self.process_signal.emit(process)
-            count = 0
-            for line in process.stderr:
-                import_iso = self.regex_import_iso.findall(line)
-                split_file = self.regex_splitting.findall(line)
-                iso_file = self.regex_iso_file.findall(line)
-                if import_iso:
-                    self.progress_signal.emit(
-                        int(
-                            count
-                            / self._get_total_split_bar(self.input_file)
-                            * 100
-                        )
-                    )
-                    count += 1
-                elif split_file:
-                    self.progress_signal.emit(
-                        int(
-                            count
-                            / self._get_total_split_bar(self.input_file)
-                            * 100
-                        )
-                    )
-                    count += 1
-                elif iso_file:
-                    if (
-                        int(
-                            count
-                            / self._get_total_split_bar(self.input_file)
-                            * 100
-                        )
-                        <= 100
-                    ):
-                        self.progress_signal.emit(
-                            int(
-                                count
-                                / self._get_total_split_bar(self.input_file)
-                                * 100
-                            )
-                        )
-                        count += 1
+            self._bar_mp4box(video_in, process.stderr)
             process.wait()
             if process.returncode == 0:
                 if self.just_divide:
@@ -208,7 +189,7 @@ class Convert:
 
     def _get_total_split_bar(self, input_file):
 
-        file_size = int(path.getsize(self.input_file)) / 1024
+        file_size = int(path.getsize(input_file)) / 1024
         number_of_divisions = file_size / 30720
         return 294 + 100 * number_of_divisions
 
@@ -219,12 +200,16 @@ class Convert:
 
     def execute(self, input_file, output_path):
 
-        search_ext = self.regex_video_extensions.findall(input_file)
+        regex_video_extensions = re.compile(
+            r"\.(mp4|mkv|m4v|flv|swf|avchd|mov|qt|avi|wmv|mpeg|rmvb|[Ww]eb[Mm])"
+        )
+        regex_unknown_extension = re.compile(r"\.\S*")
+        search_ext = regex_video_extensions.findall(input_file)
         if search_ext:
-            re_split = self.regex_video_extensions.split(input_file)
+            re_split = regex_video_extensions.split(input_file)
             file = path.split(re_split[0])[1]
         else:
-            re_unknown = self.regex_unknown_extension.split(input_file)
+            re_unknown = regex_unknown_extension.split(input_file)
             file = path.split(re_unknown[0])[1]
         output_file = path.join(output_path, f"{file}_.mp4")
 
@@ -266,8 +251,13 @@ class Convert:
             if isinstance(self.input_file, list):
                 videos_file = [video_file for video_file in self.input_file]
                 cd_n = False
+                count = 1
                 for video_file in videos_file:
+                    self.line_input_file_signal.emit(
+                        f"Convertendo {count} de {len(videos_file)}"
+                    )
                     cd_n = self.execute(video_file, self.output_path)
+                    count += 1
                 if cd_n:
                     self.done_signal.emit(
                         "Conversões e/ou Divisões Concluídas."

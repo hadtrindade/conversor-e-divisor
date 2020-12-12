@@ -131,7 +131,7 @@ def get_file_video(app):
         app.input_file = file_name
         app.output_path = paths[0]
         app.line_edit_input_file.setText(
-            f"Você Adicinou {len(file_name)} Videos"
+            f"Vídeos a converter: {len(file_name)}"
         )
         app.line_edit_output_file.setText(app.output_path)
         app.line_edit_input_file.setVisible(True)

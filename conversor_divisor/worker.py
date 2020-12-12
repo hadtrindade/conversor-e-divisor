@@ -3,6 +3,7 @@ from PySide2.QtCore import QThread, QObject, Signal, Slot
 
 class SignalsToWorker(QObject):
 
+    line_input_file_signal = Signal(object)
     progress_signal = Signal(object)
     process_signal = Signal(object)
     done_signal = Signal(object)
@@ -17,6 +18,9 @@ class Worker(QThread):
         self.kwargs = kwargs
         self.signal = SignalsToWorker()
 
+        self.kwargs[
+            "line_input_file_signal"
+        ] = self.signal.line_input_file_signal
         self.kwargs["progress_signal"] = self.signal.progress_signal
         self.kwargs["process_signal"] = self.signal.process_signal
         self.kwargs["done_signal"] = self.signal.done_signal

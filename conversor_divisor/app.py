@@ -9,8 +9,8 @@ from convert import Convert
 from settings import Settings
 
 
-VERSION = "1.3.0"
-AUTHOR = "Desenvolvido por Ivo H. Trindade"
+VERSION = "1.3.2"
+AUTHOR = "Ivo H. Trindade"
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -77,7 +77,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         ui_functions.config_init_split(self)
         # Infos
         self.label_version.setText(VERSION)
-        self.label_author.setText(AUTHOR)
+        self.label_author.setText(f"Desenvolvido por {AUTHOR}")
 
         # SET SETTINGS
         self.spinBox_split_size.setValue(
@@ -151,6 +151,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.worker = Worker()
         self.worker.args = (self.input_file, self.output_path)
+        self.worker.signal.line_input_file_signal.connect(
+            self.line_edit_input_file.setText
+        )
         self.worker.signal.process_signal.connect(self.set_process)
         self.worker.signal.progress_signal.connect(self.progress_bar.setValue)
         self.worker.signal.error_signal.connect(self.popup_error)
