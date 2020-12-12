@@ -8,7 +8,7 @@ clean:
 	rm -rf *egg-info
 	rm -rf *tox/
 	rm -rf docs/_build
-	pip3 install -e --upgrade --no-cache
+	pip3 install -e . --no-cache
 
 install:
 	pip install -r requeriments.txt
@@ -24,3 +24,6 @@ pyside-uic:
 
 pyside-rcc:
 	pyside2-rcc ui/resources_cd.qrc -o ui_conversor_divisor/resources_cd_rc.py
+
+compile:
+	bash compile_linux.sh
