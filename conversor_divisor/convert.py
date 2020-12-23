@@ -36,10 +36,7 @@ class Convert:
         self.settings = s.read_settings()
 
     def _subprocess(self, *args, **kwargs):
-
         kwargs["bufsize"] = 1
-        kwargs["encoding"] = 'utf-8'
-        kwargs["text"] = True
         kwargs["stdout"] = PIPE
         kwargs["stderr"] = PIPE
         if _windows:
@@ -118,7 +115,7 @@ class Convert:
                 "-y",
             ]
         try:
-            process = self._subprocess(*args,)
+            process = self._subprocess(*args, encoding='utf-8', text=True)
             self.process_signal.emit(process)
             self._bar_ffmpeg(process.stderr)
             process.wait()
@@ -173,7 +170,7 @@ class Convert:
                 f"{self.settings['settings_split']['split_size_kilobytes']}",  # Quilobytes
                 f"{output_video_file}",
             ]
-            process = self._subprocess(*args)
+            process = self._subprocess(*args, universal_newlines=True)
             self.process_signal.emit(process)
             self._bar_mp4box(video_in, process.stderr)
             process.wait()
