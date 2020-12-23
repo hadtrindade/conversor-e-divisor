@@ -4,6 +4,7 @@ from subprocess import Popen, PIPE
 from os import path, getcwd, remove
 from settings import Settings
 
+
 _windows = sys.platform == "win32"
 
 
@@ -37,7 +38,8 @@ class Convert:
     def _subprocess(self, *args, **kwargs):
 
         kwargs["bufsize"] = 1
-        kwargs["universal_newlines"] = True
+        kwargs["encoding"] = 'utf-8'
+        kwargs["text"] = True
         kwargs["stdout"] = PIPE
         kwargs["stderr"] = PIPE
         if _windows:
