@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'ui_cd.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 5.15.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -1066,11 +1066,11 @@ class Ui_MainWindow(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;\"><br /></p>\n"
 "<p align=\"justify\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">	Interface Grafica para convers\u00e3o e divis\u00e3o de v\u00eddeos para inclus\u00e3o no PJe, utilizando as ferramentas FFMPEG e MP4Box.</p></body></html>", None))
         self.label_config.setText(QCoreApplication.translate("MainWindow", u"Configura\u00e7\u00f5es", None))
-        self.label_split_size.setText(QCoreApplication.translate("MainWindow", u"Dividir em (MB)", None))
+        self.label_split_size.setText(QCoreApplication.translate("MainWindow", u"Dividir em (MB):", None))
         self.label_config_split.setText(QCoreApplication.translate("MainWindow", u"Divisor", None))
         self.label_config_convert.setText(QCoreApplication.translate("MainWindow", u"Conversor **modo Compactar", None))
         self.pushButton_apply_settings.setText(QCoreApplication.translate("MainWindow", u"Aplicar", None))
-        self.label_resolution.setText(QCoreApplication.translate("MainWindow", u"Resolution", None))
+        self.label_resolution.setText(QCoreApplication.translate("MainWindow", u"Resolu\u00e7\u00e3o:", None))
         self.resolution_settings.setItemText(0, QCoreApplication.translate("MainWindow", u"320x240", None))
         self.resolution_settings.setItemText(1, QCoreApplication.translate("MainWindow", u"640x480", None))
         self.resolution_settings.setItemText(2, QCoreApplication.translate("MainWindow", u"800x600", None))
