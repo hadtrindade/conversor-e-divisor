@@ -19,6 +19,7 @@ class Convert:
         done_signal=None,
         line_input_file_signal=None,
         low=None,
+        audio=None,
         not_split=None,
         just_divide=None,
     ):
@@ -30,6 +31,7 @@ class Convert:
         self.done_signal = done_signal
         self.line_input_file_signal = line_input_file_signal
         self.low = low
+        self.audio = audio
         self.not_split = not_split
         self.just_divide = just_divide
         s = Settings()
@@ -71,34 +73,32 @@ class Convert:
             except ZeroDivisionError:
                 pass
 
-    def ffmpeg(self, video_in, video_out):
+    def ffmpeg(self, file_in, file_out):
         binary_ffmpeg = "ffmpeg"
-        video_file = video_in
-        output_video_file = video_out
+        input_file = file_in
+        output_file = file_out
         if _windows:
             binary_ffmpeg = path.join(getcwd(), r"FFmpeg\bin\ffmpeg.exe")
-            video_file = video_in.replace("/", "\\")
-            output_video_file = video_out.replace("/", "\\")
+            input_file = file_in.replace("/", "\\")
+            output_file = file_out.replace("/", "\\")
         args = [
             f"{binary_ffmpeg}",
             "-i",
-            f"{video_file}",
+            f"{input_file}",
             "-preset",
             "fast",
             "-max_muxing_queue_size",
             "9999",
-            f"{output_video_file}",
+            f"{output_file}",
             "-y",
         ]
         if self.low:
             args = [
                 f"{binary_ffmpeg}",
                 "-i",
-                f"{video_file}",
+                f"{input_file}",
                 "-s",
                 f"{self.settings['settings_convert']['resolution_value']}",
-                "-vcodec",
-                "mpeg4",
                 "-preset",
                 "fast",
                 "-r",
@@ -111,18 +111,32 @@ class Convert:
                 "1",
                 "-max_muxing_queue_size",
                 "9999",
-                f"{output_video_file}",
+                f"{output_file}",
+                "-y",
+            ]
+        if self.audio:
+            path_out, file = path.split(output_file)
+            output_file = path.join(path_out, f"_{file[:-5]}.mp3")
+            args = [
+                f"{binary_ffmpeg}",
+                "-i",
+                f"{input_file}",
+                "-acodec",
+                "libmp3lame",
+                "-max_muxing_queue_size",
+                "9999",
+                f"{output_file}",
                 "-y",
             ]
         try:
-            process = self._subprocess(*args, encoding='utf-8', text=True)
+            process = self._subprocess(*args, encoding="utf-8", text=True)
             self.process_signal.emit(process)
             self._bar_ffmpeg(process.stderr)
             process.wait()
             if process.returncode:
                 self.error_signal.emit("Erro no processo de conversão.")
                 return
-            return True
+            return output_file
         except Exception as e:
             self.error_signal.emit(f"Erro: {e}")
             return
@@ -215,9 +229,10 @@ class Convert:
         if not result:
             return
         if (
-            int(path.getsize(output_file))
+            int(path.getsize(result))
             > self.settings["settings_split"]["split_size_bytes"]
             and not self.not_split
+            and not self.audio
         ):
             file = path.split(output_file)[1]
             result = self.mp4box(
@@ -245,14 +260,14 @@ class Convert:
             )
         else:
             if isinstance(self.input_file, list):
-                videos_file = [video_file for video_file in self.input_file]
+                input_files = [file for file in self.input_file]
                 cd_n = False
                 count = 1
-                for video_file in videos_file:
+                for input_file in input_files:
                     self.line_input_file_signal.emit(
-                        f"Convertendo {count} de {len(videos_file)}"
+                        f"Convertendo {count} de {len(input_files)}"
                     )
-                    cd_n = self.execute(video_file, self.output_path)
+                    cd_n = self.execute(input_file, self.output_path)
                     count += 1
                 if cd_n:
                     self.done_signal.emit(

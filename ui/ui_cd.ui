@@ -437,7 +437,9 @@ QPushButton QToolTip {
                 </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">color: rgb(69, 69, 69);</string>
+                <string notr="true">QLabel{
+	color: rgb(69, 69, 69);
+}</string>
                </property>
                <property name="text">
                 <string>Conversor &amp; Divisor</string>
@@ -446,8 +448,8 @@ QPushButton QToolTip {
               <widget class="QRadioButton" name="radio_button_normal">
                <property name="geometry">
                 <rect>
-                 <x>200</x>
-                 <y>110</y>
+                 <x>190</x>
+                 <y>120</y>
                  <width>111</width>
                  <height>21</height>
                 </rect>
@@ -462,7 +464,11 @@ QPushButton QToolTip {
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Qualidade Normal: o vídeo mantém todas suas caracteristicas originais.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">QRadioButton::indicator{
+                <string notr="true">QRadioButton{
+	color: rgb(69, 69, 69);
+}
+
+QRadioButton::indicator{
 	color: rgb(69, 69, 69);
 
 }
@@ -484,7 +490,7 @@ QRadioButton QToolTip {
                <property name="geometry">
                 <rect>
                  <x>30</x>
-                 <y>110</y>
+                 <y>120</y>
                  <width>131</width>
                  <height>21</height>
                 </rect>
@@ -499,7 +505,11 @@ QRadioButton QToolTip {
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Qualidade Baixa: o vídeo perde qualidade, mas a conversão e/ou divisão é mais rápida.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Resolução: 320x240&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Codec: mpeg4&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;FPS: 30&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Bitrate: 100 kbps &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Áudio mono de 48 kbps / 44 KHz&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">QRadioButton::indicator{
+                <string notr="true">QRadioButton{
+	color: rgb(69, 69, 69);
+}
+
+QRadioButton::indicator{
 	color: rgb(69, 69, 69);
 }
 
@@ -520,7 +530,7 @@ QRadioButton QToolTip {
                <property name="geometry">
                 <rect>
                  <x>30</x>
-                 <y>76</y>
+                 <y>50</y>
                  <width>141</width>
                  <height>21</height>
                 </rect>
@@ -535,7 +545,11 @@ QRadioButton QToolTip {
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Não dividir, somente converte o vídeo.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">QCheckBox::indicator{
+                <string notr="true">QCheckBox{
+	color: rgb(69, 69, 69);
+}
+
+QCheckBox::indicator{
 	color: rgb(69, 69, 69);
 	
 }
@@ -548,6 +562,47 @@ QCheckBox QToolTip {
                </property>
                <property name="text">
                 <string>Não Dividir</string>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+              <widget class="QCheckBox" name="check_box_audio">
+               <property name="geometry">
+                <rect>
+                 <x>30</x>
+                 <y>80</y>
+                 <width>141</width>
+                 <height>21</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Converte qualquer vídeo ou  áudio para MP3.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QCheckBox{
+	color: rgb(69, 69, 69);
+}
+
+QCheckBox::indicator{
+	color: rgb(69, 69, 69);
+	
+}
+
+QCheckBox QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
+}</string>
+               </property>
+               <property name="text">
+                <string>Áudio</string>
                </property>
                <property name="checked">
                 <bool>false</bool>
@@ -1769,10 +1824,10 @@ QPushButton QToolTip {
                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Conversor &amp;amp; Divisor&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;	Interface Grafica para conversão e divisão de vídeos para inclusão no PJe, utilizando as ferramentas FFMPEG e MP4Box.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:600;&quot;&gt;Conversor &amp;amp; Divisor&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt;&quot;&gt;	Interface Grafica para conversão e divisão de vídeos para inclusão no PJe, utilizando as ferramentas FFMPEG e MP4Box.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </widget>
@@ -2132,7 +2187,10 @@ QComboBox:focus {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">color: rgb(69, 69, 69);</string>
+              <string notr="true">QLabel{
+	color: rgb(69, 69, 69);
+}
+</string>
              </property>
              <property name="text">
               <string>  Desenvolvido por Ivo H. Trindade</string>
@@ -2149,8 +2207,13 @@ QComboBox:focus {
                <bold>false</bold>
               </font>
              </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel{
+	color: rgb(69, 69, 69);
+}</string>
+             </property>
              <property name="text">
-              <string>v1.2.0  </string>
+              <string>v1.5.0  </string>
              </property>
             </widget>
            </item>

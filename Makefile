@@ -19,11 +19,12 @@ install-dev:
 	mkdir FFmpeg
 	mkdir MP4Box
 
-pyside-uic:
+compile-ui:
 	pyside2-uic ui/ui_cd.ui -o ui_conversor_divisor/ui_cd.py
-
-pyside-rcc:
 	pyside2-rcc ui/resources_cd.qrc -o ui_conversor_divisor/resources_cd_rc.py
 
 compile:
 	bash compile_linux.sh
+
+start-app:
+	python conversor_divisor/app.py

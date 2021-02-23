@@ -22,6 +22,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.input_file_split = None
         self.split = None
         self.low = True
+        self.audio = None
         self.worker = None
         self.worker_split = None
         self._signal_sigterm = SIGTERM
@@ -45,6 +46,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_stop_split.clicked.connect(self.stop_process_split)
         # button_checkbox_split
         self.check_box_split.clicked.connect(self.change_not_split)
+        # button_checkbox_audio
+        self.check_box_audio.clicked.connect(self.change_mode_audio)
         # buttons_source_files
         self.button_source_file.clicked.connect(
             lambda: ui_functions.get_file_video(self)
@@ -93,6 +96,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.not_split = True
         else:
             self.not_split = False
+
+    def change_mode_audio(self):
+        if self.check_box_audio.isChecked():
+            self.audio = True
+            self.check_box_split.hide()
+            self.radio_button_low.hide()
+            self.radio_button_normal.hide()
+        else:
+            self.audio = False
+            self.radio_button_normal.setVisible(True)
+            self.radio_button_low.setVisible(True)
+            self.check_box_split.setVisible(True)
 
     def set_process(self, obj_proc):
         self.process_in_progress = obj_proc
@@ -156,6 +171,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.worker.signal.error_signal.connect(self.popup_error)
         self.worker.signal.done_signal.connect(self.popup_done)
         self.worker.kwargs["low"] = self.low
+        self.worker.kwargs["audio"] = self.audio
         self.worker.kwargs["not_split"] = self.not_split
         self.worker.kwargs["just_divide"] = self.split
         self.worker._class = Convert
