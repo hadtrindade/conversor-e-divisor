@@ -68,7 +68,7 @@ def toggle_menu(app, max_width, enable):
         if width == standard:
             width_extended = max_extend
             app.button_toggle.setText(" Menu")
-            app.button_page_1.setText(" Converter e Dividir")
+            app.button_page_1.setText(" Converter & Dividir")
             app.button_page_2.setText(" Dividir")
             app.button_settings.setText(" Opções")
         else:
@@ -99,14 +99,18 @@ def open_ouput_folder(app):
 
 
 def get_file_video(app):
+    files = """Video Files (*.mp4 *.mkv *.flv *.swf *.avchd *.mov
+            *.qt *.avi *.wmv *.m4v *.mpeg *.rmvb *.vob)"""
+    if app.audio:
+        files = """Audio Files (*.mp3 *.wav *.flac *.aac *.wma *.ogg
+                *.alac *.aiff *.wmv *.ape *.ac3)"""
     app.split = False
     home = Path.home()
     file_name, _ = QtWidgets.QFileDialog.getOpenFileNames(
         None,
         "Procurar Arquivo de Video",
         r"%s" % home,
-        "Video Files (*.mp4 *.mkv *.flv *.swf *.avchd *.mov "
-        "*.qt *.avi *.wmv *.m4v *.mpeg *.rmvb);;All Files (*)",
+        f"{files};;All Files (*)",
     )
 
     if not file_name:
