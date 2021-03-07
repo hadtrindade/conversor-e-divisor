@@ -583,6 +583,14 @@ class Ui_MainWindow(object):
             "QLineEdit:focus {\n"
             "	color: rgb(69, 69, 69);\n"
             "	background-color: rgb(217, 237, 247);\n"
+            "}\n"
+            "\n"
+            "QLineEdit QToolTip {\n"
+            "	color: #454545;\n"
+            "	background-color: #d9edf7;\n"
+            "	border: 0px solid;\n"
+            "	font: bold;\n"
+            "   font-size: 10pt;\n"
             "}"
         )
         self.line_edit_output_file.setAlignment(Qt.AlignCenter)
@@ -630,6 +638,14 @@ class Ui_MainWindow(object):
             "QLineEdit:focus {\n"
             "	color: rgb(69, 69, 69);\n"
             "	background-color: rgb(217, 237, 247);\n"
+            "}\n"
+            "\n"
+            "QLineEdit QToolTip {\n"
+            "	color: #454545;\n"
+            "	background-color: #d9edf7;\n"
+            "	border: 0px solid;\n"
+            "	font: bold;\n"
+            "   font-size: 10pt;\n"
             "}"
         )
         self.line_edit_input_file.setAlignment(Qt.AlignCenter)
@@ -743,6 +759,14 @@ class Ui_MainWindow(object):
             "QLineEdit:focus {\n"
             "	color: rgb(69, 69, 69);\n"
             "	background-color: rgb(217, 237, 247);\n"
+            "}\n"
+            "\n"
+            "QLineEdit QToolTip {\n"
+            "	color: #454545;\n"
+            "	background-color: #d9edf7;\n"
+            "	border: 0px solid;\n"
+            "	font: bold;\n"
+            "   font-size: 10pt;\n"
             "}"
         )
         self.line_edit_input_file_split.setAlignment(Qt.AlignCenter)
@@ -839,6 +863,14 @@ class Ui_MainWindow(object):
             "QLineEdit:focus {\n"
             "	color: rgb(69, 69, 69);\n"
             "	background-color: rgb(217, 237, 247);\n"
+            "}\n"
+            "\n"
+            "QLineEdit QToolTip {\n"
+            "	color: #454545;\n"
+            "	background-color: #d9edf7;\n"
+            "	border: 0px solid;\n"
+            "	font: bold;\n"
+            "   font-size: 10pt;\n"
             "}"
         )
         self.line_edit_output_file_split.setAlignment(Qt.AlignCenter)
@@ -1162,7 +1194,7 @@ class Ui_MainWindow(object):
         self.button_page_1.setToolTip(
             QCoreApplication.translate(
                 "MainWindow",
-                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Converter e Dividir Arquivos de V\u00eddeo</span></p></body></html>',
+                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Converter e dividir m\u00eddias.</span></p></body></html>',
                 None,
             )
         )
@@ -1172,7 +1204,7 @@ class Ui_MainWindow(object):
         self.button_page_2.setToolTip(
             QCoreApplication.translate(
                 "MainWindow",
-                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Dividir Arquivos de V\u00eddeo</span></p></body></html>',
+                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Dividir v\u00eddeos.</span></p></body></html>',
                 None,
             )
         )
@@ -1209,7 +1241,7 @@ class Ui_MainWindow(object):
         self.radio_button_low.setToolTip(
             QCoreApplication.translate(
                 "MainWindow",
-                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Qualidade Baixa: o v\u00eddeo perde qualidade, mas a convers\u00e3o e/ou divis\u00e3o \u00e9 mais r\u00e1pida.</span></p><p><span style=" font-size:10pt; font-weight:600;">Resolu\u00e7\u00e3o: 320x240</span></p><p><span style=" font-size:10pt; font-weight:600;">Codec: mpeg4</span></p><p><span style=" font-size:10pt; font-weight:600;">FPS: 30</span></p><p><span style=" font-size:10pt; font-weight:600;">Bitrate: 100 kbps </span></p><p><span style=" font-size:10pt; font-weight:600;">\u00c1udio mono de 48 kbps / 44 KHz</span></p></body></html>',
+                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Qualidade Baixa: o v\u00eddeo perde qualidade, mas a convers\u00e3o e/ou divis\u00e3o \u00e9 mais r\u00e1pida.</span></p><p><span style=" font-size:10pt; font-weight:600;">Resolu\u00e7\u00e3o: 320x240</span></p><p><span style=" font-size:10pt; font-weight:600;">FPS: 30</span></p><p><span style=" font-size:10pt; font-weight:600;">Bitrate: 100 kbps </span></p><p><span style=" font-size:10pt; font-weight:600;">\u00c1udio mono de 48 kbps / 44 KHz</span></p></body></html>',
                 None,
             )
         )
@@ -1245,7 +1277,7 @@ class Ui_MainWindow(object):
         self.button_output_file.setToolTip(
             QCoreApplication.translate(
                 "MainWindow",
-                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Local de destino do V\u00eddeo convertido e/ou dividido.</span></p></body></html>',
+                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Local de destino da m\u00eddia convertida e/ou dividida.</span></p></body></html>',
                 None,
             )
         )
@@ -1257,7 +1289,7 @@ class Ui_MainWindow(object):
         self.button_source_file.setToolTip(
             QCoreApplication.translate(
                 "MainWindow",
-                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600; color:#454545;">Procurar 1(um) ou v\u00e1rios v\u00eddeos.</span></p></body></html>',
+                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600; color:#454545;">Procurar 1(uma) ou v\u00e1rias m\u00eddias.</span></p></body></html>',
                 None,
             )
         )
@@ -1281,7 +1313,7 @@ class Ui_MainWindow(object):
         self.button_open_folder.setToolTip(
             QCoreApplication.translate(
                 "MainWindow",
-                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Abrir Local do v\u00eddeo convertido e/ou dividido.</span></p></body></html>',
+                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Abrir local da m\u00eddia convertida e/ou dividida.</span></p></body></html>',
                 None,
             )
         )
@@ -1301,6 +1333,13 @@ class Ui_MainWindow(object):
         self.button_start.setText(
             QCoreApplication.translate("MainWindow", u"Iniciar", None)
         )
+        # if QT_CONFIG(tooltip)
+        self.line_edit_output_file.setToolTip(
+            QCoreApplication.translate(
+                "MainWindow", u"diret\u00f3rio de saida", None
+            )
+        )
+        # endif // QT_CONFIG(tooltip)
         self.label_split.setText(
             QCoreApplication.translate("MainWindow", u"Divisor", None)
         )

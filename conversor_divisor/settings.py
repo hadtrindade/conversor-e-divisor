@@ -1,10 +1,13 @@
 from os.path import exists, join
 from os import makedirs
 from pathlib import Path
+from typing import Dict, Text, NoReturn
 import toml
 
 
 class Settings:
+    """Classe para gravação de configurações."""
+
     def __init__(self):
 
         self.application_user_path = join(Path.home(), ".conversor&divisor")
@@ -21,8 +24,11 @@ class Settings:
             },
         }
 
-    def read_settings(self):
+    def read_settings(self) -> Dict:
+        """Método para leitura das configurações.
 
+        :return: dict
+        """
         try:
             data_settings = toml.load(
                 join(self.application_user_path, "settings.toml")
@@ -32,7 +38,12 @@ class Settings:
             self.writer_settings("settings")
             return self.default_settings
 
-    def writer_settings(self, setting, **args):
+    def writer_settings(self, setting: Text, **kwargs) -> NoReturn:
+        """Método para gravação de configurações.
+
+        :param setting: tipo de configuração a ser gravada
+        :return: None
+        """
         if not exists(join(self.application_user_path, "settings.toml")):
             makedirs(self.application_user_path)
             with open(
@@ -44,7 +55,7 @@ class Settings:
             data_settings = toml.load(
                 join(self.application_user_path, "settings.toml")
             )
-            for k, v in args.items():
+            for k, v in kwargs.items():
                 data_settings[setting][k] = v
             with open(
                 join(self.application_user_path, "settings.toml"), "w"
