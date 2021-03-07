@@ -1,20 +1,22 @@
 import sys
 from os import path
 from subprocess import Popen
-from pathlib import Path
-from PySide2 import QtCore, QtWidgets, QtGui
+from typing import NoReturn
+from PySide2 import QtCore, QtWidgets
 from settings import Settings
 
 
 _windows = sys.platform == "win32"
 
 
-def config_init(app):
+def config_init(app: object) -> NoReturn:
+    """Factory para inicialização do app modo converter e dividir."""
 
     app.button_start.setDisabled(True)
     app.button_output_file.setDisabled(True)
     app.button_source_file.setEnabled(True)
     app.check_box_split.setEnabled(True)
+    app.check_box_audio.setEnabled(True)
     app.radio_button_normal.setEnabled(True)
     app.radio_button_low.setEnabled(True)
     app.button_stop.hide()
@@ -24,7 +26,8 @@ def config_init(app):
     app.progress_bar.hide()
 
 
-def config_init_split(app):
+def config_init_split(app: object) -> NoReturn:
+    """Factory para inicialização do app modo dividir."""
 
     app.button_start_split.setDisabled(True)
     app.button_source_file_split.setEnabled(True)
@@ -36,12 +39,16 @@ def config_init_split(app):
     app.progress_bar_split.hide()
 
 
-def processing_cd(app):
-
+def processing_cd(app: object) -> NoReturn:
+    """Factory para bloqueio de funções.
+    Bloqueias funções do modo converter e dividir
+    até que o processamento seja concluído
+    """
     app.button_start.setDisabled(True)
     app.button_output_file.setDisabled(True)
     app.button_source_file.setDisabled(True)
     app.check_box_split.setDisabled(True)
+    app.check_box_audio.setDisabled(True)
     app.radio_button_normal.setDisabled(True)
     app.radio_button_low.setDisabled(True)
     app.button_stop.setVisible(True)
@@ -50,8 +57,11 @@ def processing_cd(app):
     app.progress_bar.setVisible(True)
 
 
-def processing_split(app):
-
+def processing_split(app: object) -> NoReturn:
+    """Factory para bloqueio de funções.
+    Bloqueias funções do modo dividir até
+    que o processamento seja concluído
+    """
     app.button_start_split.setDisabled(True)
     app.button_source_file_split.setDisabled(True)
     app.button_output_file_split.setDisabled(True)
@@ -60,7 +70,9 @@ def processing_split(app):
     app.progress_bar_split.setVisible(True)
 
 
-def toggle_menu(app, max_width, enable):
+def toggle_menu(app: object, max_width: int, enable: bool) -> NoReturn:
+
+    """Factory para animação do manu."""
     if enable:
         width = app.frame_left_menu.width()
         max_extend = max_width
@@ -68,7 +80,7 @@ def toggle_menu(app, max_width, enable):
         if width == standard:
             width_extended = max_extend
             app.button_toggle.setText(" Menu")
-            app.button_page_1.setText(" Converter & Dividir")
+            app.button_page_1.setText(" Converter e Dividir")
             app.button_page_2.setText(" Dividir")
             app.button_settings.setText(" Opções")
         else:
@@ -88,28 +100,39 @@ def toggle_menu(app, max_width, enable):
         app.animation.start()
 
 
-def open_ouput_folder(app):
-
+def open_output_folder_convert(app: object) -> NoReturn:
+    """Factory para abrir destino das mídias."""
     if _windows:
         from os import startfile
 
-        startfile(app.output_path, "Open")
+        startfile(app.output_path_convert, "Open")
     else:
-        Popen(["xdg-open", f"{app.output_path}"])
+        Popen(["xdg-open", f"{app.output_path_convert}"])
 
 
-def get_file_video(app):
+def open_output_folder_split(app: object) -> NoReturn:
+    """Factory para abrir destino das mídias."""
+    if _windows:
+        from os import startfile
+
+        startfile(app.output_path_split, "Open")
+    else:
+        Popen(["xdg-open", f"{app.output_path_split}"])
+
+
+def get_media(app: object) -> NoReturn:
+    """Factory para buscar as mídias."""
+
     files = """Video Files (*.mp4 *.mkv *.flv *.swf *.avchd *.mov
             *.qt *.avi *.wmv *.m4v *.mpeg *.rmvb *.vob)"""
-    if app.audio:
+    if app.audio_only:
         files = """Audio Files (*.mp3 *.wav *.flac *.aac *.wma *.ogg
-                *.alac *.aiff *.wmv *.ape *.ac3)"""
+                *.alac *.aiff *.ape *.ac3)"""
     app.split = False
-    home = Path.home()
     file_name, _ = QtWidgets.QFileDialog.getOpenFileNames(
         None,
         "Procurar Arquivo de Video",
-        r"%s" % home,
+        r"%s" % app.current_directory_convert,
         f"{files};;All Files (*)",
     )
 
@@ -118,10 +141,15 @@ def get_file_video(app):
 
     if len(file_name) == 1:
         paths = path.split(file_name[0])
-        app.input_file = file_name[0]
-        app.output_path = paths[0]
+        app.input_file_convert = file_name[0]
+        app.output_path_convert = paths[0]
+        app.current_directory_convert = paths[0]
         app.line_edit_input_file.setText(paths[1])
-        app.line_edit_output_file.setText(app.output_path)
+        app.line_edit_input_file.setToolTip(file_name[0])
+        app.line_edit_output_file.setText(
+            path.split(app.output_path_convert)[1]
+        )
+        app.line_edit_output_file.setToolTip(paths[0])
         app.line_edit_input_file.setVisible(True)
         app.line_edit_output_file.setVisible(True)
         app.button_start.setEnabled(True)
@@ -132,12 +160,19 @@ def get_file_video(app):
 
     else:
         paths = path.split(file_name[0])
-        app.input_file = file_name
-        app.output_path = paths[0]
+        app.input_file_convert = file_name
+        app.output_path_convert = paths[0]
+        app.current_directory_convert = paths[0]
         app.line_edit_input_file.setText(
             f"Vídeos a converter: {len(file_name)}"
         )
-        app.line_edit_output_file.setText(app.output_path)
+        app.line_edit_input_file.setToolTip(
+            "".join([f"{file}\n" for file in file_name])
+        )
+        app.line_edit_output_file.setText(
+            path.split(app.output_path_convert)[1]
+        )
+        app.line_edit_output_file.setToolTip(app.output_path_convert)
         app.line_edit_input_file.setVisible(True)
         app.line_edit_output_file.setVisible(True)
         app.button_start.setEnabled(True)
@@ -147,23 +182,29 @@ def get_file_video(app):
         app.line_edit_output_file.setDisabled(True)
 
 
-def get_path_output_name(app):
-    home = Path.home()
+def get_path_output_convert(app: object) -> NoReturn:
+    """Factory para busca do path de saída das conversões."""
+
     output_path = QtWidgets.QFileDialog.getExistingDirectory(
-        None, "Procurar Diretório de Destino.", r"%s" % home,
+        None,
+        "Procurar Diretório de Destino.",
+        r"%s" % app.current_directory_convert,
     )
-    app.output_path = output_path
-    app.line_edit_output_file.setText(app.output_path)
-    app.button_output_file.setDisabled(True)
+    if output_path:
+        app.output_path_convert = output_path
+        app.line_edit_output_file.setText(
+            path.split(app.output_path_convert)[1]
+        )
+        app.line_edit_output_file.setToolTip(app.output_path_convert)
 
 
-def get_file_video_split(app):
+def get_file_video_split(app: object) -> NoReturn:
+    """Factory para busca de vídeo para divisão."""
     app.split = True
-    home = Path.home()
     file_name, _ = QtWidgets.QFileDialog.getOpenFileName(
         None,
         "Procurar Arquivo de Video",
-        r"%s" % home,
+        r"%s" % app.current_directory_split,
         "Video Files (*.mp4 )",
     )
 
@@ -171,29 +212,38 @@ def get_file_video_split(app):
         return
     app.input_file_split = file_name
     file = path.split(file_name)
-    app.output_path = file[0]
+    app.output_path_split = file[0]
+    app.current_directory_split = file[0]
     app.line_edit_input_file_split.setText(file[1])
+    app.line_edit_input_file_split.setToolTip(app.input_file_split)
     app.button_start_split.setEnabled(True)
     app.button_output_file_split.setEnabled(True)
-    app.line_edit_output_file_split.setText(file[0])
+    app.line_edit_output_file_split.setText(path.split(file[0])[1])
+    app.line_edit_output_file_split.setToolTip(app.output_path_split)
     app.line_edit_output_file_split.setVisible(True)
     app.line_edit_input_file_split.setVisible(True)
     app.line_edit_input_file_split.setDisabled(True)
     app.line_edit_output_file_split.setDisabled(True)
 
 
-def get_path_output_name_split(app):
-    home = Path.home()
-    path_dst = QtWidgets.QFileDialog.getExistingDirectory(
-        None, "Procurar Diretório de Destino.", r"%s" % home,
+def get_path_output_split(app: object) -> NoReturn:
+    """Factory para busca de path de saida."""
+    output_path = QtWidgets.QFileDialog.getExistingDirectory(
+        None,
+        "Procurar Diretório de Destino.",
+        r"%s" % app.current_directory_split,
     )
-    app.output_path = path_dst
-    app.line_edit_output_file_split.setText(app.output_path)
-    app.line_edit_output_file_split.setDisabled(True)
+    if output_path:
+        app.output_path_split = output_path
+        app.line_edit_output_file_split.setText(
+            path.split(app.output_path_split)[1]
+        )
+        app.line_edit_output_file_split.setToolTip(app.output_path_split)
+        app.line_edit_output_file_split.setDisabled(True)
 
 
-def set_settings(app):
-
+def set_settings(app: object) -> NoReturn:
+    """Factory para escrita  de configurações"""
     size_value = app.spinBox_split_size.text()
     value_kilobytes = int(size_value) * 1024
     value_bytes = value_kilobytes * 1024

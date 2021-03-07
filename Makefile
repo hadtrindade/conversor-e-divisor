@@ -28,3 +28,6 @@ compile:
 
 start-app:
 	python conversor_divisor/app.py
+
+black:
+	black -l 79 .

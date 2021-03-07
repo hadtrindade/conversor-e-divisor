@@ -7,10 +7,10 @@
 
 ---
 
-#### Conversor & Divisor é uma interface gráfica gratuita e open-source para o FFmpeg e MP4Box a fim de realizar conversões e divisões para o PJe.
+#### Conversor & Divisor é uma GUI  - interface gráfica, gratuita e open-source para o FFmpeg e MP4Box a fim de realizar conversões e divisões de mídias para o PJe.
 
-![Conversor & Divisor](https://i.imgur.com/iQzzrBN.gif)
 
+![Conversor & Divisor](https://i.imgur.com/whAnUwb.gif)
 ---
 #### Como obter o código-fonte
 

@@ -199,7 +199,7 @@ QPushButton QToolTip {
                 </size>
                </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Converter e Dividir Arquivos de Vídeo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Converter e dividir mídias.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -242,7 +242,7 @@ QPushButton QToolTip {
                 </size>
                </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Dividir Arquivos de Vídeo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Dividir vídeos.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -502,7 +502,7 @@ QRadioButton QToolTip {
                 </font>
                </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Qualidade Baixa: o vídeo perde qualidade, mas a conversão e/ou divisão é mais rápida.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Resolução: 320x240&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Codec: mpeg4&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;FPS: 30&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Bitrate: 100 kbps &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Áudio mono de 48 kbps / 44 KHz&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Qualidade Baixa: o vídeo perde qualidade, mas a conversão e/ou divisão é mais rápida.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Resolução: 320x240&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;FPS: 30&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Bitrate: 100 kbps &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Áudio mono de 48 kbps / 44 KHz&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QRadioButton{
@@ -648,7 +648,7 @@ QCheckBox QToolTip {
                 </font>
                </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Local de destino do Vídeo convertido e/ou dividido.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Local de destino da mídia convertida e/ou dividida.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -719,7 +719,7 @@ QPushButton QToolTip {
                 </font>
                </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#454545;&quot;&gt;Procurar 1(um) ou vários vídeos.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; color:#454545;&quot;&gt;Procurar 1(uma) ou várias mídias.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="toolTipDuration">
                 <number>-1</number>
@@ -872,7 +872,7 @@ QPushButton QToolTip {
                 </font>
                </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Abrir Local do vídeo convertido e/ou dividido.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Abrir local da mídia convertida e/ou dividida.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -1007,6 +1007,9 @@ QPushButton QToolTip {
                  <bold>true</bold>
                 </font>
                </property>
+               <property name="toolTip">
+                <string>diretório de saida</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QLineEdit {
 	color: rgb(69, 69, 69);
@@ -1024,6 +1027,14 @@ QLineEdit:hover {
 QLineEdit:focus {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QLineEdit QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
+	font: bold;
+   font-size: 10pt;
 }</string>
                </property>
                <property name="alignment">
@@ -1106,6 +1117,14 @@ QLineEdit:hover {
 QLineEdit:focus {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QLineEdit QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
+	font: bold;
+   font-size: 10pt;
 }</string>
                </property>
                <property name="alignment">
@@ -1359,6 +1378,14 @@ QLineEdit:hover {
 QLineEdit:focus {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QLineEdit QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
+	font: bold;
+   font-size: 10pt;
 }</string>
                   </property>
                   <property name="alignment">
@@ -1553,6 +1580,14 @@ QLineEdit:hover {
 QLineEdit:focus {
 	color: rgb(69, 69, 69);
 	background-color: rgb(217, 237, 247);
+}
+
+QLineEdit QToolTip {
+	color: #454545;
+	background-color: #d9edf7;
+	border: 0px solid;
+	font: bold;
+   font-size: 10pt;
 }</string>
                   </property>
                   <property name="alignment">
