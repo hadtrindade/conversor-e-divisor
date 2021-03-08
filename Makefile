@@ -16,8 +16,8 @@ install:
 install-dev:
 	pip install -r requirements-dev.txt
 	pip install -e .
-	#mkdir FFmpeg
-	#mkdir MP4Box
+	mkdir FFmpeg
+	mkdir MP4Box
 
 compile-ui:
 	pyside2-uic ui/ui_cd.ui -o conversor_divisor/ui_cd.py
