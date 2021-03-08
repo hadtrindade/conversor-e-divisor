@@ -131,7 +131,7 @@ def get_media(app: object) -> NoReturn:
     app.split = False
     file_name, _ = QtWidgets.QFileDialog.getOpenFileNames(
         None,
-        "Procurar Arquivo de Video",
+        "Procurar Arquivo de Mídia",
         r"%s" % app.current_directory_convert,
         f"{files};;All Files (*)",
     )
@@ -164,7 +164,7 @@ def get_media(app: object) -> NoReturn:
         app.output_path_convert = paths[0]
         app.current_directory_convert = paths[0]
         app.line_edit_input_file.setText(
-            f"Vídeos a converter: {len(file_name)}"
+            f"Mídias a converter: {len(file_name)}"
         )
         app.line_edit_input_file.setToolTip(
             "".join([f"{file}\n" for file in file_name])
