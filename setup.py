@@ -5,9 +5,9 @@ def read(filename):
     return [requirement.strip() for requirement in open(filename).readlines()]
 
 
-PACKAGE = "ui_conversor_divisor"
-NAME = "ui_conversor_divisor"
-DESCRIPTION = "software for converting and splitting videos"
+PACKAGE = "conversor_divisor"
+NAME = "conversor_divisor"
+DESCRIPTION = "software for converting and splitting medias"
 AUTHOR = __import__(PACKAGE).__author__
 AUTHOR_EMAIL = "haddleytrindade@gmail.com"
 URL = "https://github.com/hadtrindade/conversor-e-divisor"
@@ -19,7 +19,7 @@ setup(
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
     license="MIT",
-    keywords="GUI for converting and splitting video using ffmpeg and mp4box",
+    keywords="GUI for converting and splitting medias using ffmpeg and mp4box",
     url=URL,
     description=DESCRIPTION,
     packeges=find_packages(
@@ -29,11 +29,15 @@ setup(
             "build",
             "FFmpeg",
             "MP4Box",
-            "conversor_divisor",
         ]
     ),
     include_package_data=True,
     install_requires=read("requirements.txt"),
+    entry_points={
+        "console_scripts": [
+            "conversor_divisor=conversor_divisor.app:start_app",
+            ],
+        },
     classifiers=[
         "Environment :: GUI",
         "License :: OSI Approved :: MIT License",

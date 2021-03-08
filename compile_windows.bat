@@ -3,7 +3,7 @@ pyinstaller --noconfirm ^
      --icon "ui/img/main_icone.ico" ^
      --name "Conversor_Divisor" --log-level "DEBUG" ^
      --hidden-import "toml" ^
-     --hidden-import "ui_conversor_divisor" ^
+     --hidden-import "conversor_divisor" ^
      --add-data "conversor_divisor/__init__.py;." ^
      --add-data "conversor_divisor/settings.py;." ^
      --add-data "conversor_divisor/convert.py;." ^

@@ -12,9 +12,16 @@
 
 ![Conversor & Divisor](https://i.imgur.com/whAnUwb.gif)
 ---
-#### Como obter o código-fonte
 
-`git clone https://github.com/hadtrindade/conversor-e-divisor`
+#### Como instalar no windows
+`Baixar o instalador` [Link](https://github.com/hadtrindade/conversor-e-divisor/releases)
+
+
+#### Como instalar no linux
+`git clone https://github.com/hadtrindade/conversor-e-divisor`  
+`cd conversor-e-divisor`  
+`make install ou pip install .`
+
 
 
 `Binários do MP4Box e FFmpeg em `[Aqui](https://drive.google.com/drive/folders/1h_ySXbsgu-hWg_ZKAWhqQx4mCNzQy3eU?usp=sharing) 
