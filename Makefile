@@ -11,23 +11,23 @@ clean:
 	pip3 install -e . --no-cache
 
 install:
-	pip install -r requeriments.txt
+	pip install .
 
 install-dev:
-	pip install -r requeriments-dev.txt
+	pip install -r requirements-dev.txt
 	pip install -e .
-	mkdir FFmpeg
-	mkdir MP4Box
+	#mkdir FFmpeg
+	#mkdir MP4Box
 
 compile-ui:
-	pyside2-uic ui/ui_cd.ui -o ui_conversor_divisor/ui_cd.py
-	pyside2-rcc ui/resources_cd.qrc -o ui_conversor_divisor/resources_cd_rc.py
-
-compile:
-	bash compile_linux.sh
+	pyside2-uic ui/ui_cd.ui -o conversor_divisor/ui_cd.py
+	pyside2-rcc ui/resources_cd.qrc -o conversor_divisor/resources_cd_rc.py
 
 start-app:
-	python conversor_divisor/app.py
+	conversor_divisor
 
 black:
 	black -l 79 .
+
+test:
+	pytest tests/ -v --cov=conversor_divisor

@@ -2,12 +2,12 @@ import sys
 from signal import SIGTERM
 from PySide2 import QtGui, QtWidgets
 from pathlib import Path
-from ui_conversor_divisor.ui_cd import Ui_MainWindow
-from ui_conversor_divisor import __version__, __author__
-import ui_functions
-from worker import Worker
-from convert import Convert
-from settings import Settings
+from conversor_divisor.ui_cd import Ui_MainWindow
+from conversor_divisor import __version__, __author__
+from conversor_divisor import ui_functions
+from conversor_divisor.worker import Worker
+from conversor_divisor.convert import Convert
+from conversor_divisor.settings import Settings
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -240,8 +240,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         msg_box.exec_()
 
 
-if __name__ == "__main__":
+def start_app():
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
+
+
+if __name__ == "__main__":
+    start_app()

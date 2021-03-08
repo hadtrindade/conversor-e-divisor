@@ -3,7 +3,7 @@ from os import path
 from subprocess import Popen
 from typing import NoReturn
 from PySide2 import QtCore, QtWidgets
-from settings import Settings
+from conversor_divisor.settings import Settings
 
 
 _windows = sys.platform == "win32"

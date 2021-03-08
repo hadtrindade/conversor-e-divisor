@@ -3,7 +3,7 @@ import sys
 from typing import Text, NoReturn, Any, Callable
 from subprocess import Popen, PIPE
 from os import path, getcwd, remove
-from settings import Settings
+from conversor_divisor.settings import Settings
 
 
 _windows = sys.platform == "win32"
