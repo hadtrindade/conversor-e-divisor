@@ -1,7 +1,7 @@
 import re
 import sys
 from typing import Text, NoReturn, Any, Callable
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, DEVNULL
 from os import path, getcwd, remove
 from conversor_divisor.settings import Settings
 
@@ -109,6 +109,9 @@ class Convert:
         output_file = file_out
         if _windows:
             binary_ffmpeg = path.join(getcwd(), r"FFmpeg\bin\ffmpeg.exe")
+            binary_handbrake = path.join(
+                getcwd(), r"HandBrakeCLI\HandBrakeCLI.exe"
+            )
             input_file = file_in.replace("/", "\\")
             output_file = file_out.replace("/", "\\")
         args = [
@@ -164,8 +167,50 @@ class Convert:
             self._bar_ffmpeg(process.stderr)
             process.wait()
             if process.returncode:
-                self.error_signal.emit("Erro no processo de conversão.")
-                return
+                args_1 = [
+                    f"{binary_handbrake}",
+                    "-i",
+                    f"{input_file}",
+                    "-w",
+                    "320",
+                    "-l",
+                    "240",
+                    "-e",
+                    "mpeg4",
+                    "--rate",
+                    "30",
+                    "--vb",
+                    "100",
+                    "--mixdown",
+                    "mono",
+                    "--aencoder",
+                    "av_aac",
+                    "--ab",
+                    "48",
+                    "-o",
+                    f"{output_file}",
+                ]
+
+                process_1 = self._subprocess(
+                    *args_1, encoding="utf-8", text=True
+                )
+                self.process_signal.emit(process_1)
+                for t in process_1.stderr:
+                    re_proc_hb = re.compile("work result = 0")
+                    re_proc_hb_error = re.compile("work result = [1-9]")
+                    proc_result = re_proc_hb.findall(t)
+                    proc_result_error = re_proc_hb_error.findall(t)
+                    if proc_result:
+                        _ = Popen(
+                            ["tskill", "HandBrakeCLI"],
+                            stdout=DEVNULL,
+                            stderr=DEVNULL,
+                        )
+                    elif proc_result_error:
+                        self.error_signal.emit(
+                            "Erro no processo de conversão."
+                        )
+                        return
             return output_file
         except Exception as e:
             self.error_signal.emit(f"Erro: {e}")
