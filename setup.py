@@ -23,21 +23,15 @@ setup(
     url=URL,
     description=DESCRIPTION,
     packeges=find_packages(
-        exclude=[
-            "tests",
-            "dist",
-            "build",
-            "FFmpeg",
-            "MP4Box",
-        ]
+        exclude=["tests", "dist", "build", "FFmpeg", "MP4Box", "HandBrakeCLI",]
     ),
     include_package_data=True,
     install_requires=read("requirements.txt"),
     entry_points={
         "console_scripts": [
             "conversor_divisor=conversor_divisor.app:start_app",
-            ],
-        },
+        ],
+    },
     classifiers=[
         "Environment :: GUI",
         "License :: OSI Approved :: MIT License",

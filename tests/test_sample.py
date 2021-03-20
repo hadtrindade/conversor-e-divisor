@@ -1,6 +1,6 @@
+import pytest
 from conversor_divisor.app import MainWindow
 from conversor_divisor import __version__
-import pytest
 
 
 @pytest.fixture(scope="module")

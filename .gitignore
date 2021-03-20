@@ -136,3 +136,6 @@ output/
 .vscode/
 
 backup/
+
+FFmpeg/
+MP4Box/
