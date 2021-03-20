@@ -11,6 +11,7 @@ pyinstaller --noconfirm ^
      --add-data "conversor_divisor/worker.py;."  ^
      --add-data "FFmpeg;FFmpeg/" ^
      --add-data "MP4Box;MP4Box/" ^
+     --add-data "HandBrakeCLI;HandBrakeCLI/" ^
      "conversor_divisor/app.py"
 
 
