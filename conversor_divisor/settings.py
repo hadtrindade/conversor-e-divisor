@@ -14,9 +14,12 @@ class Settings:
         self.default_settings = {
             "title": "Convert Split Settings",
             "settings_split": {
-                "split_size_bytes": 31457280,
-                "split_size_kilobytes": 30720,
-                "split_size_mb": 30,
+                "split_size_bytes_v": 31457280,
+                "split_size_kilobytes_v": 30720,
+                "split_size_mb_v": 30,
+                "split_size_bytes_a": 10485760,
+                "split_size_kilobytes_a": 10240,
+                "split_size_mb_a": 10,
             },
             "settings_convert": {
                 "resolution_value": "320x240",

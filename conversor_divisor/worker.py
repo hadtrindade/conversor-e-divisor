@@ -8,6 +8,7 @@ class SignalsToWorker(QObject):
     process_signal = Signal(object)
     done_signal = Signal(object)
     error_signal = Signal(object)
+    error_signal_warm = Signal(object)
 
 
 class Worker(QThread):
@@ -25,6 +26,7 @@ class Worker(QThread):
         self.kwargs["process_signal"] = self.signal.process_signal
         self.kwargs["done_signal"] = self.signal.done_signal
         self.kwargs["error_signal"] = self.signal.error_signal
+        self.kwargs["error_signal_warm"] = self.signal.error_signal_warm
 
     @Slot()
     def stop(self):

@@ -198,14 +198,14 @@ def get_path_output_convert(app: object) -> NoReturn:
         app.line_edit_output_file.setToolTip(app.output_path_convert)
 
 
-def get_file_video_split(app: object) -> NoReturn:
+def get_file_media_split(app: object) -> NoReturn:
     """Factory para busca de vídeo para divisão."""
     app.split = True
     file_name, _ = QtWidgets.QFileDialog.getOpenFileName(
         None,
         "Procurar Arquivo de Video",
         r"%s" % app.current_directory_split,
-        "Video Files (*.mp4 )",
+        "Media Files (*.mp4 *mp3)",
     )
 
     if not file_name:
@@ -243,16 +243,23 @@ def get_path_output_split(app: object) -> NoReturn:
 
 
 def set_settings(app: object) -> NoReturn:
-    """Factory para escrita  de configurações"""
-    size_value = app.spinBox_split_size.text()
-    value_kilobytes = int(size_value) * 1024
-    value_bytes = value_kilobytes * 1024
+    """Factory para escrita  de configurações."""
+    size_value_v = app.spinBox_split_size.text()
+    value_kilobytes_v = int(size_value_v) * 1024
+    value_bytes_v = value_kilobytes_v * 1024
+    size_value_a = app.spinBox_split_size_audio.text()
+    value_kilobytes_a = int(size_value_a) * 1024
+    value_bytes_a = value_kilobytes_a * 1024
+
     s = Settings()
     s.writer_settings(
         "settings_split",
-        split_size_bytes=value_bytes,
-        split_size_kilobytes=value_kilobytes,
-        split_size_mb=int(size_value),
+        split_size_bytes_v=value_bytes_v,
+        split_size_kilobytes_v=value_kilobytes_v,
+        split_size_mb_v=int(size_value_v),
+        split_size_bytes_a=value_bytes_a,
+        split_size_kilobytes_a=value_kilobytes_a,
+        split_size_mb_a=int(size_value_a),
     )
     resolution_value = app.resolution_settings.currentText()
     resolution_index_value = app.resolution_settings.currentIndex()
