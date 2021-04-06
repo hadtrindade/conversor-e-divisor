@@ -19,6 +19,7 @@ class Convert:
         process_signal: Callable = None,
         progress_signal: Callable = None,
         error_signal: Callable = None,
+        error_signal_warm: Callable = None,
         done_signal: Callable = None,
         line_input_file_signal: Callable = None,
         low: bool = None,
@@ -33,6 +34,7 @@ class Convert:
         :param process_signal: callable - sinal do processo em execução
         :param progress_signal: callable - sinal do progresso do processo em execução
         :param error_signal: callable - sinal de erro na execução do processo
+        :param error_signal_warm: callable - sinal de erro na execução de uma lista de processos
         :param done_signal: callable - sinal para conclusão do processo
         :param line_input_file_signal: callable - sinal para atualização de progresso de várias mídias.
         :param low: bool - vídeo em baixa qualidade
@@ -45,6 +47,7 @@ class Convert:
         self.process_signal = process_signal
         self.progress_signal = progress_signal
         self.error_signal = error_signal
+        self.error_signal_warm = error_signal_warm
         self.done_signal = done_signal
         self.line_input_file_signal = line_input_file_signal
         self.low = low
@@ -101,7 +104,7 @@ class Convert:
         """Método ffmpeg para conversão de mídia.
 
         :param file_in: mídia de entrada
-        :param fule_out: nome da mídia de saída.
+        :param file_out: nome da mídia de saída.
         :return: Any
         """
         binary_ffmpeg = "ffmpeg"
@@ -149,7 +152,7 @@ class Convert:
             ]
         if self.audio_only:
             path_out, file = path.split(output_file)
-            output_file = path.join(path_out, f"_{file[:-5]}.mp3")
+            output_file = path.join(path_out, f"{file[:-4]}.mp3")
             args = [
                 f"{binary_ffmpeg}",
                 "-i",
@@ -207,13 +210,9 @@ class Convert:
                             stderr=DEVNULL,
                         )
                     elif proc_result_error:
-                        self.error_signal.emit(
-                            "Erro no processo de conversão."
-                        )
                         return
             return output_file
-        except Exception as e:
-            self.error_signal.emit(f"Erro: {e}")
+        except Exception:
             return
 
     def _bar_mp4box(self, video_in: Text, std_out: Text) -> NoReturn:
@@ -248,48 +247,52 @@ class Convert:
                     self.progress_signal.emit(int(count / total_size * 100))
                     count += 1
 
-    def mp4box(self, video_in: Text, video_out: Text) -> bool:
+    def mp4box(self, media_in: Text, media_out: Text) -> bool:
         """Método para divisão de arquivos de vídeo.
 
-        :param video_in: vídeo de entrada.
-        :param video_out: nome do vídeo de saíde
+        :param media_in: vídeo de entrada.
+        :param media_out: nome do vídeo de saíde
         :return: bool
         """
-        if (
-            int(path.getsize(video_in))
-            <= self.settings["settings_split"]["split_size_bytes"]
-        ):
-            self.done_signal.emit("Video já está em tamanho apropriado!")
-            return
+        size_media = None
+        if media_in[-3:] == "mp3":
+            size_media = self.settings["settings_split"]["split_size_bytes_a"]
+            split_size_kilobytes = self.settings["settings_split"][
+                "split_size_kilobytes_a"
+            ]
+        else:
+            size_media = self.settings["settings_split"]["split_size_bytes_v"]
+            split_size_kilobytes = self.settings["settings_split"][
+                "split_size_kilobytes_v"
+            ]
+
+        if int(path.getsize(media_in)) <= size_media:
+            return "minimum_size"
+
         binary_mp4box = "MP4Box"
-        video_file = video_in
-        output_video_file = video_out
+        media_file = media_in
+        output_file = media_out
         try:
             if _windows:
                 binary_mp4box = path.join(getcwd(), r"MP4Box\mp4box.exe")
-                video_file = video_in.replace("/", "\\")
-                output_video_file = video_out.replace("/", "\\")
+                media_file = media_in.replace("/", "\\")
+                output_file = media_out.replace("/", "\\")
             args = [
                 f"{binary_mp4box}",
                 "-add",
-                f"{video_file}",
+                f"{media_file}",
                 "-split-size",
-                f"{self.settings['settings_split']['split_size_kilobytes']}",
-                f"{output_video_file}",
+                f"{split_size_kilobytes}",
+                f"{output_file}",
             ]
             process = self._subprocess(*args, universal_newlines=True)
             self.process_signal.emit(process)
-            self._bar_mp4box(video_in, process.stderr)
+            self._bar_mp4box(media_in, process.stderr)
             process.wait()
             if process.returncode:
-                self.error_signal.emit(f"Erro: {process.returncode}")
                 return
-            if self.split_only:
-                self.done_signal.emit("Divisão Concluída.")
-                return True
-            return True
-        except Exception as e:
-            self.error_signal.emit(f"Erro: {e}")
+            return output_file
+        except Exception:
             return
 
     def _get_total_split_bar(self, input_file: Text) -> int:
@@ -311,75 +314,88 @@ class Convert:
         h, m, s = time_str.split(":")
         return int(h) * 3600 + int(m) * 60 + int(float(s))
 
-    def _execute(self, input_file, output_path):
+    def _execute(self, input_file: Text, output_path: Text) -> bool:
         """Método para execução da conversão ou divisão.
         param: input_file: arquivo de mídia
         param: output_path: caminho de saída
         :return: bool
         """
-
         regex_extensions = re.compile(
             r"\.(mp4|mp3|wav|vob|aac|mkv|m4v|flv|swf|avchd|mov|"
             r"qt|avi|wmv|mpeg|rmvb|ogg|ac3|flac|alac|[Ww]eb[Mm])"
         )
-        regex_unknown_extension = re.compile(r"\.\S*")
+        regex_unknown_extension = re.compile(r"\.\S*$")
         search_extensions = regex_extensions.findall(input_file)
         if search_extensions:
             re_split = regex_extensions.split(input_file)
-            file = path.split(re_split[0])[1]
+            _, file = path.split(re_split[0])
         else:
             re_unknown = regex_unknown_extension.split(input_file)
-            file = path.split(re_unknown[0])[1]
-        output_file = path.join(output_path, f"{file}_.mp4")
-
-        result = self.ffmpeg(input_file, output_file)
-        if not result:
-            return
-        if (
-            int(path.getsize(result))
-            > self.settings["settings_split"]["split_size_bytes"]
-            and not self.not_split
-            and not self.audio_only
-        ):
-            file = path.split(output_file)[1]
-            result = self.mp4box(
-                output_file, path.join(output_path, f"_{file[:-5]}.mp4")
+            _, file = path.split(re_unknown[0])
+        output_file = path.join(output_path, f"conv_{file}.mp4")
+        result_ffmepg = self.ffmpeg(input_file, output_file)
+        if not result_ffmepg:
+            return "error_ffmpeg"
+        elif not path.exists(result_ffmepg):
+            return "error_ffmpeg"
+        if not self.not_split:
+            path_file, file = path.split(result_ffmepg)
+            result_mp4box = self.mp4box(
+                media_in=result_ffmepg,
+                media_out=path.join(path_file, f"cd_{file[5:]}"),
             )
-            if not result:
+            if not result_mp4box:
+                remove(result_ffmepg)
                 return
-            remove(output_file)
-            return True
-        return True
+            elif result_mp4box != "minimum_size":
+                remove(result_ffmepg)
+            return result_mp4box
+        return result_ffmepg
 
     def convert_or_split(self):
-        """Método para conversão e divisão de mídias"""
+        """Método para conversão e divisão de mídias."""
 
         if self.split_only:
-            file = path.split(self.input_file)[1]
-            self.mp4box(
-                self.input_file,
-                path.join(self.output_path, f"_{file[:-4]}.mp4"),
+            _, file = path.split(self.input_file)
+            result_mp4box = self.mp4box(
+                self.input_file, path.join(self.output_path, f"d_{file}")
             )
+
+            if result_mp4box == "minimum_size":
+                self.done_signal.emit("Mídia já está em tamanho apropriado!")
+            elif not result_mp4box:
+                self.error_signal.emit(
+                    f"Ocorreu um erro no processo de divisão."
+                )
+            elif result_mp4box:
+                self.done_signal.emit("Divisão Concluída.")
         else:
             if isinstance(self.input_file, list):
-                input_files = [file for file in self.input_file]
-                media_list = None
                 count = 1
-                for input_file in input_files:
+                for file_in in self.input_file:
                     self.line_input_file_signal.emit(
-                        f"Convertendo {count} de {len(input_files)}"
+                        f"Convertendo {count} de {len(self.input_file)}"
                     )
-                    media_list = self._execute(input_file, self.output_path)
-                    if not media_list:
-                        break
+                    exec_cs = self._execute(file_in, self.output_path)
+                    if exec_cs == "error_ffmpeg" or not exec_cs:
+                        self.error_signal_warm.emit(
+                            f"A mídea: {file_in} apresentou um erro."
+                        )
+                        continue
                     count += 1
-                if media_list:
+                if count > 1:
                     self.done_signal.emit(
-                        "Conversões e/ou Divisões Concluídas."
+                        f"{count - 1} Conversões e/ou Divisões Concluídas."
                     )
+                else:
+                    self.error_signal.emit("Erro no processo de conversão.")
             else:
-                unit_conversion = self._execute(
-                    self.input_file, self.output_path
-                )
-                if unit_conversion:
+                result_exec = self._execute(self.input_file, self.output_path)
+                if result_exec == "error_ffmpeg":
+                    self.error_signal.emit("Erro no processo de conversão.")
+                elif not result_exec:
+                    self.error_signal.emit(
+                        f"Ocorreu um erro no processo de divisão."
+                    )
+                elif result_exec:
                     self.done_signal.emit("Conversão e/ou Divisão Concluída.")
