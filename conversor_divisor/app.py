@@ -14,7 +14,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
         self.setupUi(self)
-        self.not_split = False
+        self.not_split = None
         self.process_in_progress = None
         self.process_split_in_progress = None
         self.input_file_convert = None
@@ -24,15 +24,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.current_directory_convert = Path.home()
         self.current_directory_split = Path.home()
         self.input_file_split = None
-        self.split = None
         self.low = True
         self.audio_only = None
         self.worker = None
         self.worker_split = None
         self._signal_sigterm = SIGTERM
         self._platform_ms_win = sys.platform == "win32"
-        s = Settings()
-        self.settings = s.read_settings()
+        self.settings = Settings()
 
         # menu
         self.button_toggle.clicked.connect(
@@ -84,12 +82,31 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_author.setText(f"Desenvolvido por {__author__}")
 
         # Set settings
-        self.spinBox_split_size.setValue(
-            self.settings["settings_split"]["split_size_mb"]
-        )
-        self.resolution_settings.setCurrentIndex(
-            self.settings["settings_convert"]["resolution_index_value"]
-        )
+        try:
+            self.spinBox_split_size.setValue(
+                self.settings.read_settings()["settings_split"][
+                    "split_size_mb_v"
+                ]
+            )
+            self.spinBox_split_size_audio.setValue(
+                self.settings.read_settings()["settings_split"][
+                    "split_size_mb_a"
+                ]
+            )
+            self.resolution_settings.setCurrentIndex(
+                self.settings.read_settings()["settings_convert"][
+                    "resolution_index_value"
+                ]
+            )
+        except KeyError:
+            self.settings.writer_settings(
+                setting="settings_split",
+                **self.settings.default_settings["settings_split"],
+            )
+            self.settings.writer_settings(
+                setting="settings_convert",
+                **self.settings.default_settings["settings_convert"],
+            )
         self.pushButton_apply_settings.clicked.connect(self.change_settings)
 
     def change_settings(self):
@@ -104,14 +121,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def change_mode_audio(self):
         if self.check_box_audio.isChecked():
             self.audio_only = True
-            self.check_box_split.hide()
             self.radio_button_low.hide()
             self.radio_button_normal.hide()
         else:
             self.audio_only = False
             self.radio_button_normal.setVisible(True)
             self.radio_button_low.setVisible(True)
-            self.check_box_split.setVisible(True)
 
     def set_process(self, obj_proc):
         self.process_in_progress = obj_proc
@@ -164,7 +179,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         )
         self.worker_split.signal.error_signal.connect(self.popup_error_split)
         self.worker_split.signal.done_signal.connect(self.popup_done)
-        self.worker_split.kwargs["split_only"] = self.split
+        self.worker_split.kwargs["split_only"] = True
         self.worker_split._class = Convert
         ui_functions.processing_split(self)
         self.worker_split.start()
@@ -179,6 +194,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.worker.signal.process_signal.connect(self.set_process)
         self.worker.signal.progress_signal.connect(self.progress_bar.setValue)
         self.worker.signal.error_signal.connect(self.popup_error)
+        self.worker.signal.error_signal_warm.connect(self.popup_error_warm)
         self.worker.signal.done_signal.connect(self.popup_done)
         self.worker.kwargs["low"] = self.low
         self.worker.kwargs["audio_only"] = self.audio_only
@@ -216,11 +232,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         elif msg == "Conversão e/ou Cancelada":
             ui_functions.config_init(self)
         elif (
-            msg == "Conversões e/ou Divisões Concluídas."
+            "Conversões e/ou Divisões Concluídas." in msg
             or msg == "Conversão e/ou Divisão Concluída."
         ):
             ui_functions.config_init(self)
-        elif msg == "Video já está em tamanho apropriado!":
+        elif msg == "Mídia já está em tamanho apropriado!":
             ui_functions.config_init_split(self)
         msg_box.exec_()
 
@@ -231,6 +247,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         msg_box.setWindowIcon(QtGui.QIcon(":/MainIcon/main_icone"))
         msg_box.setIcon(QtWidgets.QMessageBox.Critical)
         ui_functions.config_init(self)
+        msg_box.exec_()
+
+    def popup_error_warm(self, msg):
+        msg_box = QtWidgets.QMessageBox()
+        msg_box.setWindowTitle("Conversor & Divisor")
+        msg_box.setText(msg)
+        msg_box.setWindowIcon(QtGui.QIcon(":/MainIcon/main_icone"))
+        msg_box.setIcon(QtWidgets.QMessageBox.Critical)
         msg_box.exec_()
 
     def popup_error_split(self, msg):
