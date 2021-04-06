@@ -242,7 +242,7 @@ QPushButton QToolTip {
                 </size>
                </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Dividir vídeos.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Dividir mídias.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -1862,7 +1862,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:600;&quot;&gt;Conversor &amp;amp; Divisor&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt;&quot;&gt;	Interface Grafica para conversão e divisão de vídeos para inclusão no PJe, utilizando as ferramentas FFMPEG e MP4Box.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt;&quot;&gt;	Interface Grafica para conversão e divisão de vídeos para inclusão no PJe, utilizando as ferramentas FFMPEG, HandbrakeCLI e MP4Box.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </widget>
@@ -1902,7 +1902,7 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>40</x>
                  <y>150</y>
-                 <width>131</width>
+                 <width>201</width>
                  <height>31</height>
                 </rect>
                </property>
@@ -1918,14 +1918,14 @@ p, li { white-space: pre-wrap; }
                 <string notr="true">color: rgb(69, 69, 69);</string>
                </property>
                <property name="text">
-                <string>Dividir em (MB):</string>
+                <string>Dividir Vídeo em (MB):</string>
                </property>
               </widget>
               <widget class="QSpinBox" name="spinBox_split_size">
                <property name="geometry">
                 <rect>
-                 <x>180</x>
-                 <y>145</y>
+                 <x>250</x>
+                 <y>140</y>
                  <width>71</width>
                  <height>40</height>
                 </rect>
@@ -2162,6 +2162,73 @@ QComboBox:focus {
                 </property>
                </item>
               </widget>
+              <widget class="QLabel" name="label_split_size_audio">
+               <property name="geometry">
+                <rect>
+                 <x>40</x>
+                 <y>200</y>
+                 <width>181</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(69, 69, 69);</string>
+               </property>
+               <property name="text">
+                <string>Dividir Áudio em  (MB):</string>
+               </property>
+              </widget>
+              <widget class="QSpinBox" name="spinBox_split_size_audio">
+               <property name="geometry">
+                <rect>
+                 <x>250</x>
+                 <y>190</y>
+                 <width>71</width>
+                 <height>40</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QSpinBox {
+	color: rgb(69, 69, 69);
+	border: 0px solid;
+	border-radius: 5px;
+	background-position: center;
+	background-color: rgb(255, 255,255 );
+}
+
+QSpinBox:hover {
+	border: 2px solid  rgb(0, 120, 170);
+	background-color: rgb(255, 255,255 );
+}
+
+QSpinBox:focus {
+	color: rgb(69, 69, 69);
+	background-color: rgb(255, 255, 255);
+}</string>
+               </property>
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+               <property name="value">
+                <number>10</number>
+               </property>
+              </widget>
              </widget>
             </item>
            </layout>
@@ -2248,7 +2315,7 @@ QComboBox:focus {
 }</string>
              </property>
              <property name="text">
-              <string>v1.5.0  </string>
+              <string>v2.0.0  </string>
              </property>
             </widget>
            </item>

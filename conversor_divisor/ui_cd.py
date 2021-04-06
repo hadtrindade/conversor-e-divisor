@@ -1008,12 +1008,12 @@ class Ui_MainWindow(object):
         self.label_config.setStyleSheet(u"color: rgb(69, 69, 69);")
         self.label_split_size = QLabel(self.frame_body_page_3)
         self.label_split_size.setObjectName(u"label_split_size")
-        self.label_split_size.setGeometry(QRect(40, 150, 131, 31))
+        self.label_split_size.setGeometry(QRect(40, 150, 201, 31))
         self.label_split_size.setFont(font2)
         self.label_split_size.setStyleSheet(u"color: rgb(69, 69, 69);")
         self.spinBox_split_size = QSpinBox(self.frame_body_page_3)
         self.spinBox_split_size.setObjectName(u"spinBox_split_size")
-        self.spinBox_split_size.setGeometry(QRect(180, 145, 71, 40))
+        self.spinBox_split_size.setGeometry(QRect(250, 140, 71, 40))
         self.spinBox_split_size.setFont(font2)
         self.spinBox_split_size.setStyleSheet(
             u"QSpinBox {\n"
@@ -1116,6 +1116,38 @@ class Ui_MainWindow(object):
             "	background-color: rgb(255, 255, 255);\n"
             "}"
         )
+        self.label_split_size_audio = QLabel(self.frame_body_page_3)
+        self.label_split_size_audio.setObjectName(u"label_split_size_audio")
+        self.label_split_size_audio.setGeometry(QRect(40, 200, 181, 31))
+        self.label_split_size_audio.setFont(font2)
+        self.label_split_size_audio.setStyleSheet(u"color: rgb(69, 69, 69);")
+        self.spinBox_split_size_audio = QSpinBox(self.frame_body_page_3)
+        self.spinBox_split_size_audio.setObjectName(
+            u"spinBox_split_size_audio"
+        )
+        self.spinBox_split_size_audio.setGeometry(QRect(250, 190, 71, 40))
+        self.spinBox_split_size_audio.setFont(font2)
+        self.spinBox_split_size_audio.setStyleSheet(
+            u"QSpinBox {\n"
+            "	color: rgb(69, 69, 69);\n"
+            "	border: 0px solid;\n"
+            "	border-radius: 5px;\n"
+            "	background-position: center;\n"
+            "	background-color: rgb(255, 255,255 );\n"
+            "}\n"
+            "\n"
+            "QSpinBox:hover {\n"
+            "	border: 2px solid  rgb(0, 120, 170);\n"
+            "	background-color: rgb(255, 255,255 );\n"
+            "}\n"
+            "\n"
+            "QSpinBox:focus {\n"
+            "	color: rgb(69, 69, 69);\n"
+            "	background-color: rgb(255, 255, 255);\n"
+            "}"
+        )
+        self.spinBox_split_size_audio.setMaximum(1000)
+        self.spinBox_split_size_audio.setValue(10)
 
         self.verticalLayout_4.addWidget(self.frame_body_page_3)
 
@@ -1204,7 +1236,7 @@ class Ui_MainWindow(object):
         self.button_page_2.setToolTip(
             QCoreApplication.translate(
                 "MainWindow",
-                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Dividir v\u00eddeos.</span></p></body></html>',
+                u'<html><head/><body><p><span style=" font-size:10pt; font-weight:600;">Dividir m\u00eddias.</span></p></body></html>',
                 None,
             )
         )
@@ -1423,7 +1455,7 @@ class Ui_MainWindow(object):
                 '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:600;">Conversor &amp; Divisor</span></p>\n'
                 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:600;\"><br /></p>\n"
                 '<p align="justify" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt;">	Interface Grafica '
-                "para convers\u00e3o e divis\u00e3o de v\u00eddeos para inclus\u00e3o no PJe, utilizando as ferramentas FFMPEG e MP4Box.</span></p></body></html>",
+                "para convers\u00e3o e divis\u00e3o de v\u00eddeos para inclus\u00e3o no PJe, utilizando as ferramentas FFMPEG, HandbrakeCLI e MP4Box.</span></p></body></html>",
                 None,
             )
         )
@@ -1433,7 +1465,9 @@ class Ui_MainWindow(object):
             )
         )
         self.label_split_size.setText(
-            QCoreApplication.translate("MainWindow", u"Dividir em (MB):", None)
+            QCoreApplication.translate(
+                "MainWindow", u"Dividir V\u00eddeo em (MB):", None
+            )
         )
         self.label_config_split.setText(
             QCoreApplication.translate("MainWindow", u"Divisor", None)
@@ -1470,13 +1504,18 @@ class Ui_MainWindow(object):
             5, QCoreApplication.translate("MainWindow", u"1920x1080", None)
         )
 
+        self.label_split_size_audio.setText(
+            QCoreApplication.translate(
+                "MainWindow", u"Dividir \u00c1udio em  (MB):", None
+            )
+        )
         self.label_author.setText(
             QCoreApplication.translate(
                 "MainWindow", u"  Desenvolvido por Ivo H. Trindade", None
             )
         )
         self.label_version.setText(
-            QCoreApplication.translate("MainWindow", u"v1.5.0  ", None)
+            QCoreApplication.translate("MainWindow", u"v2.0.0  ", None)
         )
 
     # retranslateUi
