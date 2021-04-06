@@ -55,7 +55,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             lambda: ui_functions.get_media(self)
         )
         self.button_source_file_split.clicked.connect(
-            lambda: ui_functions.get_file_video_split(self)
+            lambda: ui_functions.get_file_media_split(self)
         )
         # button_output
         self.button_output_file.clicked.connect(
