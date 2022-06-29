@@ -3,7 +3,9 @@ pytest
 pytest-cov
 pytest-mock
 pytest-qt
-black
-PyQt5==5.15.1
-pyqt5-tools==5.15.1.3
+blue
+isort
+
+PyQt5
+pyqt5-tools
 -r requirements.txt

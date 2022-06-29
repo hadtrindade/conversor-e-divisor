@@ -1,12 +1,10 @@
 import re
-import sys
-from typing import Text, NoReturn, Any, Callable
-from subprocess import Popen, PIPE, DEVNULL
-from os import path, getcwd, remove
-from conversor_divisor.settings import Settings
+from os import path
+from pathlib import Path
+from subprocess import DEVNULL, PIPE, Popen
+from typing import Any, Callable, List, Text
 
-
-_windows = sys.platform == "win32"
+from conversor_divisor.settings import PLATFORM, Settings
 
 
 class Convert:
@@ -14,8 +12,8 @@ class Convert:
 
     def __init__(
         self,
-        input_file: Any = None,
-        output_path: Text = None,
+        media: List[Path] = None,
+        output: Path = None,
         process_signal: Callable = None,
         progress_signal: Callable = None,
         error_signal: Callable = None,
@@ -29,8 +27,8 @@ class Convert:
     ):
         """Inicialização do obj.
 
-        :param input_file: lista ou string com o diretório da mídeia
-        :param output_path: int - path de destino da mídia
+        :param media: lista ou string com o diretório da mídeia
+        :param output: int - path de destino da mídia
         :param process_signal: callable - sinal do processo em execução
         :param progress_signal: callable - sinal do progresso do processo em execução
         :param error_signal: callable - sinal de erro na execução do processo
@@ -42,8 +40,8 @@ class Convert:
         :param not_split: bool - não realizar a divisão somente a conversão
         :param split_only: bool - somente a divisão
         """
-        self.input_file = input_file
-        self.output_path = output_path
+        self.media = media
+        self.output = output
         self.process_signal = process_signal
         self.progress_signal = progress_signal
         self.error_signal = error_signal
@@ -56,43 +54,108 @@ class Convert:
         self.split_only = split_only
         s = Settings()
         self.settings = s.read_settings()
+        self.ffmpeg_binary = 'ffmpeg'
+        self.mp4box.binary = 'MP4box'
+
+        if PLATFORM == 'win32':
+            self.handbrake_binary = (
+                Path().cwd().joinpath('HandBrakeCLI', 'HandBrakeCLI.exe')
+            )
+            self.ffmpeg_binary = (
+                Path().cwd().joinpath('FFmpeg', 'bin', 'ffmpeg.exe')
+            )
+            self.mp4box.binary = Path().cwd().joinpath('MP4Box', 'mp4box.exe')
 
     def _subprocess(self, *args, **kwargs):
         """Método para execução de subprocessos."""
 
-        kwargs["bufsize"] = 1
-        kwargs["stdout"] = PIPE
-        kwargs["stderr"] = PIPE
-        if _windows:
+        kwargs['bufsize'] = 1
+        kwargs['stdout'] = PIPE
+        kwargs['stderr'] = PIPE
+        if PLATFORM == 'win32':
             from subprocess import CREATE_NEW_PROCESS_GROUP
 
-            kwargs["creationflags"] = CREATE_NEW_PROCESS_GROUP
-            kwargs["shell"] = True
+            kwargs['creationflags'] = CREATE_NEW_PROCESS_GROUP
+            kwargs['shell'] = True
         process = Popen(args, **kwargs)
         return process
 
-    def _bar_ffmpeg(self, std_out: Text) -> NoReturn:
+    def handbrake(self, media):
+
+        output = self.output.joinpath(f'convertido_{media.stem}.mp3')
+        args = []   # TODO: FAZER A LIST COM OS DADOS PARA CONVERSÃO DE ÁUDIO
+        if not self.audio_only:
+            output = self.output.joinpath(f'convertido_{media.stem}.mp4')
+            args = []   # TODO: FAZER A LIST COM PARAM DEFAULT
+            if self.low:
+                args = [
+                    self.handbrake_binary.absolute(),
+                    '-i',
+                    media.absolute(),
+                    '-w',
+                    '320',
+                    '-l',
+                    '240',
+                    '-e',
+                    'mpeg4',
+                    '--rate',
+                    '30',
+                    '--vb',
+                    '100',
+                    '--mixdown',
+                    'mono',
+                    '--aencoder',
+                    'av_aac',
+                    '--ab',
+                    '48',
+                    '-o',
+                    output.absolute(),
+                ]
+
+        handbrake_result = self._subprocess(*args, encoding='utf-8', text=True)
+        self.process_signal.emit(handbrake_result)
+        for t in handbrake_result.stderr:
+            # TODO: verificar essa escrescencia aqui.
+            re_proc_hb = re.compile('work result = 0')
+            re_proc_hb_error = re.compile('work result = [1-9]')
+            proc_result = re_proc_hb.findall(t)
+            proc_result_error = re_proc_hb_error.findall(t)
+            if proc_result:
+                _ = Popen(
+                    ['tskill', 'HandBrakeCLI'],
+                    stdout=DEVNULL,
+                    stderr=DEVNULL,
+                )
+            elif proc_result_error:
+                return self.output.joinpath(f'convertido_{media.stem}.mp4')
+
+    def _bar_ffmpeg(self, stdout: Text) -> None:
         """Método para progress bar.
 
-        :param std_out: stantard output do processo ffmpeg.
+        :param stdout: stantard output do processo ffmpeg.
         :return: None
         """
 
         regex_total_time = re.compile(
-            r"\sDuration:\s[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}"
+            r'\sDuration:\s[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}'
         )
         regex_elapsed_time = re.compile(
-            r"time=\s?[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}"
+            r'time=\s?[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}'
         )
+
+        def get_sec(time_str):
+            h, m, s = time_str.split(':')
+            return int(h) * 3600 + int(m) * 60 + int(float(s))
+
         time_duration = 0
         elapsed_time = 0
-        for line in std_out:
+        for line in stdout:
             _total_time = regex_total_time.findall(line)
             if _total_time:
-                time_duration = self._get_sec(_total_time[0].split()[1])
+                time_duration = get_sec(_total_time[0].split()[1])
             _elapsed_time = regex_elapsed_time.findall(line)
             if _elapsed_time:
-                elapsed_time = self._get_sec(_elapsed_time[0].split("=")[1])
+                elapsed_time = get_sec(_elapsed_time[0].split('=')[1])
             try:
                 self.progress_signal.emit(
                     int(elapsed_time / time_duration * 100)
@@ -100,139 +163,91 @@ class Convert:
             except ZeroDivisionError:
                 pass
 
-    def ffmpeg(self, file_in: Text, file_out: Text) -> Any:
+    def ffmpeg(self, media) -> Any:
         """Método ffmpeg para conversão de mídia.
 
-        :param file_in: mídia de entrada
-        :param file_out: nome da mídia de saída.
+        :param media: midia a ser convertida
         :return: Any
         """
-        binary_ffmpeg = "ffmpeg"
-        input_file = file_in
-        output_file = file_out
-        if _windows:
-            binary_ffmpeg = path.join(getcwd(), r"FFmpeg\bin\ffmpeg.exe")
-            binary_handbrake = path.join(
-                getcwd(), r"HandBrakeCLI\HandBrakeCLI.exe"
-            )
-            input_file = file_in.replace("/", "\\")
-            output_file = file_out.replace("/", "\\")
+        output = self.output.joinpath(f'convertido_{media.stem}.mp3')
         args = [
-            f"{binary_ffmpeg}",
-            "-i",
-            f"{input_file}",
-            "-preset",
-            "fast",
-            "-max_muxing_queue_size",
-            "9999",
-            f"{output_file}",
-            "-y",
+            self.ffmpeg_binary.absolute(),
+            '-i',
+            media.absolute(),
+            '-acodec',
+            'libmp3lame',
+            '-max_muxing_queue_size',
+            '9999',
+            output.absolute(),
+            '-y',
         ]
-        if self.low:
+        if not self.audio_only:
+            output = self.output.joinpath(f'convertido_{media.stem}.mp4')
             args = [
-                f"{binary_ffmpeg}",
-                "-i",
-                f"{input_file}",
-                "-s",
-                f"{self.settings['settings_convert']['resolution_value']}",
-                "-preset",
-                "fast",
-                "-r",
-                "30",
-                "-b:v",
-                "100000",
-                "-ar",
-                "44100",
-                "-ac",
-                "1",
-                "-max_muxing_queue_size",
-                "9999",
-                f"{output_file}",
-                "-y",
+                self.ffmpeg_binary.absolute(),
+                '-i',
+                media.absolute(),
+                '-preset',
+                'fast',
+                '-max_muxing_queue_size',
+                '9999',
+                output.absolute(),
+                '-y',
             ]
-        if self.audio_only:
-            path_out, file = path.split(output_file)
-            output_file = path.join(path_out, f"{file[:-4]}.mp3")
-            args = [
-                f"{binary_ffmpeg}",
-                "-i",
-                f"{input_file}",
-                "-acodec",
-                "libmp3lame",
-                "-max_muxing_queue_size",
-                "9999",
-                f"{output_file}",
-                "-y",
-            ]
+            if self.low:
+                args = [
+                    self.ffmpeg_binary.absolute(),
+                    '-i',
+                    media.absolute(),
+                    '-s',
+                    f"{self.settings['settings_convert']['resolution_value']}",
+                    '-preset',
+                    'fast',
+                    '-r',
+                    '30',
+                    '-b:v',
+                    '100000',
+                    '-ar',
+                    '44100',
+                    '-ac',
+                    '1',
+                    '-max_muxing_queue_size',
+                    '9999',
+                    output.absolute(),
+                    '-y',
+                ]
         try:
-            process = self._subprocess(*args, encoding="utf-8", text=True)
+            process = self._subprocess(*args, encoding='utf-8', text=True)
             self.process_signal.emit(process)
             self._bar_ffmpeg(process.stderr)
             process.wait()
             if process.returncode:
-                args_1 = [
-                    f"{binary_handbrake}",
-                    "-i",
-                    f"{input_file}",
-                    "-w",
-                    "320",
-                    "-l",
-                    "240",
-                    "-e",
-                    "mpeg4",
-                    "--rate",
-                    "30",
-                    "--vb",
-                    "100",
-                    "--mixdown",
-                    "mono",
-                    "--aencoder",
-                    "av_aac",
-                    "--ab",
-                    "48",
-                    "-o",
-                    f"{output_file}",
-                ]
-
-                process_1 = self._subprocess(
-                    *args_1, encoding="utf-8", text=True
-                )
-                self.process_signal.emit(process_1)
-                for t in process_1.stderr:
-                    re_proc_hb = re.compile("work result = 0")
-                    re_proc_hb_error = re.compile("work result = [1-9]")
-                    proc_result = re_proc_hb.findall(t)
-                    proc_result_error = re_proc_hb_error.findall(t)
-                    if proc_result:
-                        _ = Popen(
-                            ["tskill", "HandBrakeCLI"],
-                            stdout=DEVNULL,
-                            stderr=DEVNULL,
-                        )
-                    elif proc_result_error:
-                        return
-            return output_file
+                return
+            return output
         except Exception:
             return
 
-    def _bar_mp4box(self, video_in: Text, std_out: Text) -> NoReturn:
+    def _bar_mp4box(self, media, stdout: Text) -> None:
         """Método para progress bar.
 
-        :param video_in: video de entrada.
-        :param std_out: standart output do processo de divisão.
+        :param media: media a ser dividida
+        :param stdout: standart output do processo de divisão.
+
         :return: None
         """
 
         regex_import_iso = re.compile(
-            r"^Importing ISO File:\s*\|\S*\s*\|\s\([0-9]{2}"
+            r'^Importing ISO File:\s*\|\S*\s*\|\s\([0-9]{2}'
         )
-        regex_splitting = re.compile(r"^Splitting:\s*\|\S*\s*\|\s\([0-9]{2}")
+        regex_splitting = re.compile(r'^Splitting:\s*\|\S*\s*\|\s\([0-9]{2}')
         regex_iso_file = re.compile(
-            r"^ISO File Writing:\s*\|\S*\s*\|\s\([0-9]{2}"
+            r'^ISO File Writing:\s*\|\S*\s*\|\s\([0-9]{2}'
         )
-        total_size = self._get_total_split_bar(video_in)
+        file_size = int(path.getsize(media.absolute())) / 1024
+        total_size = 294 + 100 * (file_size / 30720)
+
         count = 0
-        for line in std_out:
+        for line in stdout:
             import_iso = regex_import_iso.findall(line)
             split_file = regex_splitting.findall(line)
             iso_file = regex_iso_file.findall(line)
@@ -247,155 +262,102 @@ class Convert:
                     self.progress_signal.emit(int(count / total_size * 100))
                     count += 1
 
-    def mp4box(self, media_in: Text, media_out: Text) -> bool:
+    def mp4box(self, media) -> bool:
         """Método para divisão de arquivos de vídeo.
 
-        :param media_in: vídeo de entrada.
-        :param media_out: nome do vídeo de saíde
         :return: bool
         """
         size_media = None
-        if media_in[-3:] == "mp3":
-            size_media = self.settings["settings_split"]["split_size_bytes_a"]
-            split_size_kilobytes = self.settings["settings_split"][
-                "split_size_kilobytes_a"
+        if media.suffix == '.mp3':
+            size_media = self.settings['settings_split']['split_size_bytes_a']
+            split_size_kilobytes = self.settings['settings_split'][
+                'split_size_kilobytes_a'
             ]
         else:
-            size_media = self.settings["settings_split"]["split_size_bytes_v"]
-            split_size_kilobytes = self.settings["settings_split"][
-                "split_size_kilobytes_v"
+            size_media = self.settings['settings_split']['split_size_bytes_v']
+            split_size_kilobytes = self.settings['settings_split'][
+                'split_size_kilobytes_v'
             ]
 
-        if int(path.getsize(media_in)) <= size_media:
-            return "minimum_size"
+        if int(path.getsize(media.absolute())) <= size_media:
+            return 'minimum_size'
 
-        binary_mp4box = "MP4Box"
-        media_file = media_in
-        output_file = media_out
         try:
-            if _windows:
-                binary_mp4box = path.join(getcwd(), r"MP4Box\mp4box.exe")
-                media_file = media_in.replace("/", "\\")
-                output_file = media_out.replace("/", "\\")
             args = [
-                f"{binary_mp4box}",
-                "-add",
-                f"{media_file}",
-                "-split-size",
-                f"{split_size_kilobytes}",
-                f"{output_file}",
+                self.mp4box.binary.absolute(),
+                '-add',
+                media.absolute(),
+                '-split-size',
+                f'{split_size_kilobytes}',
+                self.output.joinpath(f'div_{media.name}'),
             ]
             process = self._subprocess(*args, universal_newlines=True)
             self.process_signal.emit(process)
-            self._bar_mp4box(media_in, process.stderr)
+            self._bar_mp4box(process.stderr)
             process.wait()
             if process.returncode:
                 return
-            return output_file
+            return self.output.joinpath(f'div_{media.name}')
         except Exception:
             return
 
-    def _get_total_split_bar(self, input_file: Text) -> int:
-        """Método para retorno do tamanho do progress bar da divisão.
-
-        :param input_file: arquivo de mídia
-        :return: int
-        """
-        file_size = int(path.getsize(input_file)) / 1024
-        number_of_divisions = file_size / 30720
-        return 294 + 100 * number_of_divisions
-
-    def _get_sec(self, time_str: Text) -> int:
-        """Método para retorno do tempo em seguntos.
-
-        :param time_str: tempo no formato '00:00:00'
-        :return: int
-        """
-        h, m, s = time_str.split(":")
-        return int(h) * 3600 + int(m) * 60 + int(float(s))
-
-    def _execute(self, input_file: Text, output_path: Text) -> bool:
+    def _execute(self, media) -> bool:
         """Método para execução da conversão ou divisão.
-        param: input_file: arquivo de mídia
-        param: output_path: caminho de saída
+
         :return: bool
         """
-        regex_extensions = re.compile(
-            r"\.(mp4|mp3|wav|vob|aac|mkv|m4v|flv|swf|avchd|mov|"
-            r"qt|avi|wmv|mpeg|rmvb|ogg|ac3|flac|alac|[Ww]eb[Mm])"
-        )
-        regex_unknown_extension = re.compile(r"\.\S*$")
-        search_extensions = regex_extensions.findall(input_file)
-        if search_extensions:
-            re_split = regex_extensions.split(input_file)
-            _, file = path.split(re_split[0])
-        else:
-            re_unknown = regex_unknown_extension.split(input_file)
-            _, file = path.split(re_unknown[0])
-        output_file = path.join(output_path, f"conv_{file}.mp4")
-        result_ffmepg = self.ffmpeg(input_file, output_file)
-        if not result_ffmepg:
-            return "error_ffmpeg"
-        elif not path.exists(result_ffmepg):
-            return "error_ffmpeg"
+        ffmpeg_result = self.ffmpeg(media=media)
+        if not ffmpeg_result:
+            handbrake_result = self.handbrake(media=media)
+            if not handbrake_result:
+                return 1
         if not self.not_split:
-            path_file, file = path.split(result_ffmepg)
-            result_mp4box = self.mp4box(
-                media_in=result_ffmepg,
-                media_out=path.join(path_file, f"cd_{file[5:]}"),
-            )
-            if not result_mp4box:
-                remove(result_ffmepg)
-                return
-            elif result_mp4box != "minimum_size":
-                remove(result_ffmepg)
-            return result_mp4box
-        return result_ffmepg
+            mp4box_result = self.mp4box(media=ffmpeg_result)
+            if not mp4box_result:
+                return 2
+            elif mp4box_result != 'minimum_size':
+                ffmpeg_result.unlink()
 
     def convert_or_split(self):
         """Método para conversão e divisão de mídias."""
 
         if self.split_only:
-            _, file = path.split(self.input_file)
-            result_mp4box = self.mp4box(
-                self.input_file, path.join(self.output_path, f"d_{file}")
-            )
-
-            if result_mp4box == "minimum_size":
-                self.done_signal.emit("Mídia já está em tamanho apropriado!")
-            elif not result_mp4box:
+            mp4box_result = self.mp4box(media=self.media)
+            if mp4box_result == 'minimum_size':
+                self.done_signal.emit('Mídia já está em tamanho apropriado!')
+            elif not mp4box_result:
                 self.error_signal.emit(
-                    f"Ocorreu um erro no processo de divisão."
+                    f'Ocorreu um erro no processo de divisão.'
                 )
-            elif result_mp4box:
-                self.done_signal.emit("Divisão Concluída.")
+            elif mp4box_result:
+                self.done_signal.emit('Divisão Concluída.')
         else:
-            if isinstance(self.input_file, list):
+            if isinstance(self.media, list):
                 count = 1
-                for file_in in self.input_file:
+                for media_file in self.media:
                     self.line_input_file_signal.emit(
-                        f"Convertendo {count} de {len(self.input_file)}"
+                        f'Convertendo {count} de {len(self.media)}'
                     )
-                    exec_cs = self._execute(file_in, self.output_path)
-                    if exec_cs == "error_ffmpeg" or not exec_cs:
+                    result_execute = self._execute(media=media_file)
+                    if result_execute:
                         self.error_signal_warm.emit(
-                            f"A mídea: {file_in} apresentou um erro."
+                            f'Erro ao processar a mídia: {media_file.name}'
                         )
                         continue
                     count += 1
                 if count > 1:
                     self.done_signal.emit(
-                        f"{count - 1} Conversões e/ou Divisões Concluídas."
+                        f'{count - 1} Conversões e/ou Divisões Concluídas.'
                     )
                 else:
-                    self.error_signal.emit("Erro no processo de conversão.")
+                    self.error_signal.emit('Erro no processo de conversão.')
             else:
-                result_exec = self._execute(self.input_file, self.output_path)
-                if result_exec == "error_ffmpeg":
-                    self.error_signal.emit("Erro no processo de conversão.")
-                elif not result_exec:
+                execute_result = self._execute(media=self.media)
+                if execute_result == 1:
+                    self.error_signal.emit('Erro no processo de conversão.')
+                elif execute_result == 2:
                     self.error_signal.emit(
-                        f"Ocorreu um erro no processo de divisão."
+                        'Ocorreu um erro no processo de divisão.'
                     )
-                elif result_exec:
-                    self.done_signal.emit("Conversão e/ou Divisão Concluída.")
+                else:
+                    self.done_signal.emit('Conversão e/ou Divisão Concluída.')
