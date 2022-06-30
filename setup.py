@@ -33,10 +33,10 @@ setup(
         ],
     },
     classifiers=[
-        "Environment :: GUI",
+        "Environment :: Console",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.10",
         "Framework :: Pytest",
     ],
     zip_safe=False,

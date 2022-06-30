@@ -36,3 +36,9 @@ format:
 
 test:
 	pytest tests/ -v --cov=conversor_divisor
+
+build:
+	@python setup.py sdist bdist_wheel
+
+publish:
+	@twine upload dist/*

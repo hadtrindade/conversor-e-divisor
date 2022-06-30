@@ -2,7 +2,7 @@ import re
 from os import path
 from pathlib import Path
 from subprocess import DEVNULL, PIPE, Popen
-from typing import Any, Callable, List, Text
+from typing import Callable, List, Text
 
 from conversor_divisor.settings import PLATFORM, Settings
 
@@ -22,7 +22,7 @@ class Convert:
         line_input_file_signal: Callable = None,
         low: bool = None,
         audio_only: bool = None,
-        not_split: bool = None,
+        split: bool = True,
         split_only: bool = None,
     ):
         """Inicialização do obj.
@@ -37,7 +37,7 @@ class Convert:
         :param line_input_file_signal: callable - sinal para atualização de progresso de várias mídias.
         :param low: bool - vídeo em baixa qualidade
         :param audio_only: bool - rip de áudio ou conversão de áudios
-        :param not_split: bool - não realizar a divisão somente a conversão
+        :param split: bool - realizer a divisão após a conversão
         :param split_only: bool - somente a divisão
         """
         self.media = media
@@ -50,12 +50,12 @@ class Convert:
         self.line_input_file_signal = line_input_file_signal
         self.low = low
         self.audio_only = audio_only
-        self.not_split = not_split
+        self.split = split
         self.split_only = split_only
         s = Settings()
         self.settings = s.read_settings()
         self.ffmpeg_binary = 'ffmpeg'
-        self.mp4box.binary = 'MP4box'
+        self.mp4box_binary = 'MP4box'
 
         if PLATFORM == 'win32':
             self.handbrake_binary = (
@@ -64,7 +64,7 @@ class Convert:
             self.ffmpeg_binary = (
                 Path().cwd().joinpath('FFmpeg', 'bin', 'ffmpeg.exe')
             )
-            self.mp4box.binary = Path().cwd().joinpath('MP4Box', 'mp4box.exe')
+            self.mp4box_binary = Path().cwd().joinpath('MP4Box', 'mp4box.exe')
 
     def _subprocess(self, *args, **kwargs):
         """Método para execução de subprocessos."""
@@ -80,54 +80,32 @@ class Convert:
         process = Popen(args, **kwargs)
         return process
 
-    def handbrake(self, media):
+    def handbrake(self, media: Path) -> Path:
 
-        output = self.output.joinpath(f'convertido_{media.stem}.mp3')
-        args = []   # TODO: FAZER A LIST COM OS DADOS PARA CONVERSÃO DE ÁUDIO
-        if not self.audio_only:
-            output = self.output.joinpath(f'convertido_{media.stem}.mp4')
-            args = []   # TODO: FAZER A LIST COM PARAM DEFAULT
-            if self.low:
-                args = [
-                    self.handbrake_binary.absolute(),
-                    '-i',
-                    media.absolute(),
-                    '-w',
-                    '320',
-                    '-l',
-                    '240',
-                    '-e',
-                    'mpeg4',
-                    '--rate',
-                    '30',
-                    '--vb',
-                    '100',
-                    '--mixdown',
-                    'mono',
-                    '--aencoder',
-                    'av_aac',
-                    '--ab',
-                    '48',
-                    '-o',
-                    output.absolute(),
-                ]
-
-        handbrake_result = self._subprocess(*args, encoding='utf-8', text=True)
-        self.process_signal.emit(handbrake_result)
-        for t in handbrake_result.stderr:
-            # TODO: verificar essa escrescencia aqui.
-            re_proc_hb = re.compile('work result = 0')
-            re_proc_hb_error = re.compile('work result = [1-9]')
-            proc_result = re_proc_hb.findall(t)
-            proc_result_error = re_proc_hb_error.findall(t)
-            if proc_result:
-                _ = Popen(
-                    ['tskill', 'HandBrakeCLI'],
-                    stdout=DEVNULL,
-                    stderr=DEVNULL,
-                )
-            elif proc_result_error:
-                return self.output.joinpath(f'convertido_{media.stem}.mp4')
+        output = self.output.joinpath(f'convertido_{media.stem}.mp4')
+        args = f'{self.handbrake_binary.absolute()} -i \
+            {media.absolute()} -o {output.absolute()}'.split()
+        if self.low:
+            args = f'{self.handbrake_binary.absolute()} -i \
+                {media.absolute()} -w 320 -l 240 -e mpeg4 --rate\
+                     30 --vb 100 --mixdown mono --aencoder av_aac \
+                        --ab 48 -o {output.absolute()}'.split()
+        try:
+            process = self._subprocess(*args, encoding='utf-8', text=True)
+            self.process_signal.emit(process)
+            re_error = re.compile('work result = [1-9]')
+            for t in process.stderr:
+                error = re_error.findall(t)
+                if error:
+                    _ = Popen(
+                        ['tskill', 'HandBrakeCLI'],
+                        stdout=DEVNULL,
+                        stderr=DEVNULL,
+                    )
+                    return process.returncode
+            return output
+        except Exception as e:
+            return e
 
     def _bar_ffmpeg(self, stdout: Text) -> None:
         """Método para progress bar.
@@ -163,7 +141,7 @@ class Convert:
             except ZeroDivisionError:
                 pass
 
-    def ffmpeg(self, media) -> Any:
+    def ffmpeg(self, media: Path) -> Path:
         """Método ffmpeg para conversão de mídia.
 
         :param media: midia a ser convertida
@@ -195,39 +173,22 @@ class Convert:
                 '-y',
             ]
             if self.low:
-                args = [
-                    self.ffmpeg_binary.absolute(),
-                    '-i',
-                    media.absolute(),
-                    '-s',
-                    f"{self.settings['settings_convert']['resolution_value']}",
-                    '-preset',
-                    'fast',
-                    '-r',
-                    '30',
-                    '-b:v',
-                    '100000',
-                    '-ar',
-                    '44100',
-                    '-ac',
-                    '1',
-                    '-max_muxing_queue_size',
-                    '9999',
-                    output.absolute(),
-                    '-y',
-                ]
+                args = f"{self.ffmpeg_binary.absolute()} -i {media.absolute()}\
+                     -s {self.settings['settings_convert']['resolution_value']}\
+                         -preset fast -r 30 -b:v 100000 -ar 44100 -ac 1 \
+                            -max_muxing_queue_size 9999 {output.absolute()} -y".split()
         try:
             process = self._subprocess(*args, encoding='utf-8', text=True)
             self.process_signal.emit(process)
             self._bar_ffmpeg(process.stderr)
             process.wait()
             if process.returncode:
-                return
+                return process.returncode
             return output
-        except Exception:
-            return
+        except Exception as e:
+            return e
 
-    def _bar_mp4box(self, media, stdout: Text) -> None:
+    def _bar_mp4box(self, media: Path, stdout: Text) -> None:
         """Método para progress bar.
 
         :param media: media a ser dividida
@@ -262,10 +223,11 @@ class Convert:
                     self.progress_signal.emit(int(count / total_size * 100))
                     count += 1
 
-    def mp4box(self, media) -> bool:
+    def mp4box(self, media: Path) -> None:
         """Método para divisão de arquivos de vídeo.
 
-        :return: bool
+        :param media: media a ser dividida
+        :return: None
         """
         size_media = None
         if media.suffix == '.mp3':
@@ -284,7 +246,7 @@ class Convert:
 
         try:
             args = [
-                self.mp4box.binary.absolute(),
+                self.mp4box_binary.absolute(),
                 '-add',
                 media.absolute(),
                 '-split-size',
@@ -293,71 +255,72 @@ class Convert:
             ]
             process = self._subprocess(*args, universal_newlines=True)
             self.process_signal.emit(process)
-            self._bar_mp4box(process.stderr)
+            self._bar_mp4box(media=media, stdout=process.stderr)
             process.wait()
             if process.returncode:
-                return
-            return self.output.joinpath(f'div_{media.name}')
-        except Exception:
+                return process.returncode
             return
+        except Exception as e:
+            return e
 
-    def _execute(self, media) -> bool:
+    def _execute(self, media: Path) -> None:
         """Método para execução da conversão ou divisão.
 
-        :return: bool
+        :param media: media a ser processada
+        :return: None
         """
-        ffmpeg_result = self.ffmpeg(media=media)
-        if not ffmpeg_result:
-            handbrake_result = self.handbrake(media=media)
-            if not handbrake_result:
+        convert_result = self.ffmpeg(media=media)
+        if not isinstance(convert_result, Path):
+            if self.audio_only:
                 return 1
-        if not self.not_split:
-            mp4box_result = self.mp4box(media=ffmpeg_result)
+            convert_result = self.handbrake(media=media)
+            if not isinstance(convert_result, Path):
+                return 1
+        if self.split:
+            mp4box_result = self.mp4box(media=convert_result)
             if not mp4box_result:
+                convert_result.unlink()
+            elif mp4box_result == 'minimum_size':
+                return
+            elif mp4box_result:
                 return 2
-            elif mp4box_result != 'minimum_size':
-                ffmpeg_result.unlink()
 
-    def convert_or_split(self):
+    def convert_or_split(self) -> None:
         """Método para conversão e divisão de mídias."""
 
         if self.split_only:
             mp4box_result = self.mp4box(media=self.media)
             if mp4box_result == 'minimum_size':
                 self.done_signal.emit('Mídia já está em tamanho apropriado!')
-            elif not mp4box_result:
-                self.error_signal.emit(
-                    f'Ocorreu um erro no processo de divisão.'
-                )
             elif mp4box_result:
+                self.error_signal.emit(
+                    'Ocorreu um erro no processo de divisão.'
+                )
+            elif not mp4box_result:
                 self.done_signal.emit('Divisão Concluída.')
+        if isinstance(self.media, list):
+            count = 1
+            for media in self.media:
+                self.line_input_file_signal.emit(
+                    f'Convertendo {count} de {len(self.media)}'
+                )
+                result_execute = self._execute(media=Path(media))
+                if result_execute:
+                    self.error_signal_warm.emit(
+                        f'Erro ao processar a mídia: {Path(media).name}'
+                    )
+                    continue
+                count += 1
+            self.done_signal.emit(
+                f'{count - 1} Conversões e/ou Divisões Concluídas.'
+            )
         else:
-            if isinstance(self.media, list):
-                count = 1
-                for media_file in self.media:
-                    self.line_input_file_signal.emit(
-                        f'Convertendo {count} de {len(self.media)}'
-                    )
-                    result_execute = self._execute(media=media_file)
-                    if result_execute:
-                        self.error_signal_warm.emit(
-                            f'Erro ao processar a mídia: {media_file.name}'
-                        )
-                        continue
-                    count += 1
-                if count > 1:
-                    self.done_signal.emit(
-                        f'{count - 1} Conversões e/ou Divisões Concluídas.'
-                    )
-                else:
-                    self.error_signal.emit('Erro no processo de conversão.')
+            execute_result = self._execute(media=self.media)
+            if execute_result == 1:
+                self.error_signal.emit('Erro no processo de conversão.')
+            elif execute_result == 2:
+                self.error_signal.emit(
+                    'Ocorreu um erro no processo de divisão.'
+                )
             else:
-                execute_result = self._execute(media=self.media)
-                if execute_result == 1:
-                    self.error_signal.emit('Erro no processo de conversão.')
-                elif execute_result == 2:
-                    self.error_signal.emit(
-                        'Ocorreu um erro no processo de divisão.'
-                    )
-                else:
-                    self.done_signal.emit('Conversão e/ou Divisão Concluída.')
+                self.done_signal.emit('Conversão e/ou Divisão Concluída.')

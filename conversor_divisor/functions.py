@@ -143,10 +143,12 @@ def get_media_convert(app: object) -> None:
     if len(media) == 1:
         app.media_convert = Path(media[0])
         app.output_convert = app.media_convert.parent.absolute()
-        app.current_directory_convert = app.media_convert.parent.absolute()
+        app.current_directory_convert = str(
+            app.media_convert.parent.absolute()
+        )
         app.line_edit_input_file.setText(app.media_convert.name)
         app.line_edit_input_file.setToolTip(str(app.media_convert.absolute()))
-        app.line_edit_output_file.setText(app.output_convert.parent.stem)
+        app.line_edit_output_file.setText(str(app.output_convert.stem))
         app.line_edit_output_file.setToolTip(str(app.output_convert))
         app.line_edit_input_file.setVisible(True)
         app.line_edit_output_file.setVisible(True)
@@ -159,13 +161,13 @@ def get_media_convert(app: object) -> None:
     else:
         app.media_convert = media
         app.output_convert = Path(media[0]).parent.absolute()
-        app.current_directory_convert = app.output_convert
+        app.current_directory_convert = str(app.output_convert)
         app.line_edit_input_file.setText(f'Mídias a converter: {len(media)}')
         app.line_edit_input_file.setToolTip(
             ''.join([f'{file}\n' for file in media])
         )
-        app.line_edit_output_file.setText(app.output_convert.stem)
-        app.line_edit_output_file.setToolTip(app.output_convert.stem)
+        app.line_edit_output_file.setText(str(app.output_convert.stem))
+        app.line_edit_output_file.setToolTip(str(app.output_convert))
         app.line_edit_input_file.setVisible(True)
         app.line_edit_output_file.setVisible(True)
         app.button_start.setEnabled(True)
@@ -186,7 +188,9 @@ def get_output_convert(app: object) -> None:
     if output:
         app.output_convert = Path(output)
         app.line_edit_output_file.setText(app.output_convert.stem)
-        app.line_edit_output_file.setToolTip(app.output_convert.absolute())
+        app.line_edit_output_file.setToolTip(
+            str(app.output_convert.absolute())
+        )
 
 
 def get_media_split(app: object) -> None:
@@ -205,11 +209,11 @@ def get_media_split(app: object) -> None:
     app.output_split = app.media_split.parent.absolute()
     app.current_directory_split = app.media_split.parent.absolute()
     app.line_edit_input_file_split.setText(app.media_split.name)
-    app.line_edit_input_file_split.setToolTip(app.media_split.absolute())
+    app.line_edit_input_file_split.setToolTip(str(app.media_split.absolute()))
     app.button_start_split.setEnabled(True)
     app.button_output_file_split.setEnabled(True)
     app.line_edit_output_file_split.setText(app.output_split.stem)
-    app.line_edit_output_file_split.setToolTip(app.output_split)
+    app.line_edit_output_file_split.setToolTip(str(app.output_split))
     app.line_edit_output_file_split.setVisible(True)
     app.line_edit_input_file_split.setVisible(True)
     app.line_edit_input_file_split.setDisabled(True)
@@ -226,7 +230,7 @@ def get_output_split(app: object) -> None:
     if output:
         app.output_split = Path(output)
         app.line_edit_output_file_split.setText(app.output_split.stem)
-        app.line_edit_output_file_split.setToolTip(app.output_split)
+        app.line_edit_output_file_split.setToolTip(str(app.output_split))
         app.line_edit_output_file_split.setDisabled(True)
 
 
