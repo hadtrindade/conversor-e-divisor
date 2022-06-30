@@ -1,4 +1,4 @@
-from PySide2.QtCore import QThread, QObject, Signal, Slot
+from PySide2.QtCore import QObject, QThread, Signal, Slot
 
 
 class SignalsToWorker(QObject):
@@ -20,13 +20,13 @@ class Worker(QThread):
         self.signal = SignalsToWorker()
 
         self.kwargs[
-            "line_input_file_signal"
+            'line_input_file_signal'
         ] = self.signal.line_input_file_signal
-        self.kwargs["progress_signal"] = self.signal.progress_signal
-        self.kwargs["process_signal"] = self.signal.process_signal
-        self.kwargs["done_signal"] = self.signal.done_signal
-        self.kwargs["error_signal"] = self.signal.error_signal
-        self.kwargs["error_signal_warm"] = self.signal.error_signal_warm
+        self.kwargs['progress_signal'] = self.signal.progress_signal
+        self.kwargs['process_signal'] = self.signal.process_signal
+        self.kwargs['done_signal'] = self.signal.done_signal
+        self.kwargs['error_signal'] = self.signal.error_signal
+        self.kwargs['error_signal_warm'] = self.signal.error_signal_warm
 
     @Slot()
     def stop(self):
