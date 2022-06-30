@@ -12,7 +12,7 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
-import conversor_divisor.resources_cd_rc
+import conversor_divisor.resources
 
 
 class Ui_MainWindow(object):

@@ -7,7 +7,7 @@ from PySide2 import QtGui, QtWidgets
 from conversor_divisor import __author__, __version__, functions
 from conversor_divisor.convert import Convert
 from conversor_divisor.settings import PLATFORM, Settings
-from conversor_divisor.ui_cd import Ui_MainWindow
+from conversor_divisor.ui import Ui_MainWindow
 from conversor_divisor.worker import Worker
 
 
@@ -133,7 +133,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.process_split_in_progress = obj_proc
 
     def stop_process(self):
-        if self._platform_ms_win:
+        if self._platform_ms_win == 'win32':
             from subprocess import DEVNULL, Popen
 
             _ = Popen(['tskill', 'ffmpeg'], stdout=DEVNULL, stderr=DEVNULL)
@@ -147,7 +147,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.popup_done('Conversão e/ou Cancelada')
 
     def stop_process_split(self):
-        if self._platform_ms_win:
+        if self._platform_ms_win == 'win32':
             from subprocess import Popen
 
             Popen(['tskill', 'mp4box'])
