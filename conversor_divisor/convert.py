@@ -59,12 +59,17 @@ class Convert:
 
         if PLATFORM == 'win32':
             self.handbrake_binary = (
-                Path().cwd().joinpath('HandBrakeCLI', 'HandBrakeCLI.exe')
+                Path()
+                .cwd()
+                .joinpath('HandBrakeCLI', 'HandBrakeCLI.exe')
+                .absolute()
             )
             self.ffmpeg_binary = (
-                Path().cwd().joinpath('FFmpeg', 'bin', 'ffmpeg.exe')
+                Path().cwd().joinpath('FFmpeg', 'bin', 'ffmpeg.exe').absolute()
             )
-            self.mp4box_binary = Path().cwd().joinpath('MP4Box', 'mp4box.exe')
+            self.mp4box_binary = (
+                Path().cwd().joinpath('MP4Box', 'mp4box.exe').absolute()
+            )
 
     def _subprocess(self, *args, **kwargs):
         """Método para execução de subprocessos."""
@@ -83,10 +88,10 @@ class Convert:
     def handbrake(self, media: Path) -> Path:
 
         output = self.output.joinpath(f'convertido_{media.stem}.mp4')
-        args = f'{self.handbrake_binary.absolute()} -i \
+        args = f'{self.handbrake_binary} -i \
             {media.absolute()} -o {output.absolute()}'.split()
         if self.low:
-            args = f'{self.handbrake_binary.absolute()} -i \
+            args = f'{self.handbrake_binary} -i \
                 {media.absolute()} -w 320 -l 240 -e mpeg4 --rate\
                      30 --vb 100 --mixdown mono --aencoder av_aac \
                         --ab 48 -o {output.absolute()}'.split()
@@ -149,7 +154,7 @@ class Convert:
         """
         output = self.output.joinpath(f'convertido_{media.stem}.mp3')
         args = [
-            self.ffmpeg_binary.absolute(),
+            self.ffmpeg_binary,
             '-i',
             media.absolute(),
             '-acodec',
@@ -162,7 +167,7 @@ class Convert:
         if not self.audio_only:
             output = self.output.joinpath(f'convertido_{media.stem}.mp4')
             args = [
-                self.ffmpeg_binary.absolute(),
+                self.ffmpeg_binary,
                 '-i',
                 media.absolute(),
                 '-preset',
@@ -173,7 +178,7 @@ class Convert:
                 '-y',
             ]
             if self.low:
-                args = f"{self.ffmpeg_binary.absolute()} -i {media.absolute()}\
+                args = f"{self.ffmpeg_binary} -i {media.absolute()}\
                      -s {self.settings['settings_convert']['resolution_value']}\
                          -preset fast -r 30 -b:v 100000 -ar 44100 -ac 1 \
                             -max_muxing_queue_size 9999 {output.absolute()} -y".split()
@@ -246,7 +251,7 @@ class Convert:
 
         try:
             args = [
-                self.mp4box_binary.absolute(),
+                self.mp4box_binary,
                 '-add',
                 media.absolute(),
                 '-split-size',
@@ -271,7 +276,7 @@ class Convert:
         """
         convert_result = self.ffmpeg(media=media)
         if not isinstance(convert_result, Path):
-            if self.audio_only:
+            if self.audio_only or PLATFORM != 'win32':
                 return 1
             convert_result = self.handbrake(media=media)
             if not isinstance(convert_result, Path):

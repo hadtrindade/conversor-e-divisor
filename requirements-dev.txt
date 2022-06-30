@@ -6,6 +6,4 @@ pytest-qt
 blue
 isort
 
-PyQt5
-pyqt5-tools
 -r requirements.txt
