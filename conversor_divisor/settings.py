@@ -1,5 +1,4 @@
 import sys
-from os import makedirs
 from pathlib import Path
 from typing import Dict, Text
 
@@ -51,7 +50,7 @@ class Settings:
         :return: None
         """
         if not self.application_user.joinpath('settings.toml').exists():
-            makedirs(self.application_user_path)
+            self.application_user.mkdir(parents=True)
             with open(
                 self.application_user.joinpath('settings.toml').absolute(), 'w'
             ) as file:
