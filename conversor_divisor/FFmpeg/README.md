@@ -3,7 +3,3 @@
         FFmpeg/
         ├── bin
         │   ├── ffmpeg.exe
-        │   ├── ffplay.exe
-        │   └── ffprobe.exe
-        ├── doc
-        ├── presets

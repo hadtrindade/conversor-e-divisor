@@ -59,16 +59,16 @@ class Convert:
 
         if PLATFORM == 'win32':
             self.handbrake_binary = (
-                Path()
-                .cwd()
+                Path(__file__)
+                .parent
                 .joinpath('HandBrakeCLI', 'HandBrakeCLI.exe')
                 .absolute()
             )
             self.ffmpeg_binary = (
-                Path().cwd().joinpath('FFmpeg', 'bin', 'ffmpeg.exe').absolute()
+                Path(__file__).parent.joinpath('FFmpeg', 'bin', 'ffmpeg.exe').absolute()
             )
             self.mp4box_binary = (
-                Path().cwd().joinpath('MP4Box', 'mp4box.exe').absolute()
+                Path(__file__).parent.joinpath('MP4Box', 'mp4box.exe').absolute()
             )
 
     def _subprocess(self, *args, **kwargs):
@@ -331,12 +331,15 @@ class Convert:
             mp4box_result = self.mp4box(media=self.media)
             if mp4box_result == 'minimum_size':
                 self.done_signal.emit('Mídia já está em tamanho apropriado!')
+                return
             elif mp4box_result:
                 self.error_signal.emit(
                     'Ocorreu um erro no processo de divisão.'
                 )
+                return
             elif not mp4box_result:
                 self.done_signal.emit('Divisão Concluída.')
+                return
         if isinstance(self.media, list):
             count = 1
             for media in self.media:
