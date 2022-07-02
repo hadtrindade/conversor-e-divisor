@@ -101,10 +101,8 @@ class Convert:
                 '-i',
                 media.absolute(),
                 '-w',
-                f"{self.settings['convert']['resolution'].split('x')[0]}"
-                '-l',
-                f"{self.settings['convert']['resolution'].split('x')[1]}"
-                '-e',
+                f"{self.settings['convert']['resolution'].split('x')[0]}" '-l',
+                f"{self.settings['convert']['resolution'].split('x')[1]}" '-e',
                 'mpeg4',
                 '--rate',
                 '30',
