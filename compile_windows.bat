@@ -4,14 +4,9 @@ pyinstaller --noconfirm ^
      --name "Conversor_Divisor" --log-level "DEBUG" ^
      --hidden-import "toml" ^
      --hidden-import "conversor_divisor" ^
-     --add-data "conversor_divisor/__init__.py;." ^
-     --add-data "conversor_divisor/settings.py;." ^
-     --add-data "conversor_divisor/convert.py;." ^
-     --add-data "conversor_divisor/ui_functions.py;." ^
-     --add-data "conversor_divisor/worker.py;."  ^
-     --add-data "FFmpeg;FFmpeg/" ^
-     --add-data "MP4Box;MP4Box/" ^
-     --add-data "HandBrakeCLI;HandBrakeCLI/" ^
+     --add-data "conversor_divisor/FFmpeg;conversor_divisor/FFmpeg/" ^
+     --add-data "conversor_divisor/MP4Box;conversor_divisor/MP4Box/" ^
+     --add-data "conversor_divisor/HandBrakeCLI;conversor_divisor/HandBrakeCLI/" ^
      "conversor_divisor/app.py"
 
 
