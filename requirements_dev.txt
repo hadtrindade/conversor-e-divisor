@@ -8,4 +8,4 @@ isort
 
 PySide2
 toml
-auto-py-to-exe
+pyinstaller
