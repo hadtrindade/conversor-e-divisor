@@ -8,23 +8,20 @@ clean:
 	rm -rf *egg-info
 	rm -rf *tox/
 	rm -rf docs/_build
-	pip3 install -e . --no-cache
+	pip install -e .['dev'] --no-cache
 
 install:
 	pip install .
 
 install-dev:
-	pip install -r requirements-dev.txt
-	pip install -e .
-	mkdir FFmpeg
-	mkdir MP4Box
+	python -m venv .venv && source .venv/bin/activate && pip3 install -e .['dev']
 
 compile-ui:
-	pyside2-uic ui/ui_cd.ui -o conversor_divisor/ui_cd.py
-	pyside2-rcc ui/resources_cd.qrc -o conversor_divisor/resources_cd_rc.py
+	pyside2-uic ui/ui_cd.ui -o conversor_divisor/ui.py
+	pyside2-rcc ui/resources_cd.qrc -o conversor_divisor/resources.py
 
-start-app:
-	conversor_divisor
+start:
+	conversor-divisor
 
 lint:
 	flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
