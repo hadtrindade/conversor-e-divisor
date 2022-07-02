@@ -244,20 +244,20 @@ def set_settings(app: object) -> None:
     value_bytes_a = value_kilobytes_a * 1024
 
     s = Settings()
-    s.writer_settings(
-        'settings_split',
-        split_size_bytes_v=value_bytes_v,
-        split_size_kilobytes_v=value_kilobytes_v,
-        split_size_mb_v=int(size_value_v),
-        split_size_bytes_a=value_bytes_a,
-        split_size_kilobytes_a=value_kilobytes_a,
-        split_size_mb_a=int(size_value_a),
+    s.write(
+        'split',
+        v_split_size_b=value_bytes_v,
+        v_split_size_kb=value_kilobytes_v,
+        v_split_size_mb=int(size_value_v),
+        a_split_size_b=value_bytes_a,
+        a_split_size_kb=value_kilobytes_a,
+        a_split_size_mb=int(size_value_a),
     )
     resolution_value = app.resolution_settings.currentText()
     resolution_index_value = app.resolution_settings.currentIndex()
-    s.writer_settings(
-        'settings_convert',
-        resolution_value=resolution_value,
-        resolution_index_value=resolution_index_value,
+    s.write(
+        'convert',
+        resolution=resolution_value,
+        resolution_index=resolution_index_value,
     )
     app.popup_done('Configurações Aplicadas')

@@ -84,28 +84,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Set settings
         try:
             self.spinBox_split_size.setValue(
-                self.settings.read_settings()['settings_split'][
-                    'split_size_mb_v'
-                ]
+                self.settings.read()['split']['v_split_size_mb']
             )
             self.spinBox_split_size_audio.setValue(
-                self.settings.read_settings()['settings_split'][
-                    'split_size_mb_a'
-                ]
+                self.settings.read()['split']['a_split_size_mb']
             )
             self.resolution_settings.setCurrentIndex(
-                self.settings.read_settings()['settings_convert'][
-                    'resolution_index_value'
-                ]
+                self.settings.read()['convert']['resolution_index']
             )
         except KeyError:
-            self.settings.writer_settings(
-                setting='settings_split',
-                **self.settings.default_settings['settings_split'],
+            self.settings.write(
+                setting='split',
+                **self.settings.default_settings['split'],
             )
-            self.settings.writer_settings(
-                setting='settings_convert',
-                **self.settings.default_settings['settings_convert'],
+            self.settings.write(
+                setting='convert',
+                **self.settings.default_settings['convert'],
             )
         self.pushButton_apply_settings.clicked.connect(self.change_settings)
 

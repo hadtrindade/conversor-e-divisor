@@ -53,7 +53,7 @@ class Convert:
         self.split = split
         self.split_only = split_only
         s = Settings()
-        self.settings = s.read_settings()
+        self.settings = s.read()
         self.ffmpeg_binary = 'ffmpeg'
         self.mp4box_binary = 'MP4box'
 
@@ -88,13 +88,37 @@ class Convert:
     def handbrake(self, media: Path) -> Path:
 
         output = self.output.joinpath(f'convertido_{media.stem}.mp4')
-        args = f'{self.handbrake_binary} -i \
-            {media.absolute()} -o {output.absolute()}'.split()
+        args = [
+            self.handbrake_binary,
+            '-i',
+            media.absolute(),
+            '-o',
+            output.absolute(),
+        ]
         if self.low:
-            args = f'{self.handbrake_binary} -i \
-                {media.absolute()} -w 320 -l 240 -e mpeg4 --rate\
-                     30 --vb 100 --mixdown mono --aencoder av_aac \
-                        --ab 48 -o {output.absolute()}'.split()
+            args = [
+                self.handbrake_binary,
+                '-i',
+                media.absolute(),
+                '-w',
+                f"{self.settings['convert']['resolution'].split('x')[0]}"
+                '-l',
+                f"{self.settings['convert']['resolution'].split('x')[1]}"
+                '-e',
+                'mpeg4',
+                '--rate',
+                '30',
+                '--vb',
+                '100',
+                '--mixdown',
+                'mono',
+                '--aencoder',
+                'av_aac',
+                '--ab',
+                '48',
+                '-o',
+                output.absolute(),
+            ]
         try:
             process = self._subprocess(*args, encoding='utf-8', text=True)
             self.process_signal.emit(process)
@@ -178,10 +202,26 @@ class Convert:
                 '-y',
             ]
             if self.low:
-                args = f"{self.ffmpeg_binary} -i {media.absolute()}\
-                     -s {self.settings['settings_convert']['resolution_value']}\
-                         -preset fast -r 30 -b:v 100000 -ar 44100 -ac 1 \
-                            -max_muxing_queue_size 9999 {output.absolute()} -y".split()
+                args = [
+                    self.ffmpeg_binary,
+                    '-i',
+                    media.absolute(),
+                    '-s',
+                    f"{self.settings['convert']['resolution']}",
+                    '-preset',
+                    'fast',
+                    '-r',
+                    '30',
+                    '-b:v',
+                    '100000',
+                    '-ar',
+                    '44100',
+                    '-ac',
+                    '1',
+                    '-max_muxing_queue_size',
+                    '9999',
+                    output.absolute(),
+                ]
         try:
             process = self._subprocess(*args, encoding='utf-8', text=True)
             self.process_signal.emit(process)
@@ -236,15 +276,11 @@ class Convert:
         """
         size_media = None
         if media.suffix == '.mp3':
-            size_media = self.settings['settings_split']['split_size_bytes_a']
-            split_size_kilobytes = self.settings['settings_split'][
-                'split_size_kilobytes_a'
-            ]
+            size_media = self.settings['split']['a_split_size_b']
+            split_size_kilobytes = self.settings['split']['a_split_size_kb']
         else:
-            size_media = self.settings['settings_split']['split_size_bytes_v']
-            split_size_kilobytes = self.settings['settings_split'][
-                'split_size_kilobytes_v'
-            ]
+            size_media = self.settings['split']['v_split_size_b']
+            split_size_kilobytes = self.settings['split']['v_split_size_kb']
 
         if int(path.getsize(media.absolute())) <= size_media:
             return 'minimum_size'
