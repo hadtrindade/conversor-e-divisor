@@ -130,13 +130,20 @@ dmypy.json
 
 
 # bin
-
-output/
-
 .vscode/
+conversor_divisor/FFmpeg/bin/*
 
-backup/
-
-FFmpeg/
-MP4Box/
-HandBrakeCLI/
+conversor_divisor/HandBrakeCLI/HandBrakeCLI.exe
+conversor_divisor/MP4Box/*.dll
+conversor_divisor/MP4Box/gui/*
+conversor_divisor/MP4Box/sdk/*
+conversor_divisor/MP4Box/*.exe
+conversor_divisor/FFmpeg/LICENSE.txt
+conversor_divisor/MP4Box/Changelog.txt
+conversor_divisor/MP4Box/configuration.html
+conversor_divisor/MP4Box/gpac.mp4
+conversor_divisor/MP4Box/License.txt
+conversor_divisor/MP4Box/nposmozilla.xpt
+conversor_divisor/MP4Box/osmo4.ico
+conversor_divisor/MP4Box/ReadMe.txt
+conversor_divisor/FFmpeg/README.txt

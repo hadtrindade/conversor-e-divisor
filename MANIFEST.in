@@ -1,0 +1,4 @@
+
+recursive-include conversor_divisor/FFmpeg *
+recursive-include conversor_divisor/HandBrakeCLI * 
+recursive-include conversor_divisor/MP4Box * 

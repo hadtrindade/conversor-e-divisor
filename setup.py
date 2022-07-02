@@ -41,9 +41,6 @@ setup(
             'tests',
             'dist',
             'build',
-            'FFmpeg',
-            'MP4Box',
-            'HandBrakeCLI',
         ]
     ),
     include_package_data=True,
