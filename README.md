@@ -31,4 +31,7 @@ Baixar o instalador [Link](https://github.com/hadtrindade/conversor-e-divisor/re
 ## macOS:
     brew install ffmpeg gpac
 
+## Como abrir o Conversor&Dividor usando o terminal:
+    $ conversor-divisor
+
 ### Download dos binários para Windows, caso queira instalar o conversor pelo código fonte [Link](https://drive.google.com/drive/folders/1h_ySXbsgu-hWg_ZKAWhqQx4mCNzQy3eU?usp=sharing).

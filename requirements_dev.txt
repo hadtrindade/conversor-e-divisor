@@ -6,4 +6,6 @@ pytest-qt
 blue
 isort
 
--r requirements.txt
+PySide2
+toml
+auto-py-to-exe

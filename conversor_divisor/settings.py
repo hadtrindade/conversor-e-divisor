@@ -39,7 +39,10 @@ class Settings:
             data = toml.load(file_settings)
             if data.keys() == self.default.keys():
                 if data['split'].keys() == self.default['split'].keys():
-                    if data['convert'].keys() == self.default['convert'].keys():
+                    if (
+                        data['convert'].keys()
+                        == self.default['convert'].keys()
+                    ):
                         return data
                     else:
                         file_settings.unlink()
@@ -70,6 +73,8 @@ class Settings:
             data = toml.load(file_settings)
             for k, v in kwargs.items():
                 data[setting][k] = v
-            with open(self.path.joinpath('settings.toml').absolute(), 'w') as f:
+            with open(
+                self.path.joinpath('settings.toml').absolute(), 'w'
+            ) as f:
                 toml.dump(data, f)
             return self.read()
