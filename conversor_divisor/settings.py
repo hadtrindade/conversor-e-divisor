@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-from typing import Dict, Text
+from typing import Any, Dict, Text
 
 import toml
 
@@ -12,57 +12,64 @@ class Settings:
 
     def __init__(self):
 
-        self.application_user = Path.home().joinpath('.conversor&divisor')
-        self.default_settings = {
-            'title': 'Convert Split Settings',
-            'settings_split': {
-                'split_size_bytes_v': 31457280,
-                'split_size_kilobytes_v': 30720,
-                'split_size_mb_v': 30,
-                'split_size_bytes_a': 10485760,
-                'split_size_kilobytes_a': 10240,
-                'split_size_mb_a': 10,
+        self.path = Path.home().joinpath('.conversor&divisor')
+        self.default = {
+            'title': 'Convert & Split Settings',
+            'split': {
+                'v_split_size_b': 31457280,
+                'v_split_size_kb': 30720,
+                'v_split_size_mb': 30,
+                'a_split_size_b': 10485760,
+                'a_split_size_kb': 10240,
+                'a_split_size_mb': 10,
             },
-            'settings_convert': {
-                'resolution_value': '320x240',
-                'resolution_index_value': 0,
+            'convert': {
+                'resolution': '320x240',
+                'resolution_index': 0,
             },
         }
 
-    def read_settings(self) -> Dict:
+    def read(self) -> Dict:
         """Método para leitura das configurações.
 
         :return: dict
         """
         try:
-            data_settings = toml.load(
-                self.application_user.joinpath('settings.toml').absolute()
-            )
-            return data_settings
+            file_settings = self.path.joinpath('settings.toml').absolute()
+            data = toml.load(file_settings)
+            if data.keys() == self.default.keys():
+                if data['split'].keys() == self.default['split'].keys():
+                    if data['convert'].keys() == self.default['convert'].keys():
+                        return data
+                    else:
+                        file_settings.unlink()
+                        return self.write()
+                else:
+                    file_settings.unlink()
+                    return self.write()
+            else:
+                file_settings.unlink()
+                return self.write()
         except FileNotFoundError:
-            self.writer_settings('settings')
-            return self.default_settings
+            return self.write()
 
-    def writer_settings(self, setting: Text, **kwargs) -> None:
+    def write(self, setting: Text = None, **kwargs: Any) -> None:
         """Método para gravação de configurações.
 
         :param setting: tipo de configuração a ser gravada
         :return: None
         """
-        if not self.application_user.joinpath('settings.toml').exists():
-            self.application_user.mkdir(parents=True)
-            with open(
-                self.application_user.joinpath('settings.toml').absolute(), 'w'
-            ) as file:
-                toml.dump(self.default_settings, file)
-
+        file_settings = self.path.joinpath('settings.toml').absolute()
+        if not self.path.exists():
+            self.path.mkdir()
+        if self.path.exists() and not file_settings.exists():
+            with open(file_settings, 'w') as file:
+                toml.dump(self.default, file)
+                return self.default
         else:
-            data_settings = toml.load(
-                self.application_user.joinpath('settings.toml').absolute()
-            )
+            data = toml.load(file_settings)
             for k, v in kwargs.items():
-                data_settings[setting][k] = v
-            with open(
-                self.application_user.joinpath('settings.toml').absolute(), 'w'
-            ) as file:
-                toml.dump(data_settings, file)
+                data[setting][k] = v
+            with open(self.path.joinpath('settings.toml').absolute(), 'w') as f:
+                toml.dump(data, f)
+            return self.read()
