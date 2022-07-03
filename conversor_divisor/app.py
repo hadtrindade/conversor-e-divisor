@@ -129,11 +129,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def stop_process(self):
         if self._platform_ms_win == 'win32':
             from subprocess import DEVNULL, Popen
-
-            _ = Popen(['tskill', 'ffmpeg'], stdout=DEVNULL, stderr=DEVNULL)
-            _ = Popen(
-                ['tskill', 'HandBrakeCLI'], stdout=DEVNULL, stderr=DEVNULL
-            )
+            try:
+                _ = Popen(['tskill', 'ffmpeg'], stdout=DEVNULL, stderr=DEVNULL)
+                _ = Popen(
+                    ['tskill', 'HandBrakeCLI'], stdout=DEVNULL, stderr=DEVNULL
+                )
+            except FileNotFoundError:
+                _ = Popen(['taskkill', '/F', '/IM', 'ffmpeg.exe'], stdout=DEVNULL, stderr=DEVNULL)
+                _ = Popen(['taskkill', '/F', '/IM', 'HandBrakeCLI.exe'], stdout=DEVNULL, stderr=DEVNULL)
         else:
             self.process_in_progress.send_signal(self._signal_sigterm)
         self.worker.terminate()
